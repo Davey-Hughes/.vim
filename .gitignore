@@ -1,0 +1,13 @@
+# directories
+
+# files
+backup/*
+swap/*
+undo/*
+
+.config/c
+
+viminfo
+
+# keep empty directories
+!*.keep

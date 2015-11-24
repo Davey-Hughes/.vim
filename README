@@ -1,0 +1,16 @@
+================================================================================
+                            Davey Hughes' Vim Setup
+================================================================================
+
+                     README last updated November 23, 2015
+
+             Originally structured for Arch Linux 2015.11.1, x86_64
+
+                      davidralphhughes@college.harvard.edu
+
+================================================================================
+
+Included plugins are listed in the .gitbundle file. This setup uses pathogen
+to manage plugins.
+
+================================================================================
