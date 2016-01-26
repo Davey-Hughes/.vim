@@ -103,8 +103,8 @@ set lazyredraw
 " for regular expressions turn magic on
 set magic
 
-" show matching brackets when text indicator is over them
-set showmatch
+" don't highlight matching parentheses
+let g:loaded_matchparen=1
 
 " :W sudo saves file
 command W w !sudo tee % > /dev/null
@@ -151,6 +151,9 @@ nnoremap <C-H> <C-W><C-H>
 " shift-Enter enters a newline without enter insert mode
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
+
+" shift-Tab inserts a real tab even when expandtab is on
+:nnoremap <leader><Tab> i<C-V><Tab><Esc>
 
 " let j and k move up and down lines that have been wrapped
 map j gj
