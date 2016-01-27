@@ -17,6 +17,7 @@
 let g:pathogen_disabled = []
 
 call add(g:pathogen_disabled, 'vim-expand-region')
+call add(g:pathogen_disabled, 'YouCompleteMe')
 
 " ctrlp.vim
 " delimitmate
@@ -65,7 +66,7 @@ set fileencoding=utf-8
 set number
 
 " reload file if it's been changed externally
-set autoread
+" set autoread
 
 " set clipboard register to the same as the computer's register
 set clipboard=unnamed
@@ -107,7 +108,7 @@ set magic
 let g:loaded_matchparen=1
 
 " :W sudo saves file
-command W w !sudo tee % > /dev/null
+command W silent w !sudo tee % > /dev/null
 
 " when editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -116,6 +117,11 @@ command W w !sudo tee % > /dev/null
     \ if line("'\"") >= 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" filetype specific settings
+
+autocmd FileType text set textwidth=79 smartindent noautoread
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
@@ -245,7 +251,7 @@ hi OverLength ctermbg=none cterm=none
 match OverLength /\%>81v/
 fun! s:LongLineHLToggle()
   if !exists('w:longlinehl')
-    let w:longlinehl = matchadd('ErrorMsg', '.\%>81v', 0)
+    let w:longlinehl = matchadd('ErrorMsg', '.\%>80v', 0)
     echo "Long lines highlighted"
   else
     call matchdelete(w:longlinehl)
@@ -262,6 +268,6 @@ fun! s:ToggleWrapGuide()
   if &colorcolumn
     set colorcolumn=
   else
-    set colorcolumn=81
+    set colorcolumn=80
   endif
 endfunction
