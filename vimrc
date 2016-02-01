@@ -4,10 +4,10 @@
 " Windows 10 Pro, x64
 " Windows PowerShell
 "
-" Arch Linux 2015.11.1 x86_64
+" Arch Linux 2016.01.01 x86_64
 " zsh with oh-my-zsh
 "
-" November 23, 2015
+" February 1, 2016
 " davidralphhughes@college.harvard.edu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -134,6 +134,12 @@ let g:rainbow_active = 1
 
 " location of ycm_extra_conf
 let g:ycm_global_ycm_extra_conf = '~/.vim/.config/'
+
+" merlin settings
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+let maplocalleader = "\\"
+let g:syntastic_ocaml_checkers=['merlin']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
