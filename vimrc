@@ -122,6 +122,7 @@ command W silent w !sudo tee % > /dev/null
 " filetype specific settings
 
 autocmd FileType text set textwidth=79 smartindent noautoread
+autocmd FileType ocaml syntax on
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
@@ -140,6 +141,15 @@ let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 let maplocalleader = "\\"
 let g:syntastic_ocaml_checkers=['merlin']
+
+" ocp indent
+set rtp+=/home/ubuntu/cs51/ocp-indent-vim
+
+" vim slime use tmux
+let g:slime_target = "tmux"
+
+" NERDCommenter add space
+let NERDSpaceDelims = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
