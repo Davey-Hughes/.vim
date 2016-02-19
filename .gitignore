@@ -6,6 +6,7 @@ swap/*
 undo/*
 
 .config/c
+.netrwhist
 
 viminfo
 
