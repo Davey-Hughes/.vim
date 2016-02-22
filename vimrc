@@ -133,6 +133,11 @@ set laststatus=2
 " turn on rainbow colored braces
 let g:rainbow_active = 1
 
+" solarized
+syntax enable
+set background=dark
+colorscheme solarized
+
 " location of ycm_extra_conf
 let g:ycm_global_ycm_extra_conf = '~/.vim/.config/'
 
@@ -161,7 +166,7 @@ nnoremap <leader>d dd
 
 nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :GundoToggle<CR>
-nnoremap <F6> :NERDTreeTabsOpen<CR>
+nnoremap <F6> :NERDTreeToggle<CR>
 nnoremap <F8> :TagbarToggle<CR>
 
 " allow changing of splits without typing ctrl-w first
