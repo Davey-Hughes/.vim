@@ -38,9 +38,9 @@
 " List of plugins (pathogen)
 
 " To disable a plugin, add it's bundle name to the following list
-" let g:pathogen_disabled = []
+let g:pathogen_disabled = []
 
-" call add(g:pathogen_disabled, 'YouCompleteMe')
+call add(g:pathogen_disabled, 'YouCompleteMe')
 
 " ctrlp.vim
 " delimitmate
@@ -86,6 +86,9 @@ set fileencoding=utf-8
 
 " turn on line numbers
 set number
+
+" highlight the line the cursor is on
+set cursorline
 
 " reload file if it's been changed externally
 " set autoread
@@ -157,7 +160,8 @@ let g:rainbow_active = 1
 
 " solarized
 syntax enable
-set background=dark
+let g:solarized_termcolors = 256
+set background=light
 colorscheme solarized
 
 " location of ycm_extra_conf
