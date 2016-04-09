@@ -43,9 +43,6 @@
 [submodule "bundle/vim-endwise"]
 	path = bundle/vim-endwise
 	url = https://github.com/tpope/vim-endwise
-[submodule "bundle/vim-expand-region"]
-	path = bundle/vim-expand-region
-	url = https://github.com/terryma/vim-expand-region
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
 	url = https://github.com/tpope/vim-fugitive

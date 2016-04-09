@@ -1,14 +1,16 @@
 # directories
-
-# files
 backup/*
 swap/*
 undo/*
 
+# files
 .config/c
 .netrwhist
 
 viminfo
+
+#filetypes
+*.pyc
 
 # keep empty directories
 !*.keep
