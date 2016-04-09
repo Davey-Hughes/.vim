@@ -1,23 +1,46 @@
-" Davey Hughes's vimrc
+" Davey Hughes' vimrc
 " 64bit Vim
 "
-" Windows 10 Pro, x64
-" Windows PowerShell
-"
-" Arch Linux 2016.01.01 x86_64
-" zsh with oh-my-zsh
-"
-" February 1, 2016
+" April 9, 2016
 " davidralphhughes@college.harvard.edu
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Initial setup and notes
+
+" YouCompleteMe
+" Initially YouCompleteMe is disabled since it requires extra installation.
+" You must go into bundle/YouCompleteMe/ and follow the directions in
+" README.md. On Ubuntu, this requires installing build-essential, cmake,
+" python-dev, and running ./install.py --clang-completer (for c-family
+" completion). Then, uncomment the line that disables YouCompleteMe in the
+" list of plugins section.
+
+" In order to get the tagbar working, install ctags.
+
+" To get the Merlin settings working for OCaml, you must install Merlin
+" through opam (opam install merlin).
+
+" vim-slime allows for easy sending of code from vim to a REPL. The way it is
+" configured here, tmux is used as the receiving terminal, and must be opened
+" for vim-slime to send code.
+
+" The Solarized setup is dependant on your terminal settings when running vim
+" from the terminal. My settings on the default Terminal for Ubuntu are
+" xterm-256 colors. The color settings can be checked by running:
+" > tput colors
+" > echo $TERM
+
+" The 80 character color-column specifed at the bottom of the file draws the
+" line on the 80th column, so the last non-whitespace character falls on the
+" 79th column. This is so the newline character happens on the 80th column.
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " List of plugins (pathogen)
 
 " To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
+" let g:pathogen_disabled = []
 
-call add(g:pathogen_disabled, 'vim-expand-region')
-call add(g:pathogen_disabled, 'YouCompleteMe')
+" call add(g:pathogen_disabled, 'YouCompleteMe')
 
 " ctrlp.vim
 " delimitmate
@@ -33,7 +56,6 @@ call add(g:pathogen_disabled, 'YouCompleteMe')
 " vim-colors-solarized
 " vim-dispatch
 " vim-endwise
-" vim-expand-region
 " vim-fugitive
 " vim-gitgutter
 " vim-nerdtree-tabs
@@ -111,9 +133,9 @@ let g:loaded_matchparen=1
 command W silent w !sudo tee % > /dev/null
 
 " when editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+autocmd BufReadPost *
     \ if line("'\"") >= 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
@@ -139,7 +161,7 @@ set background=dark
 colorscheme solarized
 
 " location of ycm_extra_conf
-let g:ycm_global_ycm_extra_conf = '~/.vim/.config/'
+let g:ycm_global_ycm_extra_conf = "~/.vim/.config/.ycm_extra_conf.py"
 
 " merlin settings
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
@@ -168,6 +190,7 @@ nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :GundoToggle<CR>
 nnoremap <F6> :NERDTreeToggle<CR>
 nnoremap <F8> :TagbarToggle<CR>
+nnoremap <leader>f :YcmCompleter FixIt<CR>
 
 " allow changing of splits without typing ctrl-w first
 nnoremap <C-J> <C-W><C-J>
@@ -179,7 +202,7 @@ nnoremap <C-H> <C-W><C-H>
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
-" shift-Tab inserts a real tab even when expandtab is on
+" leader-Tab inserts a real tab even when expandtab is on
 :nnoremap <leader><Tab> i<C-V><Tab><Esc>
 
 " let j and k move up and down lines that have been wrapped
