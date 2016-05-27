@@ -84,8 +84,9 @@ set expandtab
 set encoding=utf-8
 set fileencoding=utf-8
 
-" turn on line numbers
+" turn on relative line numbers
 set number
+set relativenumber
 
 " highlight the line the cursor is on
 set cursorline
