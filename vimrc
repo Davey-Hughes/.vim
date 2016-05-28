@@ -41,6 +41,7 @@
 let g:pathogen_disabled = []
 
 call add(g:pathogen_disabled, 'YouCompleteMe')
+call add(g:pathogen_disabled, 'rainbow')
 
 " ctrlp.vim
 " delimitmate
@@ -86,7 +87,12 @@ set fileencoding=utf-8
 
 " turn on relative line numbers
 set number
-set relativenumber
+
+if has('gui_running')
+    set guioptions-=T    
+else
+    set relativenumber
+endif
 
 " highlight the line the cursor is on
 set cursorline
@@ -161,8 +167,14 @@ let g:rainbow_active = 1
 
 " solarized
 syntax enable
-let g:solarized_termcolors = 256
-set background=light
+
+if has('gui_running')
+    set background=dark
+else
+    let g:solarized_termcolors=256
+    set background=light
+endif
+
 colorscheme solarized
 
 " location of ycm_extra_conf
