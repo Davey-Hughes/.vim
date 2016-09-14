@@ -44,8 +44,8 @@ call add(g:pathogen_disabled, 'YouCompleteMe')
 call add(g:pathogen_disabled, 'rainbow')
 
 " ctrlp.vim
-" delimitmate
-" gundo
+" delimitMate
+" gundo.vim
 " nerdcommenter
 " nerdtree
 " rainbow
@@ -56,6 +56,7 @@ call add(g:pathogen_disabled, 'rainbow')
 " vim-bufferline
 " vim-colors-solarized
 " vim-dispatch
+" vim-easymotion
 " vim-endwise
 " vim-fugitive
 " vim-gitgutter
@@ -63,6 +64,7 @@ call add(g:pathogen_disabled, 'rainbow')
 " vim-speeddating
 " vim-surround
 " vim-unimpaired
+" vimtex
 " YouCompleteMe
 
 set nocp
@@ -89,7 +91,7 @@ set fileencoding=utf-8
 set number
 
 if has('gui_running')
-    set guioptions-=T    
+    set guioptions-=T
 else
     set relativenumber
 endif
@@ -140,7 +142,7 @@ set magic
 let g:loaded_matchparen=1
 
 " :W sudo saves file
-command W silent w !sudo tee % > /dev/null
+" command W silent w !sudo tee % > /dev/null
 
 " when editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
