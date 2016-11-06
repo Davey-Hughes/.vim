@@ -1,7 +1,6 @@
 " Davey Hughes' vimrc
-" 64bit Vim
 "
-" April 9, 2016
+" November 5, 2016
 " davidralphhughes@college.harvard.edu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -170,12 +169,15 @@ let g:rainbow_active = 1
 " solarized
 syntax enable
 
-if has('gui_running')
-    set background=dark
-else
-    let g:solarized_termcolors=256
-    set background=light
-endif
+" try this if the terminal emulator is being weird with the colors
+" if has('gui_running')
+    " set background=dark
+" else
+    " let g:solarized_termcolors=256
+    " set background=light
+" endif
+
+set background=dark
 
 colorscheme solarized
 
