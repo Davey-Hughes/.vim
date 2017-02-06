@@ -1,7 +1,6 @@
 " Davey Hughes' vimrc
-" 64bit Vim
 "
-" April 9, 2016
+" Feburary 5, 2017 
 " davidralphhughes@college.harvard.edu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -56,7 +55,6 @@ call add(g:pathogen_disabled, 'rainbow')
 " vim-bufferline
 " vim-colors-solarized
 " vim-dispatch
-" vim-easymotion
 " vim-endwise
 " vim-fugitive
 " vim-gitgutter
@@ -175,6 +173,7 @@ let g:rainbow_active=1
 " solarized
 syntax enable
 
+" try this if the terminal emulator is being weird with the colors
 " if has('gui_running')
     " set background=dark
 " else
