@@ -38,7 +38,7 @@
 " List of plugins (pathogen)
 
 " To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
+let g:pathogen_disabled=[]
 
 call add(g:pathogen_disabled, 'YouCompleteMe')
 call add(g:pathogen_disabled, 'rainbow')
@@ -61,6 +61,7 @@ call add(g:pathogen_disabled, 'rainbow')
 " vim-fugitive
 " vim-gitgutter
 " vim-nerdtree-tabs
+" vim-slime
 " vim-speeddating
 " vim-surround
 " vim-unimpaired
@@ -156,7 +157,11 @@ autocmd BufReadPost *
 " filetype specific settings
 
 autocmd FileType text set textwidth=79 smartindent noautoread
-autocmd FileType ocaml syntax on
+autocmd FileType ocaml call SetOcamlOptions()
+function SetOcamlOptions()
+    syntax on
+    let b:delimitMate_quotes = "\" `"
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
@@ -165,43 +170,45 @@ autocmd FileType ocaml syntax on
 set laststatus=2
 
 " turn on rainbow colored braces
-let g:rainbow_active = 1
+let g:rainbow_active=1
 
 " solarized
 syntax enable
 
-if has('gui_running')
-    set background=dark
-else
-    let g:solarized_termcolors=256
-    set background=light
-endif
+" if has('gui_running')
+    " set background=dark
+" else
+    " let g:solarized_termcolors=256
+    " set background=light
+" endif
+
+set background=dark
 
 colorscheme solarized
 
 " location of ycm_extra_conf
-let g:ycm_global_ycm_extra_conf = "~/.vim/.config/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf="~/.vim/.config/.ycm_extra_conf.py"
 
 " merlin settings
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+let g:opamshare=substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let maplocalleader = "\\"
+let maplocalleader="\\"
 let g:syntastic_ocaml_checkers=['merlin']
 
 " ocp indent
 set rtp+=/home/ubuntu/cs51/ocp-indent-vim
 
 " vim slime use tmux
-let g:slime_target = "tmux"
+let g:slime_target="tmux"
 
 " NERDCommenter add space
-let NERDSpaceDelims = 1
+let NERDSpaceDelims=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
 
 " set mapleader to the spacebar
-let mapleader = " "
+let mapleader=" "
 
 nnoremap <leader>d dd
 
@@ -233,7 +240,7 @@ map k gk
 
 " Map key to toggle opt
 function MapToggle(key, opt)
-  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+  let cmd=':set '.a:opt.'! \| set '.a:opt."?\<CR>"
   exec 'nnoremap '.a:key.' '.cmd
   exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
