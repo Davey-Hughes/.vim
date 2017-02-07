@@ -39,7 +39,7 @@
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled = []
 
-call add(g:pathogen_disabled, 'YouCompleteMe')
+" call add(g:pathogen_disabled, 'YouCompleteMe')
 call add(g:pathogen_disabled, 'rainbow')
 
 " ctrlp.vim
@@ -77,10 +77,18 @@ filetype plugin on
 filetype plugin indent on
 
 " tab settings
-set tabstop=4
+" set tabstop=4
+" set shiftwidth=4
+" set softtabstop=4
+" set expandtab
+
+" use hard tabs
+set noexpandtab
+set copyindent
+set preserveindent
+set softtabstop=0
 set shiftwidth=4
-set softtabstop=4
-set expandtab
+set tabstop=4
 
 " character encoding
 set encoding=utf-8
@@ -164,7 +172,7 @@ autocmd FileType ocaml syntax on
 set laststatus=2
 
 " turn on rainbow colored braces
-let g:rainbow_active = 1
+let g:rainbow_active=1
 
 " solarized
 syntax enable
@@ -178,26 +186,44 @@ syntax enable
 " endif
 
 set background=dark
-
+set t_Co=256
 colorscheme solarized
 
 " location of ycm_extra_conf
-let g:ycm_global_ycm_extra_conf = "~/.vim/.config/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf="~/.vim/.config/.ycm_extra_conf.py"
 
 " merlin settings
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+let g:opamshare=substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let maplocalleader = "\\"
+let maplocalleader="\\"
 let g:syntastic_ocaml_checkers=['merlin']
 
 " ocp indent
 set rtp+=/home/ubuntu/cs51/ocp-indent-vim
 
 " vim slime use tmux
-let g:slime_target = "tmux"
+let g:slime_target="tmux"
 
 " NERDCommenter add space
-let NERDSpaceDelims = 1
+let NERDSpaceDelims=1
+
+" vimtex disable verbose warnings
+let g:vimtex_latexmk_callback=0
+
+" YouCompleteMe autocomplete for .tex files
+if !exists('g:ycm_semantic_triggers')
+    let g:ycm_semantic_triggers = {}
+  endif
+  let g:ycm_semantic_triggers.tex = [
+        \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+        \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+        \ 're!\\hyperref\[[^]]*',
+        \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+        \ 're!\\(include(only)?|input){[^}]*',
+        \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
+        \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
+        \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
+        \ ]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
