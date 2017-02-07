@@ -1,6 +1,6 @@
 " Davey Hughes' vimrc
 "
-" November 5, 2016
+" Feburary 5, 2017 
 " davidralphhughes@college.harvard.edu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -37,7 +37,7 @@
 " List of plugins (pathogen)
 
 " To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled = []
+let g:pathogen_disabled=[]
 
 " call add(g:pathogen_disabled, 'YouCompleteMe')
 call add(g:pathogen_disabled, 'rainbow')
@@ -55,11 +55,11 @@ call add(g:pathogen_disabled, 'rainbow')
 " vim-bufferline
 " vim-colors-solarized
 " vim-dispatch
-" vim-easymotion
 " vim-endwise
 " vim-fugitive
 " vim-gitgutter
 " vim-nerdtree-tabs
+" vim-slime
 " vim-speeddating
 " vim-surround
 " vim-unimpaired
@@ -163,7 +163,11 @@ autocmd BufReadPost *
 " filetype specific settings
 
 autocmd FileType text set textwidth=79 smartindent noautoread
-autocmd FileType ocaml syntax on
+autocmd FileType ocaml call SetOcamlOptions()
+function SetOcamlOptions()
+    syntax on
+    let b:delimitMate_quotes = "\" `"
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
@@ -229,7 +233,7 @@ if !exists('g:ycm_semantic_triggers')
 " key remappings
 
 " set mapleader to the spacebar
-let mapleader = " "
+let mapleader=" "
 
 nnoremap <leader>d dd
 
@@ -261,7 +265,7 @@ map k gk
 
 " Map key to toggle opt
 function MapToggle(key, opt)
-  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+  let cmd=':set '.a:opt.'! \| set '.a:opt."?\<CR>"
   exec 'nnoremap '.a:key.' '.cmd
   exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
