@@ -77,18 +77,18 @@ filetype plugin on
 filetype plugin indent on
 
 " tab settings
-" set tabstop=4
-" set shiftwidth=4
-" set softtabstop=4
-" set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
 
 " use hard tabs
-set noexpandtab
-set copyindent
-set preserveindent
-set softtabstop=0
-set shiftwidth=4
-set tabstop=4
+" set noexpandtab
+" set copyindent
+" set preserveindent
+" set softtabstop=0
+" set shiftwidth=4
+" set tabstop=4
 
 " character encoding
 set encoding=utf-8
@@ -163,10 +163,19 @@ autocmd BufReadPost *
 " filetype specific settings
 
 autocmd FileType text set textwidth=79 smartindent noautoread
+
 autocmd FileType ocaml call SetOcamlOptions()
 function SetOcamlOptions()
     syntax on
     let b:delimitMate_quotes = "\" `"
+endfunction
+
+autocmd FileType sh call SetShellOptions()
+function SetShellOptions()
+    set tabstop=2
+    set shiftwidth=2
+    set softtabstop=2
+    set expandtab
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
