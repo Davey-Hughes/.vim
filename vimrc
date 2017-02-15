@@ -1,6 +1,6 @@
 " Davey Hughes' vimrc
 "
-" Feburary 5, 2017 
+" Feburary 5, 2017
 " davidralphhughes@college.harvard.edu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -87,8 +87,8 @@ set expandtab
 " set copyindent
 " set preserveindent
 " set softtabstop=0
-" set shiftwidth=4
-" set tabstop=4
+" set shiftwidth=8
+" set tabstop=8
 
 " character encoding
 set encoding=utf-8
@@ -162,7 +162,28 @@ autocmd BufReadPost *
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " filetype specific settings
 
-autocmd FileType text set textwidth=79 smartindent noautoread
+autocmd FileType text call SetTextOptions()
+function SetTextOptions()
+    set textwidth=79
+    set smartindent
+    set noautoread
+endfunction
+
+autocmd FileType tex call SetTexOptions()
+function SetTexOptions()
+    set textwidth=79
+    set smartindent
+endfunction
+
+autocmd FileType c,cpp,asm call SetCOptions()
+function SetCOptions()
+    set noexpandtab
+    set copyindent
+    set preserveindent
+    set softtabstop=0
+    set shiftwidth=8
+    set tabstop=8
+endfunction
 
 autocmd FileType ocaml call SetOcamlOptions()
 function SetOcamlOptions()
@@ -219,6 +240,8 @@ let g:slime_target="tmux"
 
 " NERDCommenter add space
 let NERDSpaceDelims=1
+" NERDCommenter change comment style
+let NERDComAltDelims=1
 
 " vimtex disable verbose warnings
 let g:vimtex_latexmk_callback=0
