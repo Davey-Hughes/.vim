@@ -49,6 +49,7 @@ call add(g:pathogen_disabled, 'rainbow')
 " nerdtree
 " rainbow
 " syntastic
+" tabline.vim
 " tagbar
 " vim-airline
 " vim-better-whitespace
@@ -261,6 +262,13 @@ if !exists('g:ycm_semantic_triggers')
         \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
         \ ]
 
+" ctrlp extensions
+let g:ctrlp_extensions = ['tag', 'buffertag']
+let g:ctrlp_switch_buffer='ETVH'
+
+" dont sort tagbar items by name alphabetically
+let g:tagbar_sort=0
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
 
@@ -273,6 +281,7 @@ nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :GundoToggle<CR>
 nnoremap <F6> :NERDTreeToggle<CR>
 nnoremap <F8> :TagbarToggle<CR>
+nnoremap <leader>, :TagbarOpenAutoClose<CR>
 nnoremap <leader>f :YcmCompleter FixIt<CR>
 
 " allow changing of splits without typing ctrl-w first
@@ -285,7 +294,7 @@ nnoremap <C-H> <C-W><C-H>
 nmap <S-Enter> O<Esc>
 nmap <CR> o<Esc>
 
-" leader-Tab inserts a real tab even when expandtab is on
+" <leader>-Tab inserts a real tab even when expandtab is on
 :nnoremap <leader><Tab> i<C-V><Tab><Esc>
 
 " let j and k move up and down lines that have been wrapped
@@ -316,7 +325,7 @@ MapToggle <F12> paste
 set pastetoggle=<F12>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set backup/swap/undo location to permanent directory in .vim folder
+" set backup/swap/undo/ location to permanent directory in .vim folder
 
 " Save your backups to a less annoying place than the current directory.
 " If you have .vim-backup in the current directory, it'll use that.
