@@ -262,9 +262,13 @@ if !exists('g:ycm_semantic_triggers')
         \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
         \ ]
 
+" YouCompleteMe close preview window after completion
+let g:ycm_autoclose_preview_window_after_insertion=1
+
 " ctrlp extensions
 let g:ctrlp_extensions = ['tag', 'buffertag']
 let g:ctrlp_switch_buffer='ETVH'
+let g:ctrlp_cmd = 'CtrlPTag'
 
 " dont sort tagbar items by name alphabetically
 let g:tagbar_sort=0
@@ -282,6 +286,7 @@ nnoremap <F5> :GundoToggle<CR>
 nnoremap <F6> :NERDTreeToggle<CR>
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <leader>, :TagbarOpenAutoClose<CR>
+nnoremap <leader>. :TagbarOpenAutoClose<CR>/
 nnoremap <leader>f :YcmCompleter FixIt<CR>
 
 " allow changing of splits without typing ctrl-w first
