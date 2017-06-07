@@ -70,3 +70,6 @@
 [submodule "bundle/tabline.vim"]
 	path = bundle/tabline.vim
 	url = git://github.com/mkitt/tabline.vim.git
+[submodule "bundle/vim-opencl"]
+	path = bundle/vim-opencl
+	url = https://github.com/brgmnn/vim-opencl.git

@@ -39,15 +39,13 @@
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled=[]
 
-" call add(g:pathogen_disabled, 'YouCompleteMe')
-call add(g:pathogen_disabled, 'rainbow')
+call add(g:pathogen_disabled, 'YouCompleteMe')
 
 " ctrlp.vim
 " delimitMate
 " gundo.vim
 " nerdcommenter
 " nerdtree
-" rainbow
 " syntastic
 " tabline.vim
 " tagbar
@@ -60,6 +58,7 @@ call add(g:pathogen_disabled, 'rainbow')
 " vim-fugitive
 " vim-gitgutter
 " vim-nerdtree-tabs
+" vim-opencl
 " vim-slime
 " vim-speeddating
 " vim-surround
@@ -176,7 +175,7 @@ function SetTexOptions()
     set smartindent
 endfunction
 
-autocmd FileType c,cpp,asm call SetCOptions()
+autocmd FileType c,cpp,opencl,asm call SetCOptions()
 function SetCOptions()
     set noexpandtab
     set copyindent
