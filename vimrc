@@ -40,6 +40,7 @@
 let g:pathogen_disabled=[]
 
 call add(g:pathogen_disabled, 'YouCompleteMe')
+call add(g:pathogen_disabled, 'vim-autoread')
 
 " ctrlp.vim
 " delimitMate
@@ -50,6 +51,7 @@ call add(g:pathogen_disabled, 'YouCompleteMe')
 " tabline.vim
 " tagbar
 " vim-airline
+" vim-autoread
 " vim-better-whitespace
 " vim-bufferline
 " vim-colors-solarized
@@ -105,9 +107,6 @@ endif
 
 " highlight the line the cursor is on
 set cursorline
-
-" reload file if it's been changed externally
-" set autoread
 
 " set clipboard register to the same as the computer's register
 set clipboard=unnamed
