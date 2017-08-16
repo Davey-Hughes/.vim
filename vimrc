@@ -98,12 +98,14 @@ set fileencoding=utf-8
 
 " turn on relative line numbers
 set number
+set relativenumber
 
-if has('gui_running')
-    set guioptions-=T
-else
-    set relativenumber
-endif
+" Use this if relative number makes GUI vim slower
+" if has('gui_running')
+    " set guioptions-=T
+" else
+    " set relativenumber
+" endif
 
 " highlight the line the cursor is on
 set cursorline
@@ -184,6 +186,12 @@ function SetCOptions()
     set tabstop=8
 endfunction
 
+autocmd Filetype python call SetPythonOptions()
+function SetPythonOptions()
+    " don't insert extra spaces
+    let g:NERDSpaceDelims=0
+endfunction
+
 autocmd FileType ocaml call SetOcamlOptions()
 function SetOcamlOptions()
     syntax on
@@ -237,10 +245,14 @@ set rtp+=/home/ubuntu/cs51/ocp-indent-vim
 " vim slime use tmux
 let g:slime_target="tmux"
 
+" NERDTree don't open automatically in GUI
+let g:nerdtree_tabs_open_on_gui_startup = 0
+
 " NERDCommenter add space
-let NERDSpaceDelims=1
+let g:NERDSpaceDelims=1
+
 " NERDCommenter change comment style
-let NERDComAltDelims=1
+let g:NERDComAltDelims=1
 
 " vimtex disable verbose warnings
 let g:vimtex_latexmk_callback=0
@@ -270,6 +282,18 @@ let g:ctrlp_cmd = 'CtrlPTag'
 
 " dont sort tagbar items by name alphabetically
 let g:tagbar_sort=0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GUI settings
+set guifont=Hack:h13
+
+if has('gui_running')
+    autocmd VimLeave * :!(open -a iTerm)
+    autocmd VimEnter * :set fu
+endif
+
+" Remove scrollbars
+set guioptions=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
