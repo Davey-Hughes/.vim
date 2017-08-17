@@ -52,6 +52,7 @@ call add(g:pathogen_disabled, 'vim-autoread')
 " tabline.vim
 " tagbar
 " vim-airline
+" vim-apl
 " vim-autoread
 " vim-better-whitespace
 " vim-bufferline
