@@ -40,6 +40,7 @@
 let g:pathogen_disabled=[]
 
 call add(g:pathogen_disabled, 'YouCompleteMe')
+call add(g:pathogen_disabled, 'vim-cute-python')
 call add(g:pathogen_disabled, 'vim-autoread')
 
 " ctrlp.vim
@@ -55,6 +56,7 @@ call add(g:pathogen_disabled, 'vim-autoread')
 " vim-better-whitespace
 " vim-bufferline
 " vim-colors-solarized
+" vim-cute-python
 " vim-dispatch
 " vim-endwise
 " vim-fugitive
