@@ -40,12 +40,12 @@
 let g:pathogen_disabled=[]
 
 call add(g:pathogen_disabled, 'YouCompleteMe')
-call add(g:pathogen_disabled, 'vim-cute-python')
 call add(g:pathogen_disabled, 'vim-autoread')
 
 " ctrlp.vim
 " delimitMate
 " gundo.vim
+" kotlin-vim
 " nerdcommenter
 " nerdtree
 " syntastic
@@ -62,6 +62,7 @@ call add(g:pathogen_disabled, 'vim-autoread')
 " vim-endwise
 " vim-fugitive
 " vim-gitgutter
+" vim-go
 " vim-nerdtree-tabs
 " vim-opencl
 " vim-slime
@@ -179,8 +180,8 @@ function SetTexOptions()
     set smartindent
 endfunction
 
-autocmd FileType c,cpp,opencl,asm call SetCOptions()
-function SetCOptions()
+autocmd FileType c,cpp,opencl,asm,go call SetCFamilyOptions()
+function SetCFamilyOptions()
     set noexpandtab
     set copyindent
     set preserveindent
@@ -189,10 +190,25 @@ function SetCOptions()
     set tabstop=8
 endfunction
 
+autocmd Filetype c call SetCOptions()
+function SetCOptions()
+    " compile and run on <CR>
+    nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
+endfunction
+
+autocmd Filetype cpp call SetCPPOptions()
+function SetCPPOptions()
+    " compile and run on <CR>
+    nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+endfunction
+
 autocmd Filetype python call SetPythonOptions()
 function SetPythonOptions()
     " don't insert extra spaces
     let g:NERDSpaceDelims=0
+
+    " run on <CR>
+    nnoremap <CR> :!python3 %<CR>
 endfunction
 
 autocmd FileType ocaml call SetOcamlOptions()
@@ -207,6 +223,9 @@ function SetShellOptions()
     set shiftwidth=2
     set softtabstop=2
     set expandtab
+
+    " run on <CR>
+    nnoremap <CR> :!./%<CR>
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -229,7 +248,7 @@ syntax enable
     " set background=light
 " endif
 
-set background=dark
+set background=light
 set t_Co=256
 colorscheme solarized
 
@@ -286,6 +305,10 @@ let g:ctrlp_cmd = 'CtrlPTag'
 " dont sort tagbar items by name alphabetically
 let g:tagbar_sort=0
 
+" better whitelist blacklist
+let g:better_whitespace_filetypes_blacklist = [
+        \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help']
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GUI settings
 set guifont=Hack:h13
@@ -304,8 +327,6 @@ set guioptions=
 " set mapleader to the spacebar
 let mapleader=" "
 
-nnoremap <leader>d dd
-
 nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :GundoToggle<CR>
 nnoremap <F6> :NERDTreeToggle<CR>
@@ -321,11 +342,11 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " shift-Enter enters a newline without enter insert mode
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
+nnoremap <S-CR> O<Esc>
+nnoremap <leader><CR> o<Esc>
 
 " <leader>-Tab inserts a real tab even when expandtab is on
-:nnoremap <leader><Tab> i<C-V><Tab><Esc>
+nnoremap <leader><Tab> i<C-V><Tab><Esc>
 
 " let j and k move up and down lines that have been wrapped
 map j gj
