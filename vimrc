@@ -52,6 +52,7 @@ call add(g:pathogen_disabled, 'vim-autoread')
 " tabline.vim
 " tagbar
 " vim-airline
+" vim-airline-themes
 " vim-apl
 " vim-autoread
 " vim-better-whitespace
@@ -153,6 +154,9 @@ set magic
 " don't highlight matching parentheses
 let g:loaded_matchparen=1
 
+" disable auditory bell
+set visualbell t_vb=
+
 " :W sudo saves file
 " command W silent w !sudo tee % > /dev/null
 
@@ -196,6 +200,12 @@ function SetCOptions()
     nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
 endfunction
 
+autocmd Filetype go call SetGoOptions()
+function SetGoOptions()
+    " go run on <CR>
+    nnoremap <CR> :GoRun<CR>
+endfunction
+
 autocmd Filetype cpp call SetCPPOptions()
 function SetCPPOptions()
     " compile and run on <CR>
@@ -234,8 +244,21 @@ endfunction
 " always show airline statusbar
 set laststatus=2
 
-" turn on rainbow colored braces
-let g:rainbow_active=1
+" use powerline font for airline
+let g:airline_powerline_fonts = 1
+
+" powerline solarized dark
+" let g:airline_solarized_bg='dark'
+
+" switch airline status immediately when leaving insert mode
+set ttimeoutlen=10
+
+" get rid of error section at the end
+let g:airline_skip_empty_sections=1
+
+" remove three horizontal bar symbol
+" let g:airline_symbols = get(g:, 'airline_symbols', {})
+" let g:airline_symbols.linenr = ''
 
 " solarized
 syntax enable
@@ -308,18 +331,6 @@ let g:tagbar_sort=0
 " better whitelist blacklist
 let g:better_whitespace_filetypes_blacklist = [
         \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help']
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GUI settings
-set guifont=Hack:h13
-
-if has('gui_running')
-    autocmd VimLeave * :!(open -a iTerm)
-    autocmd VimEnter * :set fu
-endif
-
-" Remove scrollbars
-set guioptions=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
