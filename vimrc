@@ -1,6 +1,5 @@
 " Davey Hughes' vimrc
 "
-" Feburary 5, 2017
 " davidralphhughes@college.harvard.edu
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -34,13 +33,10 @@
 " 79th column. This is so the newline character happens on the 80th column.
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Loads pathogen like a regular plugin
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+
 " List of plugins (pathogen)
-
-" To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled=[]
-
-" call add(g:pathogen_disabled, 'YouCompleteMe')
-call add(g:pathogen_disabled, 'vim-autoread')
 
 " ctrlp.vim
 " delimitMate
@@ -66,12 +62,19 @@ call add(g:pathogen_disabled, 'vim-autoread')
 " vim-go
 " vim-nerdtree-tabs
 " vim-opencl
+" vim-pathogen
 " vim-slime
 " vim-speeddating
 " vim-surround
 " vim-unimpaired
 " vimtex
 " YouCompleteMe
+
+" To disable a plugin, add it's bundle name to the following list
+let g:pathogen_disabled=[]
+
+" call add(g:pathogen_disabled, 'YouCompleteMe')
+call add(g:pathogen_disabled, 'vim-autoread')
 
 set nocp
 execute pathogen#infect()
