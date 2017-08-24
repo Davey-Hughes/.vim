@@ -108,13 +108,6 @@ set fileencoding=utf-8
 set number
 set relativenumber
 
-" Use this if relative number makes GUI vim slower
-" if has('gui_running')
-    " set guioptions-=T
-" else
-    " set relativenumber
-" endif
-
 " highlight the line the cursor is on
 set cursorline
 
