@@ -40,13 +40,13 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " ctrlp.vim
 " delimitMate
-" gundo.vim
 " kotlin-vim
 " nerdcommenter
 " nerdtree
 " syntastic
 " tabline.vim
 " tagbar
+" undotree
 " vim-airline
 " vim-airline-themes
 " vim-apl
@@ -74,6 +74,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 let g:pathogen_disabled=[]
 
 " call add(g:pathogen_disabled, 'YouCompleteMe')
+" call add(g:pathogen_disabled, 'nerdtree')
 call add(g:pathogen_disabled, 'vim-autoread')
 
 set nocp
@@ -267,7 +268,7 @@ syntax enable
     " set background=light
 " endif
 
-set background=light
+set background=dark
 set t_Co=256
 colorscheme solarized
 
@@ -335,7 +336,7 @@ let g:better_whitespace_filetypes_blacklist = [
 let mapleader=" "
 
 nnoremap <F4> :StripWhitespace<CR>
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <F5> :UndotreeToggle<CR>
 nnoremap <F6> :NERDTreeToggle<CR>
 nnoremap <F8> :TagbarToggle<CR>
 nnoremap <leader>, :TagbarOpenAutoClose<CR>
