@@ -136,9 +136,6 @@ set ignorecase
 " when searching try to be smart about cases
 set smartcase
 
-" highlight search results
-set hlsearch
-
 " makes search act like search in modern browsers
 set incsearch
 
@@ -273,11 +270,11 @@ set t_Co=256
 colorscheme solarized
 
 " location of ycm_extra_conf
-let g:ycm_global_ycm_extra_conf="~/.vim/.config/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf='~/.vim/.config/.ycm_extra_conf.py'
 
 " merlin settings
 let g:opamshare=substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
+execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 let maplocalleader="\\"
 let g:syntastic_ocaml_checkers=['merlin']
 
@@ -285,7 +282,7 @@ let g:syntastic_ocaml_checkers=['merlin']
 set rtp+=/home/ubuntu/cs51/ocp-indent-vim
 
 " vim slime use tmux
-let g:slime_target="tmux"
+let g:slime_target='tmux'
 
 " NERDTree don't open automatically in GUI
 let g:nerdtree_tabs_open_on_gui_startup = 0
@@ -329,11 +326,14 @@ let g:tagbar_sort=0
 let g:better_whitespace_filetypes_blacklist = [
         \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help']
 
+" vim linter
+let g:syntastic_vim_checkers = ['vint']
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
 
 " set mapleader to the spacebar
-let mapleader=" "
+let mapleader=' '
 
 nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :UndotreeToggle<CR>
@@ -413,7 +413,7 @@ set directory+=.
 " viminfo stores the the state of your previous editing session
 set viminfo+=n~/.vim/viminfo
 
-if exists("+undofile")
+if exists('+undofile')
   " undofile - This allows you to use undos after exiting and restarting
   " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
   " :help undo-persistence
@@ -430,7 +430,7 @@ endif
 " trim blank lines at end of file on write
 
 function TrimEndLines()
-    let save_cursor = getpos(".")
+    let save_cursor = getpos('.')
     :silent! %s#\($\n\s*\)\+\%$##
     call setpos('.', save_cursor)
 endfunction
@@ -447,11 +447,11 @@ match OverLength /\%>81v/
 fun! s:LongLineHLToggle()
   if !exists('w:longlinehl')
     let w:longlinehl = matchadd('ErrorMsg', '.\%>80v', 0)
-    echo "Long lines highlighted"
+    echo 'Long lines highlighted'
   else
     call matchdelete(w:longlinehl)
     unl w:longlinehl
-    echo "Long lines unhighlighted"
+    echo 'Long lines unhighlighted'
   endif
 endfunction
 
