@@ -157,80 +157,91 @@ set visualbell t_vb=
 " when editing a file, always jump to the last known cursor position.
 " Don't do it when the position is invalid or when inside an event handler
 " (happens when dropping a file on gvim).
-autocmd BufReadPost *
-    \ if line("'\"") >= 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+augroup cursorpos
+    autocmd!
+    autocmd BufReadPost *
+        \ if line("'\"") >= 1 && line("'\"") <= line("$") |
+        \   exe "normal! g`\"" |
+        \ endif
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " filetype specific settings
 
-autocmd FileType text call SetTextOptions()
-function SetTextOptions()
-    set textwidth=79
-    set smartindent
-    set noautoread
-endfunction
+augroup ftcommands
+    autocmd!
+    autocmd FileType text call SetTextOptions()
+    function SetTextOptions()
+        set textwidth=79
+        set smartindent
+        set noautoread
+    endfunction
 
-autocmd FileType tex call SetTexOptions()
-function SetTexOptions()
-    set textwidth=79
-    set smartindent
-endfunction
+    autocmd FileType tex call SetTexOptions()
+    function SetTexOptions()
+        set textwidth=79
+        set smartindent
+    endfunction
 
-autocmd FileType c,cpp,opencl,asm,go call SetCFamilyOptions()
-function SetCFamilyOptions()
-    set noexpandtab
-    set copyindent
-    set preserveindent
-    set softtabstop=0
-    set shiftwidth=8
-    set tabstop=8
-endfunction
+    autocmd FileType c,cpp,opencl,asm,go call SetCFamilyOptions()
+    function SetCFamilyOptions()
+        set noexpandtab
+        set copyindent
+        set preserveindent
+        set softtabstop=0
+        set shiftwidth=8
+        set tabstop=8
+    endfunction
 
-autocmd Filetype c call SetCOptions()
-function SetCOptions()
-    " compile and run on <CR>
-    nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
-endfunction
+    autocmd Filetype c call SetCOptions()
+    function SetCOptions()
+        " compile and run on <CR>
+        nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
+    endfunction
 
-autocmd Filetype go call SetGoOptions()
-function SetGoOptions()
-    " go run on <CR>
-    nnoremap <CR> :GoRun<CR>
-endfunction
+    autocmd Filetype go call SetGoOptions()
+    function SetGoOptions()
+        " go run on <CR>
+        nnoremap <CR> :GoRun<CR>
+    endfunction
 
-autocmd Filetype cpp call SetCPPOptions()
-function SetCPPOptions()
-    " compile and run on <CR>
-    nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
-endfunction
+    autocmd Filetype cpp call SetCPPOptions()
+    function SetCPPOptions()
+        " compile and run on <CR>
+        nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+    endfunction
 
-autocmd Filetype python call SetPythonOptions()
-function SetPythonOptions()
-    " don't insert extra spaces
-    let g:NERDSpaceDelims=0
+    autocmd Filetype python call SetPythonOptions()
+    function SetPythonOptions()
+        " don't insert extra spaces
+        let g:NERDSpaceDelims=0
 
-    " run on <CR>
-    nnoremap <CR> :!python3 %<CR>
-endfunction
+        set tabstop=4
+        set shiftwidth=4
+        set softtabstop=4
+        set expandtab
 
-autocmd FileType ocaml call SetOcamlOptions()
-function SetOcamlOptions()
-    syntax on
-    let b:delimitMate_quotes = "\" `"
-endfunction
+        " run on <CR>
+        nnoremap <CR> :!python3 %<CR>
+    endfunction
 
-autocmd FileType sh call SetShellOptions()
-function SetShellOptions()
-    set tabstop=2
-    set shiftwidth=2
-    set softtabstop=2
-    set expandtab
+    autocmd FileType ocaml call SetOcamlOptions()
+    function SetOcamlOptions()
+        syntax on
+        let b:delimitMate_quotes = "\" `"
+    endfunction
 
-    " run on <CR>
-    nnoremap <CR> :!./%<CR>
-endfunction
+    autocmd FileType sh call SetShellOptions()
+    function SetShellOptions()
+        set tabstop=2
+        set shiftwidth=2
+        set softtabstop=2
+        set expandtab
+
+        " run on <CR>
+        nnoremap <CR> :!./%<CR>
+    endfunction
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
