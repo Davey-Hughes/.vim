@@ -38,8 +38,8 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " List of plugins (pathogen)
 
+" auto-pairs
 " ctrlp.vim
-" delimitMate
 " kotlin-vim
 " nerdcommenter
 " nerdtree
@@ -446,7 +446,11 @@ function TrimEndLines()
     call setpos('.', save_cursor)
 endfunction
 
-autocmd BufWritePre * call TrimEndLines()
+augroup onwrite
+    autocmd!
+    autocmd BufWritePre * call TrimEndLines()
+    autocmd BufWritePre * :StripWhitespace
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 80 character line guides
