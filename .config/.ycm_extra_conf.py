@@ -68,6 +68,7 @@ flags = [
 
     # Local projects because YCM's settings suck
     '-I', '/Users/davey/cs165/src/include',
+    '-I', '/home/davey/cs165/src/include',
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
