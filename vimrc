@@ -73,8 +73,8 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled=[]
 
-" call add(g:pathogen_disabled, 'YouCompleteMe')
-" call add(g:pathogen_disabled, 'nerdtree')
+call add(g:pathogen_disabled, 'YouCompleteMe')
+call add(g:pathogen_disabled, 'gruvbox')
 call add(g:pathogen_disabled, 'vim-autoread')
 
 set nocp
@@ -241,6 +241,12 @@ augroup ftcommands
         " run on <CR>
         nnoremap <CR> :!./%<CR>
     endfunction
+
+    autocmd FileType javascript call SetNodeOptions()
+    function SetNodeOptions()
+        nnoremap <CR> :!node %<CR>
+    endfunction
+
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -265,7 +271,7 @@ let g:airline_skip_empty_sections=1
 " let g:airline_symbols = get(g:, 'airline_symbols', {})
 " let g:airline_symbols.linenr = ''
 
-" solarized
+" colorscheme
 syntax enable
 
 " try this if the terminal emulator is being weird with the colors
@@ -276,6 +282,9 @@ syntax enable
     " set background=light
 " endif
 
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_light='soft'
+
 set background=dark
 set t_Co=256
 colorscheme solarized
@@ -284,10 +293,10 @@ colorscheme solarized
 let g:ycm_global_ycm_extra_conf='~/.vim/.config/.ycm_extra_conf.py'
 
 " merlin settings
-let g:opamshare=substitute(system('opam config var share'),'\n$','','''')
-execute 'set rtp+=' . g:opamshare . '/merlin/vim'
-let maplocalleader="\\"
-let g:syntastic_ocaml_checkers=['merlin']
+" let g:opamshare=substitute(system('opam config var share'),'\n$','','''')
+" execute 'set rtp+=' . g:opamshare . '/merlin/vim'
+" let maplocalleader="\\"
+" let g:syntastic_ocaml_checkers=['merlin']
 
 " ocp indent
 set rtp+=/home/ubuntu/cs51/ocp-indent-vim
