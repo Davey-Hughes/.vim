@@ -165,6 +165,13 @@ augroup cursorpos
         \ endif
 augroup END
 
+" running on macos
+if substitute(system('uname'), '\n', '', '') ==? 'Darwin'
+    let g:Darwin=1
+else
+    let g:Darwin=0
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " filetype specific settings
 
@@ -196,7 +203,11 @@ augroup ftcommands
     autocmd Filetype c call SetCOptions()
     function SetCOptions()
         " compile and run on <CR>
-        nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
+        if g:Darwin
+            nnoremap <CR> :!gcc-7 -O3 -o %:r % && ./%:r<CR>
+        else
+            nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
+        endif
     endfunction
 
     autocmd Filetype go call SetGoOptions()
@@ -208,7 +219,11 @@ augroup ftcommands
     autocmd Filetype cpp call SetCPPOptions()
     function SetCPPOptions()
         " compile and run on <CR>
-        nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+        if g:Darwin
+            nnoremap <CR> :!g++-7 -O3 -o %:r % && ./%:r<CR>
+        else
+            nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+        endif
     endfunction
 
     autocmd Filetype python call SetPythonOptions()
@@ -348,6 +363,11 @@ let g:better_whitespace_filetypes_blacklist = [
 
 " vim linter
 let g:syntastic_vim_checkers = ['vint']
+
+" gcc version for MacOS
+if g:Darwin
+    let g:syntastic_c_compiler='gcc-7'
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
