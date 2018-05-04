@@ -38,8 +38,8 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " List of plugins (pathogen)
 
-" auto-pairs
 " ctrlp.vim
+" delimitMate
 " kotlin-vim
 " nerdcommenter
 " nerdtree
@@ -203,11 +203,21 @@ augroup ftcommands
     autocmd Filetype c call SetCOptions()
     function SetCOptions()
         " compile and run on <CR>
-        if g:Darwin
-            nnoremap <CR> :!gcc-7 -O3 -o %:r % && ./%:r<CR>
-        else
+        " MacOS
+        " if g:Darwin
+            " nnoremap <CR> :!gcc-7 -O3 -o %:r % && ./%:r<CR>
+        " else
+            " nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
+        " endif
+        function! FromCSource()
             nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
-        endif
+        endfunction
+
+        function! FromCMakefile()
+            nnoremap <CR> :make<CR> :!./%<<CR>
+        endfunction
+
+        call FromCSource()
     endfunction
 
     autocmd Filetype go call SetGoOptions()
@@ -219,11 +229,22 @@ augroup ftcommands
     autocmd Filetype cpp call SetCPPOptions()
     function SetCPPOptions()
         " compile and run on <CR>
-        if g:Darwin
-            nnoremap <CR> :!g++-7 -O3 -o %:r % && ./%:r<CR>
-        else
+        " MacOS
+        " if g:Darwin
+            " nnoremap <CR> :!g++-7 -O3 -o %:r % && ./%:r<CR>
+        " else
+            " nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+        " endif
+        function! FromCPPSource()
             nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
-        endif
+        endfunction
+
+        function! FromCPPMakefile()
+            nnoremap <CR> :make<CR> :!./%<<CR>
+        endfunction
+
+        call FromCPPSource()
+
     endfunction
 
     autocmd Filetype python call SetPythonOptions()
@@ -377,6 +398,18 @@ let g:syntastic_vim_checkers = ['vint']
 if g:Darwin
     let g:syntastic_c_compiler='gcc-7'
 endif
+
+let g:delimitMate_expand_cr = 1
+
+" delimitmate temp workaround
+imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
+
+function! YcmOnDeleteChar()
+  if pumvisible()
+    return "\<C-y>"
+  endif
+  return ""
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
