@@ -93,14 +93,6 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-" use hard tabs
-" set noexpandtab
-" set copyindent
-" set preserveindent
-" set softtabstop=0
-" set shiftwidth=8
-" set tabstop=8
-
 " character encoding
 set encoding=utf-8
 set fileencoding=utf-8
@@ -161,7 +153,7 @@ augroup cursorpos
     autocmd!
     autocmd BufReadPost *
         \ if line("'\"") >= 1 && line("'\"") <= line("$") |
-        \   exe "normal! g`\"" |
+        \     exe "normal! g`\"" |
         \ endif
 augroup END
 
@@ -173,135 +165,13 @@ else
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" filetype specific settings
-
-augroup ftcommands
-    autocmd!
-    autocmd FileType text call SetTextOptions()
-    function SetTextOptions()
-        set textwidth=79
-        set smartindent
-        set noautoread
-    endfunction
-
-    autocmd FileType tex call SetTexOptions()
-    function SetTexOptions()
-        set textwidth=79
-        set smartindent
-    endfunction
-
-    autocmd FileType c,cpp,opencl,asm,go call SetCFamilyOptions()
-    function SetCFamilyOptions()
-        set noexpandtab
-        set copyindent
-        set preserveindent
-        set softtabstop=0
-        set shiftwidth=8
-        set tabstop=8
-    endfunction
-
-    autocmd Filetype c call SetCOptions()
-    function SetCOptions()
-        " compile and run on <CR>
-        " MacOS
-        " if g:Darwin
-            " nnoremap <CR> :!gcc-7 -O3 -o %:r % && ./%:r<CR>
-        " else
-            " nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
-        " endif
-        function! FromCSource()
-            nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
-        endfunction
-
-        function! FromCMakefile()
-            nnoremap <CR> :make<CR> :!./%<<CR>
-        endfunction
-
-        call FromCSource()
-    endfunction
-
-    autocmd Filetype go call SetGoOptions()
-    function SetGoOptions()
-        " go run on <CR>
-        nnoremap <CR> :GoRun<CR>
-    endfunction
-
-    autocmd Filetype cpp call SetCPPOptions()
-    function SetCPPOptions()
-        " compile and run on <CR>
-        " MacOS
-        " if g:Darwin
-            " nnoremap <CR> :!g++-7 -O3 -o %:r % && ./%:r<CR>
-        " else
-            " nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
-        " endif
-        function! FromCPPSource()
-            nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
-        endfunction
-
-        function! FromCPPMakefile()
-            nnoremap <CR> :make<CR> :!./%<<CR>
-        endfunction
-
-        call FromCPPSource()
-
-    endfunction
-
-    autocmd Filetype python call SetPythonOptions()
-    function SetPythonOptions()
-        " don't insert extra spaces
-        let g:NERDSpaceDelims=0
-
-        set tabstop=4
-        set shiftwidth=4
-        set softtabstop=4
-        set expandtab
-
-        " run on <CR>
-        nnoremap <CR> :!python3 %<CR>
-    endfunction
-
-    autocmd FileType ocaml call SetOcamlOptions()
-    function SetOcamlOptions()
-        syntax on
-        let b:delimitMate_quotes = "\" `"
-    endfunction
-
-    autocmd FileType sh call SetShellOptions()
-    function SetShellOptions()
-        set tabstop=2
-        set shiftwidth=2
-        set softtabstop=2
-        set expandtab
-
-        " run on <CR>
-        nnoremap <CR> :!./%<CR>
-    endfunction
-
-    autocmd FileType javascript call SetNodeOptions()
-    function SetNodeOptions()
-        nnoremap <CR> :!node %<CR>
-    endfunction
-
-augroup END
-
-augroup templates
-    " c files
-    autocmd BufNewFile *.c 0r $HOME/.vim/templates/skeleton.c
-
-    " c header files
-    autocmd BufNewFile *.h 0r $HOME/.vim/templates/skeleton.h
-    autocmd BufNewFile *.h %substitute#\[:FILENAME:\]#\=toupper(expand('%:r'))
-augroup END
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
 
 " always show airline statusbar
 set laststatus=2
 
 " use powerline font for airline
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts=1
 
 " powerline solarized dark
 " let g:airline_solarized_bg='dark'
@@ -350,7 +220,7 @@ set rtp+=/home/ubuntu/cs51/ocp-indent-vim
 let g:slime_target='tmux'
 
 " NERDTree don't open automatically in GUI
-let g:nerdtree_tabs_open_on_gui_startup = 0
+let g:nerdtree_tabs_open_on_gui_startup=0
 
 " NERDCommenter add space
 let g:NERDSpaceDelims=1
@@ -358,23 +228,28 @@ let g:NERDSpaceDelims=1
 " NERDCommenter change comment style
 let g:NERDComAltDelims=1
 
+" NERDCommenter custom comment styles
+let g:NERDCustomDelimiters={
+    \ 'python': {'left': '#', 'leftAlt': '#'}
+\ }
+
 " vimtex disable verbose warnings
 let g:vimtex_latexmk_callback=0
 
 " YouCompleteMe autocomplete for .tex files
 if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {}
-  endif
-  let g:ycm_semantic_triggers.tex = [
-        \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
-        \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
-        \ 're!\\hyperref\[[^]]*',
-        \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
-        \ 're!\\(include(only)?|input){[^}]*',
-        \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
-        \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
-        \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
-        \ ]
+    let g:ycm_semantic_triggers={}
+endif
+let g:ycm_semantic_triggers.tex=[
+    \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
+    \ 're!\\hyperref\[[^]]*',
+    \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
+    \ 're!\\(include(only)?|input){[^}]*',
+    \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
+    \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
+    \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
+\ ]
 
 " YouCompleteMe close preview window after completion
 let g:ycm_autoclose_preview_window_after_insertion=1
@@ -388,27 +263,28 @@ let g:ctrlp_cmd = 'CtrlPTag'
 let g:tagbar_sort=0
 
 " better whitelist blacklist
-let g:better_whitespace_filetypes_blacklist = [
-        \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help']
+let g:better_whitespace_filetypes_blacklist=[
+    \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help'
+\ ]
 
 " vim linter
-let g:syntastic_vim_checkers = ['vint']
+let g:syntastic_vim_checkers=['vint']
 
 " gcc version for MacOS
 if g:Darwin
     let g:syntastic_c_compiler='gcc-7'
 endif
 
-let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_cr=1
 
 " delimitmate temp workaround
 imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
 
 function! YcmOnDeleteChar()
-  if pumvisible()
-    return "\<C-y>"
-  endif
-  return ""
+    if pumvisible()
+        return "\<C-y>"
+    endif
+    return ''
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -447,9 +323,9 @@ map k gk
 
 " Map key to toggle opt
 function MapToggle(key, opt)
-  let cmd=':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-  exec 'nnoremap '.a:key.' '.cmd
-  exec 'inoremap '.a:key." \<C-O>".cmd
+    let cmd=':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+    exec 'nnoremap '.a:key.' '.cmd
+    exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
@@ -485,7 +361,7 @@ set backup
 " If you have .vim-swap in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/swap, ~/tmp or .
 if isdirectory($HOME . '/.vim/swap') == 0
-  :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+    :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
 endif
 set directory=./.vim-swap//
 set directory+=~/.vim/swap//
@@ -496,32 +372,32 @@ set directory+=.
 set viminfo+=n~/.vim/viminfo
 
 if exists('+undofile')
-  " undofile - This allows you to use undos after exiting and restarting
-  " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
-  " :help undo-persistence
-  " This is only present in 7.3+
-  if isdirectory($HOME . '/.vim/undo') == 0
-    :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
-  endif
-  set undodir=./.vim-undo//
-  set undodir+=~/.vim/undo//
-  set undofile
+    " undofile - This allows you to use undos after exiting and restarting
+    " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
+    " :help undo-persistence
+    " This is only present in 7.3+
+    if isdirectory($HOME . '/.vim/undo') == 0
+        :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+    endif
+    set undodir=./.vim-undo//
+    set undodir+=~/.vim/undo//
+    set undofile
 endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " save the previous search and restore after executing the command
 function! SafeSearchCommand(theCommand)
-    let search = @/
+    let search=@/
     execute a:theCommand
-    let @/ = search
+    let @/=search
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " trim blank lines at end of file on write
 
 function TrimEndLines()
-    let save_cursor = getpos('.')
+    let save_cursor=getpos('.')
     :silent! call SafeSearchCommand('%substitute#\($\n\s*\)\+\%$##')
     call setpos('.', save_cursor)
 endfunction
@@ -539,15 +415,15 @@ augroup END
 nnoremap <Leader>H :call<SID>LongLineHLToggle()<cr>
 hi OverLength ctermbg=none cterm=none
 match OverLength /\%>81v/
-fun! s:LongLineHLToggle()
-  if !exists('w:longlinehl')
-    let w:longlinehl = matchadd('ErrorMsg', '.\%>80v', 0)
-    echo 'Long lines highlighted'
-  else
-    call matchdelete(w:longlinehl)
-    unl w:longlinehl
-    echo 'Long lines unhighlighted'
-  endif
+function! s:LongLineHLToggle()
+    if !exists('w:longlinehl')
+        let w:longlinehl = matchadd('ErrorMsg', '.\%>80v', 0)
+        echo 'Long lines highlighted'
+    else
+        call matchdelete(w:longlinehl)
+        unl w:longlinehl
+        echo 'Long lines unhighlighted'
+    endif
 endfunction
 
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
@@ -555,9 +431,9 @@ highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 " toggle 80 character wrap guide
 nnoremap <Leader>h :call<SID>ToggleWrapGuide()<cr>
 fun! s:ToggleWrapGuide()
-  if &colorcolumn
-    set colorcolumn=
-  else
-    set colorcolumn=80
-  endif
+    if &colorcolumn
+        set colorcolumn=
+    else
+        set colorcolumn=80
+    endif
 endfunction
