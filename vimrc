@@ -264,6 +264,15 @@ augroup ftcommands
 
 augroup END
 
+augroup templates
+    " c files
+    autocmd BufNewFile *.c 0r $HOME/.vim/templates/skeleton.c
+
+    " c header files
+    autocmd BufNewFile *.h 0r $HOME/.vim/templates/skeleton.h
+    autocmd BufNewFile *.h %substitute#\[:FILENAME:\]#\=toupper(expand('%:r'))
+augroup END
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
 
@@ -466,12 +475,21 @@ if exists('+undofile')
   set undofile
 endif
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" save the previous search and restore after executing the command
+function! SafeSearchCommand(theCommand)
+    let search = @/
+    execute a:theCommand
+    let @/ = search
+endfunction
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " trim blank lines at end of file on write
 
 function TrimEndLines()
     let save_cursor = getpos('.')
-    :silent! %s#\($\n\s*\)\+\%$##
+    :silent! call SafeSearchCommand('%substitute#\($\n\s*\)\+\%$##')
     call setpos('.', save_cursor)
 endfunction
 
