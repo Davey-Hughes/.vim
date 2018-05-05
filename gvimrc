@@ -5,13 +5,13 @@
 set guifont=Hack:h13
 
 augroup guicommands
-    autocmd VimLeave * call ExitMacVim()
-    function ExitMacVim()
-        if &fullscreen
-            set fu!
-        endif
-        :!open -a iTerm
-    endfunction
+    " autocmd VimLeave * call ExitMacVim()
+    " function ExitMacVim()
+        " if &fullscreen
+            " set fu!
+        " endif
+        " :!open -a iTerm
+    " endfunction
 
     " autocmd VimEnter * call EnterMacVim()
     " function EnterMacVim()
