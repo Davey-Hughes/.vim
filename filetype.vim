@@ -119,6 +119,26 @@ augroup templates
     autocmd BufNewFile *.c 0r $HOME/.vim/templates/skeleton.c
 
     " c header files
-    autocmd BufNewFile *.h 0r $HOME/.vim/templates/skeleton.h
-    autocmd BufNewFile *.h %substitute#\[:FILENAME:\]#\=toupper(expand('%:r'))
+    autocmd BufNewFile *.h
+        \ 0r $HOME/.vim/templates/skeleton.h |
+        \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:r'))
+
+    " cpp files
+    autocmd BufNewFile *.cpp 0r $HOME/.vim/templates/skeleton.cpp
+
+    " python files
+    autocmd BufNewFile *.py 0r $HOME/.vim/templates/skeleton.py
+
+    " Move cursor to [:CURSOR:] in file
+    autocmd BufNewFile * call MoveCursor()
 augroup END
+
+function MoveCursor()
+    normal gg
+    if (search('\[:CURSOR:\]', 'W'))
+        let l:lineno = line('.')
+        let l:colno = col('.')
+        substitute/\[:CURSOR:\]//
+        call cursor(l:lineno, l:colno)
+    endif
+endfunction
