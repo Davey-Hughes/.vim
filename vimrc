@@ -38,8 +38,12 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " List of plugins (pathogen)
 
+" VimCompletesMe
+" YouCompleteMe
+" codi.vim
 " ctrlp.vim
 " delimitMate
+" gruvbox
 " kotlin-vim
 " nerdcommenter
 " nerdtree
@@ -53,6 +57,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-autoread
 " vim-better-whitespace
 " vim-bufferline
+" vim-coffee-script
 " vim-colors-solarized
 " vim-cute-python
 " vim-dispatch
@@ -68,12 +73,14 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-surround
 " vim-unimpaired
 " vimtex
-" YouCompleteMe
 
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled=[]
 
+" Only use one completion plugin at a time
 call add(g:pathogen_disabled, 'YouCompleteMe')
+" call add(g:pathogen_disabled, 'VimCompletesMe')
+
 call add(g:pathogen_disabled, 'gruvbox')
 call add(g:pathogen_disabled, 'vim-autoread')
 
@@ -164,6 +171,11 @@ else
     let g:Darwin=0
 endif
 
+" Automatically close the documentation window when a selection is made
+augroup completion
+    autocmd CompleteDone * pclose
+augroup END
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
 
@@ -234,7 +246,7 @@ let g:NERDCustomDelimiters={
 \ }
 
 " vimtex disable verbose warnings
-let g:vimtex_latexmk_callback=0
+" let g:vimtex_latexmk_callback=0
 
 " YouCompleteMe autocomplete for .tex files
 if !exists('g:ycm_semantic_triggers')
@@ -264,7 +276,7 @@ let g:tagbar_sort=0
 
 " better whitelist blacklist
 let g:better_whitespace_filetypes_blacklist=[
-    \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help'
+    \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'codi'
 \ ]
 
 " vim linter
@@ -288,7 +300,18 @@ function! YcmOnDeleteChar()
 endfunction
 
 " error notification for vimtex
-let g:vimtex_compiler_latexmk = {'callback' : 0}
+let g:vimtex_compiler_latexmk={'callback' : 0}
+
+" better whitespace settings
+let g:better_whitespace_enabled=0
+let g:strip_whitespace_on_save=1
+
+" codi
+let g:codi#interpreters={
+    \ 'python': {
+        \'bin': 'python3'
+    \ }
+\ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
@@ -408,7 +431,6 @@ endfunction
 augroup onwrite
     autocmd!
     autocmd BufWritePre * call TrimEndLines()
-    autocmd BufWritePre * :StripWhitespace
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
