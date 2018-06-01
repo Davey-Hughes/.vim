@@ -42,8 +42,8 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " YouCompleteMe
 " ale
 " codi.vim
-" ctrlp.vim
 " delimitMate
+" fzf.vim
 " gruvbox
 " kotlin-vim
 " nerdcommenter
@@ -83,6 +83,7 @@ call add(g:pathogen_disabled, 'YouCompleteMe')
 
 call add(g:pathogen_disabled, 'gruvbox')
 call add(g:pathogen_disabled, 'vim-autoread')
+" call add(g:pathogen_disabled, 'fzf.vim')
 
 set nocp
 execute pathogen#infect()
@@ -265,11 +266,6 @@ let g:ycm_semantic_triggers.tex=[
 " YouCompleteMe close preview window after completion
 let g:ycm_autoclose_preview_window_after_insertion=1
 
-" ctrlp extensions
-let g:ctrlp_extensions = ['tag', 'buffertag']
-let g:ctrlp_switch_buffer='ETVH'
-let g:ctrlp_cmd = 'CtrlPTag'
-
 " dont sort tagbar items by name alphabetically
 let g:tagbar_sort=0
 
@@ -303,6 +299,9 @@ let g:codi#interpreters={
         \'bin': 'python3'
     \ }
 \ }
+
+" fzf
+set rtp+=/usr/local/opt/fzf
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
