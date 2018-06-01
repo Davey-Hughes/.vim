@@ -61,9 +61,6 @@
 [submodule "bundle/vim-opencl"]
 	path = bundle/vim-opencl
 	url = https://github.com/brgmnn/vim-opencl.git
-[submodule "bundle/vim-autoread"]
-	path = bundle/vim-autoread
-	url = https://github.com/djoshea/vim-autoread.git
 [submodule "bundle/vim-cute-python"]
 	path = bundle/vim-cute-python
 	url = https://github.com/ehamberg/vim-cute-python.git
