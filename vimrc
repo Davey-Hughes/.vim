@@ -121,7 +121,7 @@ set splitbelow
 set splitright
 
 " set scrolling to start at 7 lines from the top and bottom of buffer
-set so=7
+set scrolloff=7
 
 " set amount of entries to save in history
 set history=10000
@@ -218,14 +218,6 @@ colorscheme solarized
 
 " location of ycm_extra_conf
 let g:ycm_global_ycm_extra_conf='~/.vim/.config/.ycm_extra_conf.py'
-
-" merlin settings
-" let g:opamshare=substitute(system('opam config var share'),'\n$','','''')
-" execute 'set rtp+=' . g:opamshare . '/merlin/vim'
-" let maplocalleader="\\"
-
-" ocp indent
-set rtp+=/home/ubuntu/cs51/ocp-indent-vim
 
 " vim slime use tmux
 let g:slime_target='tmux'
