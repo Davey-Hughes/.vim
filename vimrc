@@ -40,6 +40,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " VimCompletesMe
 " YouCompleteMe
+" ale
 " codi.vim
 " ctrlp.vim
 " delimitMate
@@ -47,7 +48,6 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " kotlin-vim
 " nerdcommenter
 " nerdtree
-" syntastic
 " tabline.vim
 " tagbar
 " undotree
@@ -223,7 +223,6 @@ let g:ycm_global_ycm_extra_conf='~/.vim/.config/.ycm_extra_conf.py'
 " let g:opamshare=substitute(system('opam config var share'),'\n$','','''')
 " execute 'set rtp+=' . g:opamshare . '/merlin/vim'
 " let maplocalleader="\\"
-" let g:syntastic_ocaml_checkers=['merlin']
 
 " ocp indent
 set rtp+=/home/ubuntu/cs51/ocp-indent-vim
@@ -278,14 +277,6 @@ let g:tagbar_sort=0
 let g:better_whitespace_filetypes_blacklist=[
     \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'codi'
 \ ]
-
-" vim linter
-let g:syntastic_vim_checkers=['vint']
-
-" gcc version for MacOS
-if g:Darwin
-    let g:syntastic_c_compiler='gcc-7'
-endif
 
 let g:delimitMate_expand_cr=1
 
