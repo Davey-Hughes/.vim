@@ -12,11 +12,11 @@
 " python-dev, and running ./install.py --clang-completer (for c-family
 " completion). Then, uncomment the line that disables YouCompleteMe in the
 " list of plugins section.
+"
+" In cases where YouCompleteMe causes a long vim startup time, use
+" VimCompletesMe instead.
 
 " In order to get the tagbar working, install ctags.
-
-" To get the Merlin settings working for OCaml, you must install Merlin
-" through opam (opam install merlin).
 
 " vim-slime allows for easy sending of code from vim to a REPL. The way it is
 " configured here, tmux is used as the receiving terminal, and must be opened
@@ -31,6 +31,8 @@
 " The 80 character color-column specifed at the bottom of the file draws the
 " line on the 80th column, so the last non-whitespace character falls on the
 " 79th column. This is so the newline character happens on the 80th column.
+
+" fzf is required to use fzf.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Loads pathogen like a regular plugin
@@ -54,7 +56,6 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-airline
 " vim-airline-themes
 " vim-apl
-" vim-autoread
 " vim-better-whitespace
 " vim-bufferline
 " vim-coffee-script
@@ -82,8 +83,6 @@ call add(g:pathogen_disabled, 'YouCompleteMe')
 " call add(g:pathogen_disabled, 'VimCompletesMe')
 
 call add(g:pathogen_disabled, 'gruvbox')
-call add(g:pathogen_disabled, 'vim-autoread')
-" call add(g:pathogen_disabled, 'fzf.vim')
 
 execute pathogen#infect()
 
