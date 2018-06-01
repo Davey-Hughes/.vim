@@ -85,7 +85,6 @@ call add(g:pathogen_disabled, 'gruvbox')
 call add(g:pathogen_disabled, 'vim-autoread')
 " call add(g:pathogen_disabled, 'fzf.vim')
 
-set nocp
 execute pathogen#infect()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
