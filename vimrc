@@ -95,7 +95,7 @@ filetype plugin on
 filetype plugin indent on
 
 " tab settings
-set tabstop=4
+set tabstop=8
 set shiftwidth=4
 set softtabstop=4
 set expandtab
@@ -292,13 +292,13 @@ let g:codi#interpreters={
 \ }
 
 " fzf
-set rtp+=/usr/local/opt/fzf
+set runtimepath+=/usr/local/opt/fzf
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
 
 " set mapleader to the spacebar
-let mapleader=' '
+let g:mapleader=' '
 
 nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :UndotreeToggle<CR>
@@ -330,9 +330,9 @@ map k gk
 
 " Map key to toggle opt
 function MapToggle(key, opt)
-    let cmd=':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-    exec 'nnoremap '.a:key.' '.cmd
-    exec 'inoremap '.a:key." \<C-O>".cmd
+    let l:cmd=':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+    exec 'nnoremap '.a:key.' '.l:cmd
+    exec 'inoremap '.a:key." \<C-O>".l:cmd
 endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
@@ -395,18 +395,18 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " save the previous search and restore after executing the command
 function! SafeSearchCommand(theCommand)
-    let search=@/
+    let l:search=@/
     execute a:theCommand
-    let @/=search
+    let @/=l:search
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " trim blank lines at end of file on write
 
 function TrimEndLines()
-    let save_cursor=getpos('.')
+    let l:save_cursor=getpos('.')
     :silent! call SafeSearchCommand('%substitute#\($\n\s*\)\+\%$##')
-    call setpos('.', save_cursor)
+    call setpos('.', l:save_cursor)
 endfunction
 
 augroup onwrite
