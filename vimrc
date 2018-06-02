@@ -113,6 +113,7 @@ set cursorline
 " set clipboard register to the same as the computer's register
 set clipboard=unnamed
 
+" use zsh
 set shell=zsh
 
 " put new splits on the right and bottom
@@ -128,10 +129,9 @@ set history=10000
 " when using list, show all whitespace characters
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
-" ignore case when searching
+" ignore case when searching except when an uppercase letter is in the search
+" pattern
 set ignorecase
-
-" when searching try to be smart about cases
 set smartcase
 
 " makes search act like search in modern browsers
@@ -142,9 +142,6 @@ set lazyredraw
 
 " for regular expressions turn magic on
 set magic
-
-" don't highlight matching parentheses
-let g:loaded_matchparen=1
 
 " disable auditory bell
 set visualbell t_vb=
@@ -177,6 +174,10 @@ augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
+
+""" AIRLINE """
+" show ale errors in airline
+let g:airline#extensions#ale#enabled = 1
 
 " always show airline statusbar
 set laststatus=2
@@ -215,30 +216,12 @@ set background=dark
 set t_Co=256
 colorscheme solarized
 
+
+""" YOUCOMPLETEME """
 " location of ycm_extra_conf
 let g:ycm_global_ycm_extra_conf='~/.vim/.config/.ycm_extra_conf.py'
 
-" vim slime use tmux
-let g:slime_target='tmux'
-
-" NERDTree don't open automatically in GUI
-let g:nerdtree_tabs_open_on_gui_startup=0
-
-" NERDCommenter add space
-let g:NERDSpaceDelims=1
-
-" NERDCommenter change comment style
-let g:NERDComAltDelims=1
-
-" NERDCommenter custom comment styles
-let g:NERDCustomDelimiters={
-    \ 'python': {'left': '#', 'leftAlt': '#'}
-\ }
-
-" vimtex disable verbose warnings
-" let g:vimtex_latexmk_callback=0
-
-" YouCompleteMe autocomplete for .tex files
+" autocomplete for .tex files
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers={}
 endif
@@ -253,20 +236,61 @@ let g:ycm_semantic_triggers.tex=[
     \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
 \ ]
 
-" YouCompleteMe close preview window after completion
+" close preview window after completion
 let g:ycm_autoclose_preview_window_after_insertion=1
 
+""" VIM SLIME """
+" vim slime use tmux
+let g:slime_target='tmux'
+
+
+""" NERDTREE """
+" don't open automatically in GUI
+let g:nerdtree_tabs_open_on_gui_startup=0
+
+
+""" NERD COMMENTER """
+" add space
+let g:NERDSpaceDelims=1
+
+" change comment style
+let g:NERDComAltDelims=1
+
+" custom comment styles
+let g:NERDCustomDelimiters={
+    \ 'python': {'left': '#', 'leftAlt': '#'}
+\ }
+
+
+""" VIMTEX """
+" disable verbose warnings
+let g:vimtex_latexmk_callback=0
+
+" error notification
+let g:vimtex_compiler_latexmk={'callback' : 0}
+
+
+""" TAGBAR """
 " dont sort tagbar items by name alphabetically
 let g:tagbar_sort=0
 
-" better whitelist blacklist
+
+""" BETTER WHITESPACE """
+" blacklist
 let g:better_whitespace_filetypes_blacklist=[
     \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'codi'
 \ ]
 
+let g:better_whitespace_enabled=0
+let g:strip_whitespace_on_save=1
+
+
+
+""" DELIMITMATE """
+" expand carrage returns
 let g:delimitMate_expand_cr=1
 
-" delimitmate temp workaround
+" workaround
 imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
 
 function! YcmOnDeleteChar()
@@ -276,21 +300,15 @@ function! YcmOnDeleteChar()
     return ''
 endfunction
 
-" error notification for vimtex
-let g:vimtex_compiler_latexmk={'callback' : 0}
 
-" better whitespace settings
-let g:better_whitespace_enabled=0
-let g:strip_whitespace_on_save=1
-
-" codi
+""" CODI """
 let g:codi#interpreters={
     \ 'python': {
         \'bin': 'python3'
     \ }
 \ }
 
-" fzf
+""" FZF """
 set runtimepath+=/usr/local/opt/fzf
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -390,7 +408,6 @@ if exists('+undofile')
     set undofile
 endif
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " save the previous search and restore after executing the command
 function! SafeSearchCommand(theCommand)
@@ -401,7 +418,6 @@ endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " trim blank lines at end of file on write
-
 function TrimEndLines()
     let l:save_cursor=getpos('.')
     :silent! call SafeSearchCommand('%substitute#\($\n\s*\)\+\%$##')
