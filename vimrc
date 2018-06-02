@@ -239,6 +239,7 @@ let g:ycm_semantic_triggers.tex=[
 " close preview window after completion
 let g:ycm_autoclose_preview_window_after_insertion=1
 
+
 """ VIM SLIME """
 " vim slime use tmux
 let g:slime_target='tmux'
@@ -285,7 +286,6 @@ let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 
 
-
 """ DELIMITMATE """
 " expand carrage returns
 let g:delimitMate_expand_cr=1
@@ -307,6 +307,7 @@ let g:codi#interpreters={
         \'bin': 'python3'
     \ }
 \ }
+
 
 """ FZF """
 set runtimepath+=/usr/local/opt/fzf
@@ -332,10 +333,9 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " shift-Enter enters a newline without enter insert mode
-nnoremap <S-CR> O<Esc>
 nnoremap <leader><CR> o<Esc>
 
-" <leader>-Tab inserts a real tab even when expandtab is on
+" <leader><Tab> inserts a real tab even when expandtab is on
 nnoremap <leader><Tab> i<C-V><Tab><Esc>
 
 " let j and k move up and down lines that have been wrapped

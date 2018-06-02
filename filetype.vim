@@ -35,12 +35,6 @@ augroup ftcommands
     autocmd Filetype c call SetCOptions()
     function SetCOptions()
         " compile and run on <CR>
-        " MacOS
-        " if g:Darwin
-            " nnoremap <CR> :!gcc-7 -O3 -o %:r % && ./%:r<CR>
-        " else
-            " nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
-        " endif
         function! FromCSource()
             nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
         endfunction
@@ -61,12 +55,6 @@ augroup ftcommands
     autocmd Filetype cpp call SetCPPOptions()
     function SetCPPOptions()
         " compile and run on <CR>
-        " MacOS
-        " if g:Darwin
-            " nnoremap <CR> :!g++-7 -O3 -o %:r % && ./%:r<CR>
-        " else
-            " nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
-        " endif
         function! FromCPPSource()
             nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
         endfunction
