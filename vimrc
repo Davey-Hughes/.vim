@@ -216,6 +216,10 @@ set background=dark
 set t_Co=256
 colorscheme solarized
 
+" make split indicator look thinner
+highlight VertSplit ctermbg=NONE
+highlight VertSplit guibg=NONE
+
 
 """ YOUCOMPLETEME """
 " location of ycm_extra_conf
