@@ -79,8 +79,8 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 let g:pathogen_disabled=[]
 
 " Only use one completion plugin at a time
-call add(g:pathogen_disabled, 'YouCompleteMe')
-" call add(g:pathogen_disabled, 'VimCompletesMe')
+" call add(g:pathogen_disabled, 'YouCompleteMe')
+call add(g:pathogen_disabled, 'VimCompletesMe')
 
 call add(g:pathogen_disabled, 'gruvbox')
 
