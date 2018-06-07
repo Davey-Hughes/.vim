@@ -202,6 +202,9 @@ augroup templates
     " go files
     autocmd BufNewFile *.go 0r $HOME/.vim/templates/skeleton.go
 
+    " html files
+    autocmd BufNewFile *.html 0r $HOME/.vim/templates/skeleton.html
+
     " Move cursor to [:CURSOR:] in file
     autocmd BufNewFile * call MoveCursor()
 augroup END
