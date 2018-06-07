@@ -35,6 +35,15 @@
 " fzf is required to use fzf.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" MacOS detection
+if substitute(system('uname'), '\n', '', '') ==? 'Darwin'
+    let g:Darwin=1
+else
+    let g:Darwin=0
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Loads pathogen like a regular plugin
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 
@@ -79,8 +88,12 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 let g:pathogen_disabled=[]
 
 " Only use one completion plugin at a time
-" call add(g:pathogen_disabled, 'YouCompleteMe')
-call add(g:pathogen_disabled, 'VimCompletesMe')
+
+if g:Darwin
+    call add(g:pathogen_disabled, 'YouCompleteMe')
+else
+    call add(g:pathogen_disabled, 'VimCompletesMe')
+endif
 
 call add(g:pathogen_disabled, 'gruvbox')
 
@@ -292,13 +305,6 @@ augroup cursorpos
         \ endif
 augroup END
 
-" running on macos
-if substitute(system('uname'), '\n', '', '') ==? 'Darwin'
-    let g:Darwin=1
-else
-    let g:Darwin=0
-endif
-
 " Automatically close the documentation window when a selection is made
 augroup completion
     autocmd CompleteDone * pclose
@@ -308,7 +314,7 @@ augroup END
 " plugin specific settings
 
 """ AIRLINE """
-" show ale errors in airline
+" show ALE errors in airline
 let g:airline#extensions#ale#enabled = 1
 
 " always show airline statusbar
@@ -452,6 +458,9 @@ set runtimepath+=/usr/local/opt/fzf
 """ vim-go """
 let g:go_template_autocreate=0
 
+
+""" ALE """
+" change error format
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
