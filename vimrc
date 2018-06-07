@@ -199,6 +199,9 @@ augroup templates
     " python files
     autocmd BufNewFile *.py 0r $HOME/.vim/templates/skeleton.py
 
+    " go files
+    autocmd BufNewFile *.go 0r $HOME/.vim/templates/skeleton.go
+
     " Move cursor to [:CURSOR:] in file
     autocmd BufNewFile * call MoveCursor()
 augroup END
@@ -441,6 +444,11 @@ let g:codi#interpreters={
 
 """ FZF """
 set runtimepath+=/usr/local/opt/fzf
+
+
+""" vim-go """
+let g:go_template_autocreate=0
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
