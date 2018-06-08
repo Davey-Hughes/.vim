@@ -54,6 +54,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " ale
 " codi.vim
 " delimitMate
+" emmet-vim
 " fzf.vim
 " gruvbox
 " kotlin-vim
@@ -223,7 +224,7 @@ augroup templates
 augroup END
 
 function! MoveCursor()
-    normal gg
+    normal! gg
     if (search('\[:CURSOR:\]', 'W'))
         let l:lineno = line('.')
         let l:colno = col('.')
@@ -461,6 +462,9 @@ let g:go_template_autocreate=0
 
 """ ALE """
 " change error format
+let g:ale_echo_msg_error_str='E'
+let g:ale_echo_msg_warning_str='W'
+let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
