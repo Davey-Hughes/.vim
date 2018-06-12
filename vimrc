@@ -35,6 +35,15 @@
 " fzf is required to use fzf.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" MacOS detection
+if substitute(system('uname'), '\n', '', '') ==? 'Darwin'
+    let g:Darwin=1
+else
+    let g:Darwin=0
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Loads pathogen like a regular plugin
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 
@@ -45,6 +54,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " ale
 " codi.vim
 " delimitMate
+" emmet-vim
 " fzf.vim
 " gruvbox
 " kotlin-vim
@@ -79,8 +89,12 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 let g:pathogen_disabled=[]
 
 " Only use one completion plugin at a time
-" call add(g:pathogen_disabled, 'YouCompleteMe')
-call add(g:pathogen_disabled, 'VimCompletesMe')
+
+if g:Darwin
+    call add(g:pathogen_disabled, 'YouCompleteMe')
+else
+    call add(g:pathogen_disabled, 'VimCompletesMe')
+endif
 
 call add(g:pathogen_disabled, 'gruvbox')
 
@@ -93,36 +107,36 @@ augroup ftcommands
     autocmd!
     autocmd FileType text call SetTextOptions()
     function! SetTextOptions()
-        set textwidth=79
-        set smartindent
-        set noautoread
+        setlocal textwidth=79
+        setlocal smartindent
+        setlocal noautoread
     endfunction
 
     autocmd FileType tex call SetTexOptions()
     function! SetTexOptions()
-        set textwidth=79
-        set smartindent
+        setlocal textwidth=79
+        setlocal smartindent
     endfunction
 
     autocmd FileType c,cpp,opencl,asm,go call SetCFamilyOptions()
     function! SetCFamilyOptions()
-        set noexpandtab
-        set copyindent
-        set preserveindent
-        set softtabstop=0
-        set shiftwidth=8
-        set tabstop=8
+        setlocal noexpandtab
+        setlocal copyindent
+        setlocal preserveindent
+        setlocal softtabstop=0
+        setlocal shiftwidth=8
+        setlocal tabstop=8
     endfunction
 
     autocmd Filetype c call SetCOptions()
     function! SetCOptions()
         " compile and run on <CR>
         function! FromCSource()
-            nnoremap <CR> :!gcc -O3 -o %:r % && ./%:r<CR>
+            nnoremap <leader><CR> :!gcc -O3 -o %:r % && ./%:r<CR>
         endfunction
 
         function! FromCMakefile()
-            nnoremap <CR> :make<CR> :!./%<<CR>
+            nnoremap <leader><CR> :make<CR> :!./%<<CR>
         endfunction
 
         call FromCSource()
@@ -131,18 +145,18 @@ augroup ftcommands
     autocmd Filetype go call SetGoOptions()
     function! SetGoOptions()
         " go run on <CR>
-        nnoremap <CR> :GoRun<CR>
+        nnoremap <leader><CR> :GoRun<CR>
     endfunction
 
     autocmd Filetype cpp call SetCPPOptions()
     function! SetCPPOptions()
         " compile and run on <CR>
         function! FromCPPSource()
-            nnoremap <CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+            nnoremap <leader><CR> :!g++ -O3 -o %:r % && ./%:r<CR>
         endfunction
 
         function! FromCPPMakefile()
-            nnoremap <CR> :make<CR> :!./%<<CR>
+            nnoremap <leader><CR> :make<CR> :!./%<<CR>
         endfunction
 
         call FromCPPSource()
@@ -151,13 +165,13 @@ augroup ftcommands
 
     autocmd Filetype python call SetPythonOptions()
     function! SetPythonOptions()
-        set tabstop=4
-        set shiftwidth=4
-        set softtabstop=4
-        set expandtab
+        setlocal tabstop=4
+        setlocal shiftwidth=4
+        setlocal softtabstop=4
+        setlocal expandtab
 
         " run on <CR>
-        nnoremap <CR> :!python3 %<CR>
+        nnoremap <leader><CR> :!python3 %<CR>
     endfunction
 
     autocmd FileType ocaml call SetOcamlOptions()
@@ -168,18 +182,18 @@ augroup ftcommands
 
     autocmd FileType sh call SetShellOptions()
     function! SetShellOptions()
-        set tabstop=2
-        set shiftwidth=2
-        set softtabstop=2
-        set expandtab
+        setlocal tabstop=2
+        setlocal shiftwidth=2
+        setlocal softtabstop=2
+        setlocal expandtab
 
         " run on <CR>
-        nnoremap <CR> :!./%<CR>
+        nnoremap <leader><CR> :!./%<CR>
     endfunction
 
     autocmd FileType javascript call SetNodeOptions()
     function! SetNodeOptions()
-        nnoremap <CR> :!node %<CR>
+        nnoremap <leader><CR> :!node %<CR>
     endfunction
 
 augroup END
@@ -210,7 +224,7 @@ augroup templates
 augroup END
 
 function! MoveCursor()
-    normal gg
+    normal! gg
     if (search('\[:CURSOR:\]', 'W'))
         let l:lineno = line('.')
         let l:colno = col('.')
@@ -292,13 +306,6 @@ augroup cursorpos
         \ endif
 augroup END
 
-" running on macos
-if substitute(system('uname'), '\n', '', '') ==? 'Darwin'
-    let g:Darwin=1
-else
-    let g:Darwin=0
-endif
-
 " Automatically close the documentation window when a selection is made
 augroup completion
     autocmd CompleteDone * pclose
@@ -308,7 +315,7 @@ augroup END
 " plugin specific settings
 
 """ AIRLINE """
-" show ale errors in airline
+" show ALE errors in airline
 let g:airline#extensions#ale#enabled = 1
 
 " always show airline statusbar
@@ -462,6 +469,12 @@ let g:go_list_autoclose=1
 " change gofmt to goimports
 let g:go_fmt_command="goimports"
 
+
+""" ALE """
+" change error format
+let g:ale_echo_msg_error_str='E'
+let g:ale_echo_msg_warning_str='W'
+let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
