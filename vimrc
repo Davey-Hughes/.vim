@@ -397,8 +397,8 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 " add space
 let g:NERDSpaceDelims=1
 
-" change comment style
-let g:NERDComAltDelims=1
+" change comment styles per language
+let g:NERDAltDelims_go=1
 
 " custom comment styles
 let g:NERDCustomDelimiters={
@@ -457,7 +457,17 @@ set runtimepath+=/usr/local/opt/fzf
 
 
 """ vim-go """
+" turn off vim-go template
 let g:go_template_autocreate=0
+
+" use quickfix window instead of location list
+let g:go_list_type="quickfix"
+
+" close quickfix/loclist automatically
+let g:go_list_autoclose=1
+
+" change gofmt to goimports
+let g:go_fmt_command="goimports"
 
 
 """ ALE """
