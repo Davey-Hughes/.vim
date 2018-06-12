@@ -132,11 +132,11 @@ augroup ftcommands
     function! SetCOptions()
         " compile and run on <CR>
         function! FromCSource()
-            nnoremap <leader><CR> :!gcc -O3 -o %:r % && ./%:r<CR>
+            nnoremap <buffer> <leader><CR> :!gcc -O3 -o %:r % && ./%:r<CR>
         endfunction
 
         function! FromCMakefile()
-            nnoremap <leader><CR> :make<CR> :!./%<<CR>
+            nnoremap <buffer> <leader><CR> :make<CR> :!./%<<CR>
         endfunction
 
         call FromCSource()
@@ -145,18 +145,18 @@ augroup ftcommands
     autocmd Filetype go call SetGoOptions()
     function! SetGoOptions()
         " go run on <CR>
-        nnoremap <leader><CR> :GoRun<CR>
+        nnoremap <buffer> <leader><CR> :GoRun<CR>
     endfunction
 
     autocmd Filetype cpp call SetCPPOptions()
     function! SetCPPOptions()
         " compile and run on <CR>
         function! FromCPPSource()
-            nnoremap <leader><CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+            nnoremap <buffer> <leader><CR> :!g++ -O3 -o %:r % && ./%:r<CR>
         endfunction
 
         function! FromCPPMakefile()
-            nnoremap <leader><CR> :make<CR> :!./%<<CR>
+            nnoremap <buffer> <leader><CR> :make<CR> :!./%<<CR>
         endfunction
 
         call FromCPPSource()
@@ -188,12 +188,12 @@ augroup ftcommands
         setlocal expandtab
 
         " run on <CR>
-        nnoremap <leader><CR> :!./%<CR>
+        nnoremap <buffer> <leader><CR> :!./%<CR>
     endfunction
 
     autocmd FileType javascript call SetNodeOptions()
     function! SetNodeOptions()
-        nnoremap <leader><CR> :!node %<CR>
+        nnoremap <buffer> <leader><CR> :!node %<CR>
     endfunction
 
 augroup END
