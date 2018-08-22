@@ -118,7 +118,7 @@ augroup ftcommands
         setlocal smartindent
     endfunction
 
-    autocmd FileType c,cpp,opencl,asm,go call SetCFamilyOptions()
+    autocmd FileType c,cpp,h,opencl,asm,go call SetCFamilyOptions()
     function! SetCFamilyOptions()
         setlocal noexpandtab
         setlocal copyindent
@@ -397,9 +397,6 @@ let g:nerdtree_tabs_open_on_gui_startup=0
 " add space
 let g:NERDSpaceDelims=1
 
-" change comment styles per language
-let g:NERDAltDelims_go=1
-
 " custom comment styles
 let g:NERDCustomDelimiters={
     \ 'python': {'left': '#', 'leftAlt': '#'}
@@ -475,6 +472,9 @@ let g:go_fmt_command="goimports"
 let g:ale_echo_msg_error_str='E'
 let g:ale_echo_msg_warning_str='W'
 let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
+
+" keep error gutter open
+let g:ale_sign_column_always=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
