@@ -197,6 +197,11 @@ set magic
 " disable auditory bell
 set visualbell t_vb=
 
+" read files if changed on disk automatically
+" for vim in the terminal, requires the plugin vim-tmux-focus-events and for
+" tmux to have > set -g focus-events on
+set autoread
+
 " :W sudo saves file
 " command W silent w !sudo tee % > /dev/null
 
@@ -356,6 +361,7 @@ let g:codi#interpreters={
 
 """ FZF """
 set runtimepath+=/usr/local/opt/fzf
+nnoremap <C-P> :FZF<CR>
 
 
 """ vim-go """
