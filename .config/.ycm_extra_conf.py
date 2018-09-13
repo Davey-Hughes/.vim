@@ -29,20 +29,40 @@
 # For more information, please refer to <http://unlicense.org/>
 
 import os
+import sys
 import ycm_core
 
-flags = [
+w_flags = [
     '-Wall',
     '-Wextra',
     '-Werror',
+    '-Wpedantic',
     '-Wno-long-long',
     '-Wno-variadic-macros',
     '-fexceptions',
     '-DNDEBUG',
+]
+
+c_flags = [
     '-std=c11',
     '-x',
     'c',
+]
+
+cc_flags = [
+    '-std=c++17',
+    '-x',
+    'c++',
     '-isystem', '../BoostParts',
+]
+
+macos_flags = [
+]
+
+linux_flags = [
+]
+
+include_flags = [
     '-isystem', '/System/Library/Frameworks/Python.framework/Headers',
     '-isystem', '../llvm/include',
     '-isystem', '../llvm/tools/clang/include',
@@ -50,22 +70,15 @@ flags = [
     '-isystem', './tests/gmock/gtest/include',
     '-isystem', './tests/gmock',
     '-isystem', './tests/gmock/include',
-    '-I', '.',
-    '-I', './include',
-    '-I', './includes',
-    '-I', '../include',
-    '-I', '../includes',
     '-I', './ClangCompleter',
+]
 
-    # MacOS
-    '-I', '/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1',
-    '-I', '/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include',
-    '-I', '/Applications/Xcode-beta.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include',
-    '-I', '/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/usr/include',
-    '-I', '/Applications/Xcode-beta.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.13.sdk/System/Library/Frameworks',
-
-    # Linux
-
+local_include = [
+    '.',
+    'include',
+    'includes',
+    '../include',
+    '../includes',
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
@@ -124,10 +137,29 @@ def GetCompilationInfoForFile(filename):
 
 def FlagsForFile(filename, **kwargs):
     if not database:
+        flags = []
+
+        flags += w_flags
+
+        extension = os.path.splitext(filename)[1]
+        if extension in ['.cc', '.cpp']:
+            flags += cc_flags
+        elif extension in ['.c']:
+            flags += c_flags
+
+        if sys.platform == 'linux':
+            flags += linux_flags
+        elif sys.platform == 'darwin':
+            flags += macos_flags
+
+        flags += include_flags
+
+        dirpath = os.path.dirname(os.path.realpath(filename))
+        flags += ['-I' + dirpath + '/' + s for s in local_include]
+
         return {
             'flags': flags,
             'include_paths_relative_to_dir': DirectoryOfThisScript()
-            # 'include_paths_relative_to_dir': os.path.abspath(filename)
         }
 
     compilation_info = GetCompilationInfoForFile(filename)
