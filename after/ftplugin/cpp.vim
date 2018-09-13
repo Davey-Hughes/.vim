@@ -7,7 +7,7 @@ setlocal tabstop=8
 
 " compile and run on <CR>
 function! FromCPPSource()
-    nnoremap <buffer> <leader><CR> :!g++ -O3 -o %:r % && ./%:r<CR>
+    nnoremap <buffer> <leader><CR> :!g++ -std=c++17 -O3 -o %:r % && ./%:r<CR>
 endfunction
 
 function! FromCPPMakefile()
