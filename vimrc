@@ -110,10 +110,10 @@ augroup templates
     " c header files
     autocmd BufNewFile *.h
         \ 0r $HOME/.vim/templates/skeleton.h |
-        \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:r'))
+        \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
 
     " cpp files
-    autocmd BufNewFile *.cpp 0r $HOME/.vim/templates/skeleton.cpp
+    autocmd BufNewFile *.cc,*cpp 0r $HOME/.vim/templates/skeleton.cc
 
     " python files
     autocmd BufNewFile *.py 0r $HOME/.vim/templates/skeleton.py
