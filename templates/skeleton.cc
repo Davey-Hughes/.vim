@@ -1,7 +1,7 @@
 #include <iostream>
 
 int
-main(void)
+main()
 {
 	[:CURSOR:]std::cout << "hello, world" << std::endl;
 	return 0;
