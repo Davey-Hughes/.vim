@@ -63,6 +63,7 @@ linux_flags = [
 ]
 
 include_flags = [
+    '-I', '/usr/local/include/',
     '-isystem', '/System/Library/Frameworks/Python.framework/Headers',
     '-isystem', '../llvm/include',
     '-isystem', '../llvm/tools/clang/include',

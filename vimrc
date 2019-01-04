@@ -373,13 +373,13 @@ nnoremap <C-P> :FZF<CR>
 let g:go_template_autocreate=0
 
 " use quickfix window instead of location list
-let g:go_list_type="quickfix"
+let g:go_list_type='quickfix'
 
 " close quickfix/loclist automatically
 let g:go_list_autoclose=1
 
 " change gofmt to goimports
-let g:go_fmt_command="goimports"
+let g:go_fmt_command='goimports'
 
 
 """ ALE """
