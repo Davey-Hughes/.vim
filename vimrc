@@ -292,6 +292,10 @@ let g:ycm_semantic_triggers.tex=[
 " close preview window after completion
 let g:ycm_autoclose_preview_window_after_insertion=1
 
+let g:ycm_filetype_blacklist = {
+    \ 'nasm': 1
+\}
+
 
 """ VIM SLIME """
 " vim slime use tmux
