@@ -313,7 +313,8 @@ let g:NERDSpaceDelims=1
 
 " custom comment styles
 let g:NERDCustomDelimiters={
-    \ 'python': {'left': '#', 'leftAlt': '#'}
+    \ 'python': {'left': '#', 'leftAlt': '#'},
+    \ 'cpp': {'left': '/*', 'leftAlt': '//', 'right': '*/', 'rightAlt': ''}
 \ }
 
 
