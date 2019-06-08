@@ -118,3 +118,6 @@
 [submodule "bundle/vim-apl"]
 	path = bundle/vim-apl
 	url = https://gitlab.com/n9n/vim-apl.git
+[submodule "pack/kite/start/vim-plugin"]
+	path = pack/kite/start/vim-plugin
+	url = https://github.com/kiteco/vim-plugin.git
