@@ -392,12 +392,6 @@ let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 " keep error gutter open
 let g:ale_sign_column_always=1
 
-" specify exact linter to use
-" python is disabled in favor of Kite
-let g:ale_linters={
-    \ 'python': []
-\}
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
 
