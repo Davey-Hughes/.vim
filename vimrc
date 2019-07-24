@@ -49,14 +49,11 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " List of plugins (pathogen)
 
-" VimCompletesMe
-" YouCompleteMe
 " ale
 " codi.vim
 " delimitMate
 " emmet-vim
 " fzf.vim
-" gruvbox
 " kotlin-vim
 " nerdcommenter
 " nerdtree
@@ -84,19 +81,13 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-surround
 " vim-unimpaired
 " vimtex
+"
+" List of plugins (native)
+
 
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled=[]
-
-" Only use one completion plugin at a time
-
-if g:Darwin
-    call add(g:pathogen_disabled, 'YouCompleteMe')
-else
-    call add(g:pathogen_disabled, 'VimCompletesMe')
-endif
-
-call add(g:pathogen_disabled, 'gruvbox')
+" call add(g:pathogen_disabled, '')
 
 execute pathogen#infect()
 
