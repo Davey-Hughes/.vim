@@ -116,6 +116,11 @@ augroup templates
     " html files
     autocmd BufNewFile *.html 0r $HOME/.vim/templates/skeleton.html
 
+    " java files
+    autocmd BufNewFile *.java
+        \ 0r $HOME/.vim/templates/skeleton.java |
+        \ %substitute#\[:FILENAME:\]#\=expand('%:t:r')
+
     " Move cursor to [:CURSOR:] in file
     autocmd BufNewFile * call MoveCursor()
 augroup END
@@ -333,6 +338,7 @@ let g:better_whitespace_filetypes_blacklist=[
 
 let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
+let g:strip_whitespace_confirm=0
 
 
 """ DELIMITMATE """
