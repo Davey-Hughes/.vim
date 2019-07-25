@@ -20,3 +20,6 @@ if filereadable(expand(expand('<amatch>:p:h').'/*makefile'))
 else
     call FromCPPSource()
 endif
+
+" only use ccls for CPP linting
+let b:ale_linters={'cpp': ['ccls']}

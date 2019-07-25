@@ -81,8 +81,9 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-surround
 " vim-unimpaired
 " vimtex
-"
+
 " List of plugins (native)
+" coc
 
 
 " To disable a plugin, add it's bundle name to the following list
@@ -382,6 +383,34 @@ let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 
 " keep error gutter open
 let g:ale_sign_column_always=1
+
+
+""" Coc """
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " key remappings
