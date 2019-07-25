@@ -20,3 +20,7 @@ if filereadable(expand(expand('<amatch>:p:h').'/*makefile'))
 else
     call FromCSource()
 endif
+
+
+" only use ccls for C linting
+let b:ale_linters={'c': ['ccls']}
