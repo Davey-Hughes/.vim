@@ -106,3 +106,6 @@
 [submodule "bundle/vim-apl"]
 	path = bundle/vim-apl
 	url = https://gitlab.com/n9n/vim-apl.git
+[submodule "bundle/vim-obsession"]
+	path = bundle/vim-obsession
+	url = https://github.com/tpope/vim-obsession.git

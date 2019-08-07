@@ -246,7 +246,13 @@ let g:airline_skip_empty_sections=1
 " let g:airline_symbols = get(g:, 'airline_symbols', {})
 " let g:airline_symbols.linenr = ''
 
-" colorscheme
+" Vim obsession airline extension
+let g:airline#extensions#obsession#enabled=1
+let g:airline#extensions#obsession#indicator_text='$'
+
+
+
+""" Colorscheme Stuff """
 syntax enable
 
 " try this if the terminal emulator is being weird with the colors
