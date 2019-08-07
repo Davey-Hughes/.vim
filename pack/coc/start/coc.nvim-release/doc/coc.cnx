@@ -354,7 +354,7 @@ g:coc_start_at_startup 				*g:coc_start_at_startup*
 
 g:coc_user_config 				*g:coc_user_config*
 
-			配置 coc 的用户配置，推荐使用 coc-setting.json 文件
+			配置 coc 的用户配置，推荐使用 coc-settings.json 文件
 			进行配置，而不是该变量。
 
 			该设置仅在服务启动前有效。
@@ -912,6 +912,10 @@ CocActionAsync({action}, [...{args}, [{callback}]])
 
 	执行当前行第一个 quickfix action，用于快速修复。
 
+"addRanges" {ranges}					*coc-action-addRanges*
+
+	Ranges 必须为 LSP 定义的 Range 数组： https://git.io/fjiEG
+
 ==============================================================================
 
 命令 						*coc-commands*
@@ -936,7 +940,7 @@ CocActionAsync({action}, [...{args}, [{callback}]])
 
 :CocConfig 					*:CocConfig*
 
-		打开用户的 `coc-setting.json` 文件。
+		打开用户的 `coc-settings.json` 文件。
 
 :CocInstall [{option}] {name} ... 		*:CocInstall*
 
@@ -1185,6 +1189,12 @@ CocHintFloat 					*CocHintFloat*
   默认: `hi default link CocHintFloat CocHintSign`
 
   提醒浮窗符使用的高亮。
+
+CocCursorRange 					*CocCursorRange*
+
+  Default: `hi default link CocCursorRange Search`
+
+  鼠标选择区使用的高亮。
 
 ==============================================================================
 
