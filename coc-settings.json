@@ -12,6 +12,5 @@
     }
   },
 
-  "diagnostic.displayByAle": true
-
+  "coc.preferences.diagnostic.displayByAle": true,
 }
