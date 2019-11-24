@@ -17,6 +17,10 @@ function! CocAction(...) abort
   return coc#rpc#request('CocAction', a:000)
 endfunction
 
+function! CocHasProvider(name) abort
+  return coc#rpc#request('hasProvider', [a:name])
+endfunction
+
 function! CocActionAsync(...) abort
   return s:AsyncRequest('CocAction', a:000)
 endfunction
@@ -88,6 +92,29 @@ function! s:OpenConfig()
     call mkdir(home, 'p')
   endif
   execute 'edit '.home.'/coc-settings.json'
+endfunction
+
+function! s:OpenLocalConfig()
+  let currentDir = getcwd()
+  let fsRootDir = fnamemodify($HOME, ":p:h:h:h")
+
+  if currentDir == $HOME
+    echom "Can't resolve local config from current working directory."
+    return
+  endif
+
+  while isdirectory(currentDir) && !(currentDir ==# $HOME) && !(currentDir ==# fsRootDir)
+    if isdirectory(currentDir.'/.vim')
+      execute 'edit '.currentDir.'/.vim/coc-settings.json'
+      return
+    endif
+    let currentDir = fnamemodify(currentDir, ':p:h:h')
+  endwhile
+
+  if coc#util#prompt_confirm("No local config detected, would you like to create .vim/coc-settings.json?")
+    call mkdir('.vim', 'p')
+    execute 'edit .vim/coc-settings.json'
+  endif
 endfunction
 
 function! s:AddAnsiGroups() abort
@@ -168,7 +195,7 @@ function! s:Enable()
 
     if coc#rpc#started()
       autocmd VimEnter            * call coc#rpc#notify('VimEnter', [])
-    else
+    elseif get(g:, 'coc_start_at_startup', 1)
       autocmd VimEnter            * call coc#rpc#start_server()
     endif
     if s:is_vim
@@ -197,13 +224,13 @@ function! s:Enable()
     autocmd InsertEnter         * call s:Autocmd('InsertEnter', +expand('<abuf>'))
     autocmd BufHidden           * call s:Autocmd('BufHidden', +expand('<abuf>'))
     autocmd BufEnter            * call s:Autocmd('BufEnter', +expand('<abuf>'))
-    autocmd TextChanged         * call s:Autocmd('TextChanged', +expand('<abuf>'))
+    autocmd TextChanged         * call s:Autocmd('TextChanged', +expand('<abuf>'), getbufvar(+expand('<abuf>'), 'changedtick'))
     autocmd BufWritePost        * call s:Autocmd('BufWritePost', +expand('<abuf>'))
     autocmd CursorMoved         * call s:Autocmd('CursorMoved', +expand('<abuf>'), [line('.'), col('.')])
     autocmd CursorMovedI        * call s:Autocmd('CursorMovedI', +expand('<abuf>'), [line('.'), col('.')])
     autocmd CursorHold          * call s:Autocmd('CursorHold', +expand('<abuf>'))
     autocmd CursorHoldI         * call s:Autocmd('CursorHoldI', +expand('<abuf>'))
-    autocmd BufNewFile,BufReadPost, * call s:Autocmd('BufCreate', +expand('<abuf>'))
+    autocmd BufNewFile,BufReadPost * call s:Autocmd('BufCreate', +expand('<abuf>'))
     autocmd BufUnload           * call s:SyncAutocmd('BufUnload', +expand('<abuf>'))
     autocmd BufWritePre         * call s:SyncAutocmd('BufWritePre', +expand('<abuf>'))
     autocmd FocusGained         * if mode() !~# '^c' | call s:Autocmd('FocusGained') | endif
@@ -232,9 +259,15 @@ hi default link CocInfoHighlight    CocUnderline
 hi default link CocHintHighlight    CocUnderline
 hi default link CocListMode ModeMsg
 hi default link CocListPath Comment
-hi default link CocFloating Pmenu
 hi default link CocHighlightText  CursorColumn
+if has('nvim')
+  hi default link CocFloating NormalFloat
+else
+  hi default link CocFloating Pmenu
+endif
 
+
+hi default link CocHoverRange     Search
 hi default link CocCursorRange    Search
 hi default link CocHighlightRead  CocHighlightText
 hi default link CocHighlightWrite CocHighlightText
@@ -293,6 +326,7 @@ command! -nargs=0 CocNext         :call coc#rpc#notify('listNext', [])
 command! -nargs=0 CocDisable      :call s:Disable()
 command! -nargs=0 CocEnable       :call s:Enable()
 command! -nargs=0 CocConfig       :call s:OpenConfig()
+command! -nargs=0 CocLocalConfig  :call s:OpenLocalConfig()
 command! -nargs=0 CocRestart      :call coc#rpc#restart()
 command! -nargs=0 CocStart        :call coc#rpc#start_server()
 command! -nargs=0 CocRebuild      :call coc#util#rebuild()
@@ -346,15 +380,3 @@ vnoremap <silent> <Plug>(coc-funcobj-i)        :<C-U>call coc#rpc#request('selec
 vnoremap <silent> <Plug>(coc-funcobj-a)        :<C-U>call coc#rpc#request('selectFunction', [v:false, visualmode()])<CR>
 onoremap <silent> <Plug>(coc-funcobj-i)        :<C-U>call coc#rpc#request('selectFunction', [v:true, ''])<CR>
 onoremap <silent> <Plug>(coc-funcobj-a)        :<C-U>call coc#rpc#request('selectFunction', [v:false, ''])<CR>
-if !hasmapto('<Plug>(coc-funcobj-i)', 'v') && empty(maparg('if', 'x'))
-  xmap if <Plug>(coc-funcobj-i)
-endif
-if !hasmapto('<Plug>(coc-funcobj-a)', 'v') && empty(maparg('af', 'x'))
-  xmap af <Plug>(coc-funcobj-a)
-endif
-if !hasmapto('<Plug>(coc-funcobj-i)', 'o') && empty(maparg('if', 'o'))
-  omap if <Plug>(coc-funcobj-i)
-endif
-if !hasmapto('<Plug>(coc-funcobj-a)', 'o') && empty(maparg('af', 'o'))
-  omap af <Plug>(coc-funcobj-a)
-endif
