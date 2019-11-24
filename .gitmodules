@@ -16,9 +16,6 @@
 [submodule "bundle/vim-better-whitespace"]
 	path = bundle/vim-better-whitespace
 	url = https://github.com/ntpeters/vim-better-whitespace
-[submodule "bundle/vim-bufferline"]
-	path = bundle/vim-bufferline
-	url = https://github.com/bling/vim-bufferline
 [submodule "bundle/vim-colors-solarized"]
 	path = bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
@@ -76,15 +73,9 @@
 [submodule "bundle/undotree"]
 	path = bundle/undotree
 	url = https://github.com/mbbill/undotree.git
-[submodule "bundle/delimitMate"]
-	path = bundle/delimitMate
-	url = https://github.com/Raimondi/delimitMate.git
 [submodule "bundle/vim-coffee-script"]
 	path = bundle/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
-[submodule "bundle/codi.vim"]
-	path = bundle/codi.vim
-	url = https://github.com/metakirby5/codi.vim.git
 [submodule "bundle/ale"]
 	path = bundle/ale
 	url = https://github.com/w0rp/ale.git

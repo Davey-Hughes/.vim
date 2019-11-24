@@ -50,8 +50,6 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " List of plugins (pathogen)
 
 " ale
-" codi.vim
-" delimitMate
 " emmet-vim
 " fzf.vim
 " kotlin-vim
@@ -64,7 +62,6 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-airline-themes
 " vim-apl
 " vim-better-whitespace
-" vim-bufferline
 " vim-coffee-script
 " vim-colors-solarized
 " vim-cute-python
@@ -88,7 +85,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled=[]
-" call add(g:pathogen_disabled, '')
+" call add(g:pathogen_disabled, 'vim-bufferline')
 
 execute pathogen#infect()
 
@@ -251,7 +248,6 @@ let g:airline#extensions#obsession#enabled=1
 let g:airline#extensions#obsession#indicator_text='$'
 
 
-
 """ Colorscheme Stuff """
 syntax enable
 
@@ -273,33 +269,6 @@ colorscheme solarized
 " make split indicator look thinner
 highlight VertSplit ctermbg=NONE
 highlight VertSplit guibg=NONE
-
-
-""" YOUCOMPLETEME """
-" location of ycm_extra_conf
-let g:ycm_global_ycm_extra_conf='~/.vim/.config/.ycm_extra_conf.py'
-
-" autocomplete for .tex files
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers={}
-endif
-let g:ycm_semantic_triggers.tex=[
-    \ 're!\\[A-Za-z]*cite[A-Za-z]*(\[[^]]*\]){0,2}{[^}]*',
-    \ 're!\\[A-Za-z]*ref({[^}]*|range{([^,{}]*(}{)?))',
-    \ 're!\\hyperref\[[^]]*',
-    \ 're!\\includegraphics\*?(\[[^]]*\]){0,2}{[^}]*',
-    \ 're!\\(include(only)?|input){[^}]*',
-    \ 're!\\\a*(gls|Gls|GLS)(pl)?\a*(\s*\[[^]]*\]){0,2}\s*\{[^}]*',
-    \ 're!\\includepdf(\s*\[[^]]*\])?\s*\{[^}]*',
-    \ 're!\\includestandalone(\s*\[[^]]*\])?\s*\{[^}]*',
-\ ]
-
-" close preview window after completion
-let g:ycm_autoclose_preview_window_after_insertion=1
-
-let g:ycm_filetype_blacklist = {
-    \ 'nasm': 1
-\}
 
 
 """ VIM SLIME """
@@ -339,35 +308,13 @@ let g:tagbar_sort=0
 """ BETTER WHITESPACE """
 " blacklist
 let g:better_whitespace_filetypes_blacklist=[
-    \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'codi'
+    \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help'
 \ ]
 
 let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 let g:strip_whitespace_confirm=0
 
-
-""" DELIMITMATE """
-" expand carrage returns
-let g:delimitMate_expand_cr=1
-
-" workaround
-imap <silent> <BS> <C-R>=YcmOnDeleteChar()<CR><Plug>delimitMateBS
-
-function! YcmOnDeleteChar()
-    if pumvisible()
-        return "\<C-y>"
-    endif
-    return ''
-endfunction
-
-
-""" CODI """
-let g:codi#interpreters={
-    \ 'python': {
-        \'bin': 'python3'
-    \ }
-\ }
 
 
 """ FZF """

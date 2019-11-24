@@ -2,6 +2,7 @@
 backup/*
 swap/*
 undo/*
+sessions/*
 
 # files
 .config/c
