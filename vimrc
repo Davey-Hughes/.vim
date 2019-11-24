@@ -85,7 +85,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 
 " To disable a plugin, add it's bundle name to the following list
 let g:pathogen_disabled=[]
-" call add(g:pathogen_disabled, 'vim-bufferline')
+" call add(g:pathogen_disabled, 'auto-pairs')
 
 execute pathogen#infect()
 
@@ -345,6 +345,13 @@ let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 " keep error gutter open
 let g:ale_sign_column_always=1
 
+" ccls cache directory
+let g:ale_cpp_ccls_init_options = {
+\   'cache': {
+\       'directory': '/tmp/ccls'
+\
+\   }
+\ }
 
 """ Coc """
 " if hidden is not set, TextEdit might fail.
@@ -372,9 +379,10 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
+" DelimitMate
+let g:delimitMate_expand_cr=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" key remappings
 
 " set mapleader to the spacebar
 let g:mapleader=' '
