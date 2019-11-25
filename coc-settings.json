@@ -5,12 +5,21 @@
       "filetypes": ["c", "cpp", "objc", "objcpp"],
       "rootPatterns": [".ccls", "compile_commands.json", ".vim/", ".git/", ".hg/"],
       "initializationOptions": {
-         "cache": {
-           "directory": "/tmp/ccls"
-         }
-       }
+        "cache": {
+          "directory": "/tmp/ccls"
+        },
+        "clang": {
+          "resourceDir": "/Library/Developer/CommandLineTools/usr/lib/clang/11.0.0",
+          "extraArgs": [
+            "-isystem",
+            "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1",
+            "-I",
+            "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/"
+          ]
+        }
+      }
     }
   },
 
-  "coc.preferences.diagnostic.displayByAle": true,
+  "diagnostic.displayByAle": true,
 }

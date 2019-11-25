@@ -22,4 +22,4 @@ else
 endif
 
 " only use ccls for CPP linting
-let b:ale_linters={'cpp': ['ccls']}
+let b:ale_linters={'cpp': ['clang']}
