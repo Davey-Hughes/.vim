@@ -259,8 +259,8 @@ syntax enable
     " set background=light
 " endif
 
-let g:gruvbox_contrast_dark='medium'
-let g:gruvbox_contrast_light='soft'
+" let g:gruvbox_contrast_dark='medium'
+" let g:gruvbox_contrast_light='soft'
 
 set background=dark
 set t_Co=256
@@ -383,6 +383,9 @@ endfunction
 let g:delimitMate_expand_cr=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" make SignColumn the same color as the line number column
+highlight! link SignColumn LineNr
 
 " set mapleader to the spacebar
 let g:mapleader=' '
