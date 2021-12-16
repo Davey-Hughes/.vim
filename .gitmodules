@@ -100,3 +100,6 @@
 [submodule "bundle/delimitMate"]
 	path = bundle/delimitMate
 	url = https://github.com/Raimondi/delimitMate.git
+[submodule "bundle/vim-tabdrop"]
+	path = bundle/vim-tabdrop
+	url = https://github.com/ipod825/vim-tabdrop.git

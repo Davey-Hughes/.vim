@@ -76,6 +76,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-slime
 " vim-speeddating
 " vim-surround
+" vim-tabdrop
 " vim-unimpaired
 " vimtex
 
@@ -216,6 +217,9 @@ augroup END
 augroup completion
     autocmd CompleteDone * pclose
 augroup END
+
+" search for tags recursively until $HOME directory
+set tags=tags;$HOME
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
@@ -381,6 +385,10 @@ endfunction
 
 " delimitMate
 let g:delimitMate_expand_cr=1
+
+" tabdrop
+nnoremap <C-]> :TagTabdrop<CR>
+vnoremap <C-]> <Esc>:TagTabdrop<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
