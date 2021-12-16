@@ -221,6 +221,9 @@ augroup END
 " search for tags recursively until $HOME directory
 set tags=tags;$HOME
 
+" use ripgrep instead of grep
+set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
 
