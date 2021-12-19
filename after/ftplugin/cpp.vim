@@ -23,3 +23,11 @@ endif
 
 " only use ccls for CPP linting
 let b:ale_linters={'cpp': ['clang']}
+
+" ccls cache directory
+let g:ale_cpp_ccls_init_options = {
+\   'cache': {
+\       'directory': '/tmp/ccls'
+\
+\   }
+\ }
