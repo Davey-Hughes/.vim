@@ -5,18 +5,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Initial setup and notes
 
-" YouCompleteMe
-" Initially YouCompleteMe is disabled since it requires extra installation.
-" You must go into bundle/YouCompleteMe/ and follow the directions in
-" README.md. On Ubuntu, this requires installing build-essential, cmake,
-" python-dev, and running ./install.py --clang-completer (for c-family
-" completion). Then, uncomment the line that disables YouCompleteMe in the
-" list of plugins section.
-"
-" In cases where YouCompleteMe causes a long vim startup time, use
-" VimCompletesMe instead.
-
-" In order to get the tagbar working, install ctags.
+" In order to get the vista working, install ctags.
 
 " vim-slime allows for easy sending of code from vim to a REPL. The way it is
 " configured here, tmux is used as the receiving terminal, and must be opened
@@ -50,13 +39,14 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " List of plugins (pathogen)
 
 " ale
+" delimitMate
 " emmet-vim
 " fzf.vim
 " kotlin-vim
 " nerdcommenter
 " nerdtree
+" rust.vim
 " tabline.vim
-" tagbar
 " undotree
 " vim-airline
 " vim-airline-themes
@@ -79,6 +69,8 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-tabdrop
 " vim-unimpaired
 " vimtex
+" vista.vim
+" webapi-vim
 
 " List of plugins (native)
 " coc
@@ -118,6 +110,9 @@ augroup templates
     autocmd BufNewFile *.java
         \ 0r $HOME/.vim/templates/skeleton.java |
         \ %substitute#\[:FILENAME:\]#\=expand('%:t:r')
+
+    " rust files
+    autocmd BufNewFile *.rs 0r $HOME/.vim/templates/skeleton.rs
 
     " Move cursor to [:CURSOR:] in file
     autocmd BufNewFile * call MoveCursor()
@@ -307,9 +302,18 @@ let g:vimtex_latexmk_callback=0
 let g:vimtex_compiler_latexmk={'callback' : 0}
 
 
-""" TAGBAR """
-" dont sort tagbar items by name alphabetically
-let g:tagbar_sort=0
+""" VISTA """
+let g:vista_icon_indent=["╰─▸ ", "├─▸ "]
+let g:vista#renderer#enable_icon=1
+let g:vista_stay_on_open=0
+
+" close vista if the last buffer is closed
+augroup vista
+autocmd bufenter *
+    \ if winnr("$") == 1 && vista#sidebar#IsOpen() |
+        \ execute "normal! :q!\<CR>" |
+    \ endif
+augroup END
 
 
 """ BETTER WHITESPACE """
@@ -336,20 +340,6 @@ let g:fzf_action={
 \ }
 
 
-""" vim-go """
-" turn off vim-go template
-let g:go_template_autocreate=0
-
-" use quickfix window instead of location list
-let g:go_list_type='quickfix'
-
-" close quickfix/loclist automatically
-let g:go_list_autoclose=1
-
-" change gofmt to goimports
-let g:go_fmt_command='goimports'
-
-
 """ ALE """
 " change error format
 let g:ale_echo_msg_error_str='E'
@@ -358,14 +348,6 @@ let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 
 " keep error gutter open
 let g:ale_sign_column_always=1
-
-" ccls cache directory
-let g:ale_cpp_ccls_init_options = {
-\   'cache': {
-\       'directory': '/tmp/ccls'
-\
-\   }
-\ }
 
 """ Coc """
 " if hidden is not set, TextEdit might fail.
@@ -411,10 +393,7 @@ let g:mapleader=' '
 nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :UndotreeToggle<CR>
 nnoremap <F6> :NERDTreeToggle<CR>
-nnoremap <F8> :TagbarToggle<CR>
-nnoremap <leader>, :TagbarOpenAutoClose<CR>
-nnoremap <leader>. :TagbarOpenAutoClose<CR>/
-nnoremap <leader>f :YcmCompleter FixIt<CR>
+nnoremap <F8> :Vista!!<CR>
 
 " allow changing of splits without typing ctrl-w first
 nnoremap <C-J> <C-W><C-J>
@@ -422,7 +401,7 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" shift-Enter enters a newline without enter insert mode
+" <leader><CR> enters a newline without enter insert mode
 nnoremap <leader><CR> o<Esc>
 
 " <leader><Tab> inserts a real tab even when expandtab is on
