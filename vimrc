@@ -42,6 +42,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " delimitMate
 " emmet-vim
 " fzf.vim
+" fzf-preview.vim
 " kotlin-vim
 " nerdcommenter
 " nerdtree
@@ -55,6 +56,7 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-coffee-script
 " vim-colors-solarized
 " vim-cute-python
+" vim-devicons
 " vim-dispatch
 " vim-endwise
 " vim-fugitive
@@ -219,6 +221,9 @@ set tags=tags;$HOME
 " use ripgrep instead of grep
 set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
+" set mapleader to the spacebar
+let g:mapleader=' '
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
 
@@ -329,7 +334,7 @@ let g:strip_whitespace_confirm=0
 
 """ FZF """
 set runtimepath+=/usr/local/opt/fzf
-nnoremap <C-P> :FZF<CR>
+nnoremap <C-P> :Files<CR>
 
 " use PRg to use Rg in git project
 command! -bang -nargs=* PRg
@@ -338,6 +343,26 @@ command! -bang -nargs=* PRg
 let g:fzf_action={
   \ 'ctrl-t': 'Tabdrop'
 \ }
+
+""" FZF-PREVIEW """
+nmap <leader>f [fzf-p]
+xmap <leader>f [fzf-p]
+
+nnoremap <silent> [fzf-p]p     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
+nnoremap <silent> [fzf-p]gs    :<C-u>CocCommand fzf-preview.GitStatus<CR>
+nnoremap <silent> [fzf-p]ga    :<C-u>CocCommand fzf-preview.GitActions<CR>
+nnoremap <silent> [fzf-p]b     :<C-u>CocCommand fzf-preview.Buffers<CR>
+nnoremap <silent> [fzf-p]B     :<C-u>CocCommand fzf-preview.AllBuffers<CR>
+nnoremap <silent> [fzf-p]o     :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
+nnoremap <silent> [fzf-p]<C-o> :<C-u>CocCommand fzf-preview.Jumps<CR>
+nnoremap <silent> [fzf-p]g;    :<C-u>CocCommand fzf-preview.Changes<CR>
+nnoremap <silent> [fzf-p]/     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+nnoremap <silent> [fzf-p]*     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap          [fzf-p]gr    :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
+xnoremap          [fzf-p]gr    "sy:CocCommand   fzf-preview.ProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <silent> [fzf-p]t     :<C-u>CocCommand fzf-preview.BufferTags<CR>
+nnoremap <silent> [fzf-p]q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
+nnoremap <silent> [fzf-p]l     :<C-u>CocCommand fzf-preview.LocationList<CR>
 
 
 """ ALE """
@@ -349,7 +374,7 @@ let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 " keep error gutter open
 let g:ale_sign_column_always=1
 
-""" Coc """
+""" COC """
 " if hidden is not set, TextEdit might fail.
 set hidden
 
@@ -375,10 +400,12 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" delimitMate
+
+""" DELIMITMATE """
 let g:delimitMate_expand_cr=1
 
-" tabdrop
+
+""" TABDROP """
 nnoremap <C-]> :TagTabdrop<CR>
 vnoremap <C-]> <Esc>:TagTabdrop<CR>
 
@@ -386,9 +413,6 @@ vnoremap <C-]> <Esc>:TagTabdrop<CR>
 
 " make SignColumn the same color as the line number column
 highlight! link SignColumn LineNr
-
-" set mapleader to the spacebar
-let g:mapleader=' '
 
 nnoremap <F4> :StripWhitespace<CR>
 nnoremap <F5> :UndotreeToggle<CR>
