@@ -4,13 +4,16 @@
 git submodule update --init --recursive
 
 # pull newest changes for each submodule, recursively
-git submodule foreach --recursive git checkout master
-git submodule foreach --recursive git pull
+git submodule foreach --recursive \
+    'eval "case \$name in \
+        'bundle/fzf-preview.vim') \
+            git checkout release/rpc ;; \
+        'bundle/vim-slime') \
+            git checkout main ;; \
+        *) git checkout master ;; \
+    esac"'
 
-# update coc
-mkdir -p ~/.vim/pack/coc/start
-cd ~/.vim/pack/coc/start
-curl --fail -L https://github.com/neoclide/coc.nvim/archive/release.tar.gz|tar xzfv -
+git submodule foreach --recursive git pull
 
 # install coc extensions
 mkdir -p ~/.config/coc/extensions
@@ -21,5 +24,5 @@ then
 fi
 
 # npm install coc-git
-npm install coc-git coc-java coc-json coc-python coc-vimlsp \
+npm install coc-git coc-java coc-json coc-pyright coc-go coc-vimlsp coc-fzf-preview coc-rust-analyzer \
     --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod
