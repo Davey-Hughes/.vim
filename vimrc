@@ -344,6 +344,7 @@ let g:fzf_action={
   \ 'ctrl-t': 'Tabdrop'
 \ }
 
+
 """ FZF-PREVIEW """
 nmap <leader>f [fzf-p]
 xmap <leader>f [fzf-p]

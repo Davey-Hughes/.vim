@@ -85,6 +85,7 @@
 [submodule "bundle/emmet-vim"]
 	path = bundle/emmet-vim
 	url = https://github.com/mattn/emmet-vim.git
+	ignore = dirty
 [submodule "bundle/vim-sleuth"]
 	path = bundle/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth.git
@@ -118,3 +119,6 @@
 [submodule "bundle/fzf-preview.vim"]
 	path = bundle/fzf-preview.vim
 	url = https://github.com/yuki-yano/fzf-preview.vim.git
+[submodule "bundle/vim-devicons"]
+	path = bundle/vim-devicons
+	url = https://github.com/ryanoasis/vim-devicons.git
