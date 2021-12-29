@@ -99,6 +99,11 @@ augroup templates
     " cpp files
     autocmd BufNewFile *.cc,*cpp 0r $HOME/.vim/templates/skeleton.cc
 
+    " cpp header files
+    autocmd BufNewFile *.hh
+        \ 0r $HOME/.vim/templates/skeleton.hh |
+        \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
+
     " python files
     autocmd BufNewFile *.py 0r $HOME/.vim/templates/skeleton.py
 
@@ -154,9 +159,6 @@ set relativenumber
 
 " highlight the line the cursor is on
 set cursorline
-
-" set clipboard register to the same as the computer's register
-set clipboard=unnamed
 
 " use zsh
 set shell=zsh
