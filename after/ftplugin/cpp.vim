@@ -7,7 +7,7 @@ setlocal tabstop=8
 
 " compile and run on <CR>
 function! FromCPPSource()
-    nnoremap <buffer> <leader><CR> :!g++ -std=c++17 -O3 -o %:r % && ./%:r<CR>
+    nnoremap <buffer> <leader><CR> :!g++ -std=c++20 -O3 -o %:r % && ./%:r<CR>
 endfunction
 
 function! FromCPPMakefile()
@@ -23,6 +23,12 @@ endif
 
 " only use ccls for CPP linting
 let b:ale_linters={'cpp': ['clang']}
+
+" cpp compile options
+let g:ale_cpp_cc_options='-std=c++20 -Wall'
+
+" disable coc for cpp files
+let b:coc_diagnostic_disable=1
 
 " ccls cache directory
 let g:ale_cpp_ccls_init_options = {

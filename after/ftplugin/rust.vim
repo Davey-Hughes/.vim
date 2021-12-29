@@ -10,7 +10,8 @@ function! FromRustSource()
 endfunction
 
 function! FromCargoProject()
-    nnoremap <buffer> <leader><CR> :!cargo run<CR>
+    nnoremap <buffer> <leader><CR> :make run<CR>
+    nnoremap <buffer> `<CR> :Dispatch cargo run<CR>
 endfunction
 
 if !empty(findfile('Cargo.toml', getcwd().';'))
@@ -32,8 +33,7 @@ endif
 
 let g:ale_linters={
     \ 'rust': [
-        \ 'analyzer',
-        \ 'rls'
+        \ 'analyzer'
     \ ]
 \ }
 
