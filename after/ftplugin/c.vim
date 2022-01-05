@@ -24,3 +24,6 @@ endif
 
 " only use ccls for C linting
 let b:ale_linters={'c': ['ccls']}
+
+" clang format
+let g:clang_format#auto_format=1
