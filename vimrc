@@ -32,6 +32,9 @@ else
     let g:Darwin=0
 endif
 
+" vim folder location
+let $VIMDIR='$HOME/.vim'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Loads pathogen like a regular plugin
 runtime bundle/vim-pathogen/autoload/pathogen.vim
@@ -53,12 +56,14 @@ runtime bundle/vim-pathogen/autoload/pathogen.vim
 " vim-airline-themes
 " vim-apl
 " vim-better-whitespace
+" vim-clang-format
 " vim-coffee-script
 " vim-colors-solarized
 " vim-cute-python
 " vim-devicons
 " vim-dispatch
 " vim-endwise
+" vim-flog
 " vim-fugitive
 " vim-gitgutter
 " vim-go
@@ -89,7 +94,7 @@ execute pathogen#infect()
 
 augroup templates
     " c files
-    autocmd BufNewFile *.c 0r $HOME/.vim/templates/skeleton.c
+    autocmd BufNewFile *.c 0r $VIMDIR/templates/skeleton.c
 
     " c header files
     autocmd BufNewFile *.h
@@ -97,7 +102,7 @@ augroup templates
         \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
 
     " cpp files
-    autocmd BufNewFile *.cc,*cpp 0r $HOME/.vim/templates/skeleton.cc
+    autocmd BufNewFile *.cc,*cpp 0r $VIMDIR/templates/skeleton.cc
 
     " cpp header files
     autocmd BufNewFile *.hh
@@ -105,21 +110,21 @@ augroup templates
         \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
 
     " python files
-    autocmd BufNewFile *.py 0r $HOME/.vim/templates/skeleton.py
+    autocmd BufNewFile *.py 0r $VIMDIR/templates/skeleton.py
 
     " go files
-    autocmd BufNewFile *.go 0r $HOME/.vim/templates/skeleton.go
+    autocmd BufNewFile *.go 0r $VIMDIR/templates/skeleton.go
 
     " html files
-    autocmd BufNewFile *.html 0r $HOME/.vim/templates/skeleton.html
+    autocmd BufNewFile *.html 0r $VIMDIR/templates/skeleton.html
 
     " java files
     autocmd BufNewFile *.java
-        \ 0r $HOME/.vim/templates/skeleton.java |
+        \ 0r $VIMDIR/templates/skeleton.java |
         \ %substitute#\[:FILENAME:\]#\=expand('%:t:r')
 
     " rust files
-    autocmd BufNewFile *.rs 0r $HOME/.vim/templates/skeleton.rs
+    autocmd BufNewFile *.rs 0r $VIMDIR/.vim/templates/skeleton.rs
 
     " Move cursor to [:CURSOR:] in file
     autocmd BufNewFile * call MoveCursor()
@@ -225,6 +230,9 @@ set grepprg=rg\ --vimgrep\ --smart-case\ --follow
 
 " set mapleader to the spacebar
 let g:mapleader=' '
+
+" select auto regex engine (instead of old by default)
+set regexpengine=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
@@ -333,6 +341,11 @@ let g:better_whitespace_enabled=0
 let g:strip_whitespace_on_save=1
 let g:strip_whitespace_confirm=0
 
+augroup better-whitespace
+    autocmd!
+    autocmd FileType markdown let b:strip_whitespace_on_save=0
+augroup END
+
 
 """ FZF """
 set runtimepath+=/usr/local/opt/fzf
@@ -405,7 +418,7 @@ endfunction
 
 
 """ DELIMITMATE """
-let g:delimitMate_expand_cr=1
+let b:delimitMate_expand_cr=1
 
 
 """ TABDROP """
@@ -467,21 +480,21 @@ set pastetoggle=<F12>
 " Save your backups to a less annoying place than the current directory.
 " If you have .vim-backup in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/backup or . if all else fails.
-if isdirectory($HOME . '/.vim/backup') == 0
-  :silent !mkdir -p ~/.vim/backup >/dev/null 2>&1
+if isdirectory($VIMDIR . '/backup') == 0
+  execute 'silent !mkdir -p ' . $VIMDIR . '/backup >/dev/null 2>&1'
 endif
 set backupdir-=.
 set backupdir+=.
 set backupdir-=~/
-set backupdir^=~/.vim/backup/
+set backupdir^=~/.vim/backup//
 set backupdir^=./.vim-backup/
 set backup
 
 " save your swp files to a less annoying place than the current directory.
 " If you have .vim-swap in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/swap, ~/tmp or .
-if isdirectory($HOME . '/.vim/swap') == 0
-    :silent !mkdir -p ~/.vim/swap >/dev/null 2>&1
+if isdirectory($VIMDIR . '/swap') == 0
+    execute 'silent !mkdir -p ' . $VIMDIR . '/swap >/dev/null 2>&1'
 endif
 set directory=./.vim-swap//
 set directory+=~/.vim/swap//
@@ -489,15 +502,15 @@ set directory+=~/tmp//
 set directory+=.
 
 " viminfo stores the the state of your previous editing session
-set viminfo+=n~/.vim/viminfo
+set viminfofile=$VIMDIR/viminfo
 
 if exists('+undofile')
     " undofile - This allows you to use undos after exiting and restarting
     " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
     " :help undo-persistence
     " This is only present in 7.3+
-    if isdirectory($HOME . '/.vim/undo') == 0
-        :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
+    if isdirectory($VIMDIR . '/undo') == 0
+        execute 'silent !mkdir -p ' . $VIMDIR . '/undo > /dev/null 2>&1'
     endif
     set undodir=./.vim-undo//
     set undodir+=~/.vim/undo//
@@ -514,7 +527,7 @@ endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " trim blank lines at end of file on write
-function TrimEndLines()
+function! TrimEndLines()
     let l:save_cursor=getpos('.')
     :silent! call SafeSearchCommand('%substitute#\($\n\s*\)\+\%$##')
     call setpos('.', l:save_cursor)

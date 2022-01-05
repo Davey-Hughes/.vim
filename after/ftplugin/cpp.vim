@@ -21,6 +21,7 @@ else
     call FromCPPSource()
 endif
 
+
 " only use ccls for CPP linting
 let b:ale_linters={'cpp': ['clang']}
 
@@ -37,3 +38,6 @@ let g:ale_cpp_ccls_init_options = {
 \
 \   }
 \ }
+
+" clang format
+let g:clang_format#auto_format=1
