@@ -9,5 +9,7 @@ nnoremap <leader><CR> :!python3 %<CR>
 
 
 " autopep8 settings
-let g:autopep8_disable_show_diff=1
-let g:autopep8_on_save=1
+if executable('autopep8')
+    let g:autopep8_disable_show_diff=1
+    let g:autopep8_on_save=1
+endif
