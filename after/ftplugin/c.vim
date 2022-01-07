@@ -1,9 +1,5 @@
-" indenting
-setlocal noexpandtab
-setlocal copyindent
-setlocal softtabstop=0
-setlocal shiftwidth=8
-setlocal tabstop=8
+" shared C/C++ vim settings
+runtime! ftplugin/cfamily.vim
 
 " compile and run on <CR>
 function! FromCSource()
@@ -22,8 +18,17 @@ else
 endif
 
 
-" only use ccls for C linting
-let b:ale_linters={'c': ['ccls']}
+" ale c compile options
+let g:ale_c_cc_options='-std=c17 -Wall -Werror -Wpedantic'
 
-" clang format
-let g:clang_format#auto_format=1
+" linters for C
+let b:ale_linters={'c': ['ccls', 'clangtidy', 'clang']}
+
+" disable coc for c files
+let b:coc_diagnostic_disable=1
+
+" ccls cache directory
+let g:ale_c_ccls_init_options={
+    \ 'cacheDirectory': '/tmp/ccls',
+    \ 'cacheFormat': 'binary'
+\ }
