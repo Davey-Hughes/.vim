@@ -22,13 +22,7 @@ endif
 let g:ale_c_cc_options='-std=c17 -Wall -Werror -Wpedantic'
 
 " linters for C
-let b:ale_linters={'c': ['ccls', 'clangtidy', 'clang']}
+let b:ale_linters={'c': ['ccls']}
 
 " disable coc for c files
 let b:coc_diagnostic_disable=1
-
-" ccls cache directory
-let g:ale_c_ccls_init_options={
-    \ 'cacheDirectory': '/tmp/ccls',
-    \ 'cacheFormat': 'binary'
-\ }
