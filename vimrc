@@ -1,27 +1,6 @@
 " Davey Hughes' vimrc
 "
-" davidralphhughes@college.harvard.edu
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Initial setup and notes
-
-" In order to get the vista working, install ctags.
-
-" vim-slime allows for easy sending of code from vim to a REPL. The way it is
-" configured here, tmux is used as the receiving terminal, and must be opened
-" for vim-slime to send code.
-
-" The Solarized setup is dependant on your terminal settings when running vim
-" from the terminal. My settings on the default Terminal for Ubuntu are
-" xterm-256 colors. The color settings can be checked by running:
-" > tput colors
-" > echo $TERM
-
-" The 80 character color-column specifed at the bottom of the file draws the
-" line on the 80th column, so the last non-whitespace character falls on the
-" 79th column. This is so the newline character happens on the 80th column.
-
-" fzf is required to use fzf.vim
+" davidralphhughes@gmail.com
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -36,58 +15,74 @@ endif
 let $VIMDIR='$HOME/.vim'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Loads pathogen like a regular plugin
-runtime bundle/vim-pathogen/autoload/pathogen.vim
 
-" List of plugins (pathogen)
+" plugins
 
-" ale
-" delimitMate
-" emmet-vim
-" fzf.vim
-" fzf-preview.vim
-" kotlin-vim
-" nerdcommenter
-" nerdtree
-" rust.vim
-" tabline.vim
-" undotree
-" vim-airline
-" vim-airline-themes
-" vim-apl
-" vim-better-whitespace
-" vim-clang-format
-" vim-coffee-script
-" vim-colors-solarized
-" vim-cute-python
-" vim-devicons
-" vim-dispatch
-" vim-endwise
-" vim-flog
-" vim-fugitive
-" vim-gitgutter
-" vim-go
-" vim-nerdtree-tabs
-" vim-opencl
-" vim-pathogen
-" vim-slime
-" vim-speeddating
-" vim-surround
-" vim-tabdrop
-" vim-unimpaired
-" vimtex
-" vista.vim
-" webapi-vim
-
-" List of plugins (native)
 " coc
-
-
-" To disable a plugin, add it's bundle name to the following list
-let g:pathogen_disabled=[]
-" call add(g:pathogen_disabled, 'auto-pairs')
-
-execute pathogen#infect()
+"     start
+"         coc.nvim
+" colorschemes
+"     start
+"         NeoSolarized
+"         vim-colors-solarized
+" completion_linting
+"     start
+"         ale
+" filetypes
+"     start
+"         kotlin-vim
+"         rust.vim
+"         vim-coffee-script
+"         vim-cute-python
+"         vim-go
+"         vim-opencl
+"         vimtex
+" formatters
+"     start
+"         vim-autopep8
+"         vim-clang-format
+" fzf
+"     start
+"         fzf-preview.vim
+"         fzf.vim
+" git
+"     start
+"         vim-flog
+"         vim-fugitive
+"         vim-gitgutter
+" misc
+"     start
+"         vim-dispatch
+"         vim-obsession
+"         vim-sleuth
+"         vim-slime
+"         webapi-vim
+" text_editing
+"     start
+"         delimitMate
+"         emmet-vim
+"         nerdcommenter
+"         vim-better-whitespace
+"         vim-endwise
+"         vim-speeddating
+"         vim-surround
+"         vim-unimpaired
+" tmux
+"     start
+"         vim-tmux-focus-events
+"         vim-tmux-navigator
+" ui
+"     start
+"         nerdtree
+"         tabline.vim
+"         undotree
+"         vim-airline
+"         vim-airline-themes
+"         vim-bookmarks
+"         vim-devicons
+"         vim-nerdtree-tabs
+"         vim-tabdrop
+"         vista.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " commands for filetypes
@@ -179,7 +174,7 @@ set scrolloff=7
 set history=10000
 
 " when using list, show all whitespace characters
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+set listchars=eol:$,tab:>-,trail:~,lead:·,nbsp:⎵,extends:>,precedes:<
 
 " ignore case when searching except when an uppercase letter is in the search
 " pattern
