@@ -128,3 +128,6 @@
 [submodule "bundle/vim-autopep8"]
 	path = pack/formatters/start/vim-autopep8
 	url = https://github.com/tell-k/vim-autopep8.git
+[submodule "pack/filetypes/start/vim-apl"]
+	path = pack/filetypes/start/vim-apl
+	url = https://github.com/PyGamer0/vim-apl.git
