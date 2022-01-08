@@ -73,10 +73,6 @@
 [submodule "bundle/vim-tmux-navigator"]
 	path = pack/tmux/start/vim-tmux-navigator
 	url = https://github.com/christoomey/vim-tmux-navigator.git
-[submodule "bundle/emmet-vim"]
-	path = pack/text_editing/start/emmet-vim
-	url = https://github.com/mattn/emmet-vim.git
-	ignore = dirty
 [submodule "bundle/vim-sleuth"]
 	path = pack/misc/start/vim-sleuth
 	url = https://github.com/tpope/vim-sleuth.git
