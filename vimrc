@@ -12,7 +12,15 @@ else
 endif
 
 " vim folder location
-let $VIMDIR='$HOME/.vim'
+let $VIMDIR=$HOME . '/.vim'
+let $VIMSUBDIR=$VIMDIR . '/vim'
+
+if has('nvim')
+    let $VIMDIR='$HOME/.config/nvim'
+    let $VIMSUBDIR=$VIMDIR . '/nvim'
+
+    set guicursor=i:block
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -471,44 +479,45 @@ set pastetoggle=<F12>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set backup/swap/undo/ location to permanent directory in .vim folder
+" executes are necessary to expand variables like $VIMDIR
 
 " Save your backups to a less annoying place than the current directory.
 " If you have .vim-backup in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/backup or . if all else fails.
-if isdirectory($VIMDIR . '/backup') == 0
-  execute 'silent !mkdir -p ' . $VIMDIR . '/backup >/dev/null 2>&1'
+if isdirectory($VIMSUBDIR . '/backup') == 0
+  execute 'silent !mkdir -p ' . $VIMSUBDIR . '/backup >/dev/null 2>&1'
 endif
 set backupdir-=.
 set backupdir+=.
 set backupdir-=~/
-set backupdir^=~/.vim/backup//
+execute 'set backupdir^=' . $VIMSUBDIR . '/backup//'
 set backupdir^=./.vim-backup/
 set backup
 
 " save your swp files to a less annoying place than the current directory.
 " If you have .vim-swap in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/swap, ~/tmp or .
-if isdirectory($VIMDIR . '/swap') == 0
-    execute 'silent !mkdir -p ' . $VIMDIR . '/swap >/dev/null 2>&1'
+if isdirectory($VIMSUBDIR . '/swap') == 0
+    execute 'silent !mkdir -p ' . $VIMSUBDIR . '/swap >/dev/null 2>&1'
 endif
 set directory=./.vim-swap//
-set directory+=~/.vim/swap//
+execute 'set directory+=' . $VIMSUBDIR . '/swap//'
 set directory+=~/tmp//
 set directory+=.
 
 " viminfo stores the the state of your previous editing session
-set viminfofile=$VIMDIR/viminfo
+execute 'set viminfofile=' . $VIMSUBDIR . '/viminfo'
 
 if exists('+undofile')
     " undofile - This allows you to use undos after exiting and restarting
     " This, like swap and backups, uses .vim-undo first, then ~/.vim/undo
     " :help undo-persistence
     " This is only present in 7.3+
-    if isdirectory($VIMDIR . '/undo') == 0
-        execute 'silent !mkdir -p ' . $VIMDIR . '/undo > /dev/null 2>&1'
+    if isdirectory($VIMSUBDIR . '/undo') == 0
+        execute 'silent !mkdir -p ' . $VIMSUBDIR . '/undo > /dev/null 2>&1'
     endif
     set undodir=./.vim-undo//
-    set undodir+=~/.vim/undo//
+    execute 'set undodir+=' . $VIMSUBDIR . '/undo//'
     set undofile
 endif
 

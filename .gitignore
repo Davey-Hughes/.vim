@@ -1,14 +1,14 @@
 # directories
-backup/*
-swap/*
-undo/*
+*/backup/*
+*/swap/*
+*/undo/*
 sessions/*
 
 # files
 .config/c
 .netrwhist
 
-viminfo
+*/viminfo
 
 #filetypes
 *.pyc
