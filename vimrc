@@ -49,6 +49,7 @@ endif
 "     start
 "         vim-autopep8
 "         vim-clang-format
+"         vim-prettier
 " fzf
 "     start
 "         fzf-preview.vim
@@ -81,6 +82,7 @@ endif
 "         vim-tmux-navigator
 " ui
 "     start
+"         indentLine
 "         nerdtree
 "         tabline.vim
 "         undotree
@@ -359,7 +361,9 @@ command! -bang -nargs=* PRg
   \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
 
 let g:fzf_action={
-  \ 'ctrl-t': 'Tabdrop'
+  \ 'ctrl-t': 'Tabdrop',
+  \ 'ctrl-c': 'split',
+  \ 'ctrl-v': 'vsplit',
 \ }
 
 
@@ -427,6 +431,11 @@ let b:delimitMate_expand_cr=1
 """ TABDROP """
 nnoremap <C-]> :TagTabdrop<CR>
 vnoremap <C-]> <Esc>:TagTabdrop<CR>
+
+
+""" INDENT LINE """
+" use colorscheme instead of grey
+let g:indentLine_setColors=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

@@ -2,7 +2,7 @@
 */backup/*
 */swap/*
 */undo/*
-sessions/*
+*/sessions/*
 
 # files
 .config/c
