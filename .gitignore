@@ -8,6 +8,9 @@
 .config/c
 .netrwhist
 
+# symlinks for neovim
+.vim
+
 */viminfo
 
 #filetypes
