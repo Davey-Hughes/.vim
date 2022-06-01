@@ -9,8 +9,7 @@ git submodule update --init --recursive
 
 # pull newest changes for each submodule, recursively
 git submodule foreach --recursive \
-    'eval "echo $name; \
-    case \$name in \
+    'eval "case \$name in \
         'pack/fzf/start/fzf-preview.vim') \
             git checkout release/rpc ;; \
         'pack/misc/start/vim-slime') \
