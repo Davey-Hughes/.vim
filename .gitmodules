@@ -64,9 +64,6 @@
 [submodule "pack/filetypes/start/vim-coffee-script"]
 	path = pack/filetypes/start/vim-coffee-script
 	url = https://github.com/kchmck/vim-coffee-script.git
-[submodule "pack/completion_linting/start/ale"]
-	path = pack/completion_linting/start/ale
-	url = https://github.com/w0rp/ale.git
 [submodule "pack/fzf/start/fzf.vim"]
 	path = pack/fzf/start/fzf.vim
 	url = https://github.com/junegunn/fzf.vim.git
@@ -100,8 +97,8 @@
 [submodule "pack/ui/start/vim-bookmarks"]
 	path = pack/ui/start/vim-bookmarks
 	url = https://github.com/MattesGroeger/vim-bookmarks.git
-[submodule "pack/completion_linting/start/coc.nvim"]
-	path = pack/completion_linting/start/coc.nvim
+[submodule "pack/lsp/start/coc.nvim"]
+	path = pack/lsp/start/coc.nvim
 	url = https://github.com/neoclide/coc.nvim.git
 [submodule "pack/fzf/start/fzf-preview.vim"]
 	path = pack/fzf/start/fzf-preview.vim
@@ -130,3 +127,9 @@
 [submodule "pack/formatters/start/vim-prettier"]
 	path = pack/formatters/start/vim-prettier
 	url = https://github.com/prettier/vim-prettier.git
+[submodule "pack/lsp/opt/nvim-lspconfig"]
+	path = pack/lsp/opt/nvim-lspconfig
+	url = https://github.com/neovim/nvim-lspconfig.git
+[submodule "pack/lsp/opt/ale"]
+	path = pack/lsp/opt/ale
+	url = https://github.com/dense-analysis/ale.git
