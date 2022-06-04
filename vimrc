@@ -20,22 +20,28 @@ if has('nvim')
     let $VIMSUBDIR=$VIMDIR . '/nvim'
 
     set guicursor=i:block
+
+    " initialize lsp_config for nvim
+    lua require('lsp_config')
+else
+    " load ale in vim
+    packadd ale
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " plugins
 
-" coc
-"     start
-"         coc.nvim
 " colorschemes
 "     start
 "         NeoSolarized
 "         vim-colors-solarized
-" completion_linting
+" LSP
 "     start
 "         ale
+"         coc.nvim
+"     opt
+"         nvim-lspconfig
 " filetypes
 "     start
 "         kotlin-vim
@@ -422,6 +428,17 @@ function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 
 """ DELIMITMATE """

@@ -33,9 +33,13 @@ endif
 
 let g:ale_linters={
     \ 'rust': [
-        \ 'analyzer'
+        \ 'analyzer',
+        \ 'cargo'
     \ ]
 \ }
+
+" ale use clippy
+let g:ale_rust_cargo_use_clippy=1
 
 " delimitMate settings
 let b:delimitMate_matchpairs="(:),[:],{:}"
