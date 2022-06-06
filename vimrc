@@ -351,11 +351,12 @@ augroup END
 
 """ FZF """
 set runtimepath+=/usr/local/opt/fzf
-nnoremap <C-P> :Files<CR>
-
 " use PRg to use Rg in git project
 command! -bang -nargs=* PRg
   \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
+
+nnoremap <C-P> :PRg<CR>
+
 
 let g:fzf_action={
   \ 'ctrl-t': 'Tabdrop',
@@ -453,10 +454,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
