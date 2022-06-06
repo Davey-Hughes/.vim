@@ -291,6 +291,7 @@ syntax enable
 
 set background=dark
 set termguicolors
+let g:neosolarized_patched=1
 colorscheme NeoSolarized
 
 " make split indicator look thinner
