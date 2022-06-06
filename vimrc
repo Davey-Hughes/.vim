@@ -291,8 +291,8 @@ syntax enable
 " let g:gruvbox_contrast_light='soft'
 
 set background=dark
-set t_Co=256
-colorscheme solarized
+set termguicolors
+colorscheme NeoSolarized
 
 " make split indicator look thinner
 highlight VertSplit ctermbg=NONE
