@@ -21,6 +21,10 @@ git submodule foreach --recursive \
 
 git submodule foreach --recursive git pull
 
+# yarn install coc
+cd $HOME/.vim/pack/lsp/start/coc.nvim
+yarn install
+
 # install coc extensions
 mkdir -p ~/.config/coc/extensions
 cd ~/.config/coc/extensions
