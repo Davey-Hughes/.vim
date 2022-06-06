@@ -247,6 +247,9 @@ set regexpengine=0
 " always keep signcolumn open
 set signcolumn=yes
 
+" turn on hlsearch by default
+set hlsearch
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
 
