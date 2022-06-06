@@ -8,7 +8,7 @@ built-in package manager and git submodules.
 After cloning, all the packages can be initialized and later updated by
 running:
 ```
-./updsubmod.sh
+./update.sh
 ```
 This updates all the plugins and coc, an asynchronous autocompletion engine
 that supports the language server protocol (LSP). Currently all packages are
