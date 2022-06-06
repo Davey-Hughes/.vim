@@ -109,9 +109,6 @@
 [submodule "pack/formatters/start/vim-clang-format"]
 	path = pack/formatters/start/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format.git
-[submodule "pack/colorschemes/start/vim-colors-solarized"]
-	path = pack/colorschemes/start/vim-colors-solarized
-	url = https://github.com/altercation/vim-colors-solarized.git
 [submodule "pack/formatters/start/vim-autopep8"]
 	path = pack/formatters/start/vim-autopep8
 	url = https://github.com/tell-k/vim-autopep8.git
