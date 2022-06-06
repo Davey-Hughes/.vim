@@ -109,9 +109,6 @@
 [submodule "pack/formatters/start/vim-clang-format"]
 	path = pack/formatters/start/vim-clang-format
 	url = https://github.com/rhysd/vim-clang-format.git
-[submodule "pack/colorschemes/start/NeoSolarized"]
-	path = pack/colorschemes/start/NeoSolarized
-	url = https://github.com/overcache/NeoSolarized.git
 [submodule "pack/colorschemes/start/vim-colors-solarized"]
 	path = pack/colorschemes/start/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized.git
@@ -130,3 +127,6 @@
 [submodule "pack/lsp/opt/ale"]
 	path = pack/lsp/opt/ale
 	url = https://github.com/dense-analysis/ale.git
+[submodule "pack/colorschemes/start/NeoSolarized"]
+	path = pack/colorschemes/start/NeoSolarized
+	url = git@github.com:Davey-Hughes/NeoSolarized.git
