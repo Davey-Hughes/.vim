@@ -64,7 +64,6 @@ endif
 "     start
 "         vim-flog
 "         vim-fugitive
-"         vim-gitgutter
 " misc
 "     start
 "         vim-dispatch
