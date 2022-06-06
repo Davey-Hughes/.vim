@@ -244,6 +244,9 @@ let g:mapleader=' '
 " select auto regex engine (instead of old by default)
 set regexpengine=0
 
+" always keep signcolumn open
+set signcolumn=yes
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
 
@@ -400,8 +403,6 @@ let g:ale_echo_msg_error_str='E'
 let g:ale_echo_msg_warning_str='W'
 let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 
-" keep error gutter open
-let g:ale_sign_column_always=1
 
 """ COC """
 " if hidden is not set, TextEdit might fail.
