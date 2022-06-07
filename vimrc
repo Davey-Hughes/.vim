@@ -35,7 +35,6 @@ endif
 " colorschemes
 "     start
 "         NeoSolarized
-"         vim-colors-solarized
 " LSP
 "     start
 "         ale
