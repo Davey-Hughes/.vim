@@ -12,11 +12,11 @@ else
 endif
 
 " vim folder location
-let $VIMDIR=$HOME . '/.vim'
+let $VIMDIR='~/.vim'
 let $VIMSUBDIR=$VIMDIR . '/vim'
 
 if has('nvim')
-    let $VIMDIR='$HOME/.config/nvim'
+    let $VIMDIR='~/.config/nvim'
     let $VIMSUBDIR=$VIMDIR . '/nvim'
 
     set guicursor=i:block
@@ -70,6 +70,7 @@ endif
 "     start
 "         vim-dispatch
 "         vim-obsession
+"         vim-prosession
 "         vim-sleuth
 "         vim-slime
 "         webapi-vim
@@ -525,6 +526,10 @@ vnoremap <C-]> <Esc>:TagTabdrop<CR>
 """ INDENT LINE """
 " use colorscheme instead of grey
 let g:indentLine_setColors=0
+
+
+""" Prosession """
+let g:prosession_dir=$VIMSUBDIR . '/sessions/'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 

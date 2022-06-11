@@ -136,3 +136,6 @@
 [submodule "pack/filetypes/start/typescript-vim"]
 	path = pack/filetypes/start/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim.git
+[submodule "pack/misc/start/vim-prosession"]
+	path = pack/misc/start/vim-prosession
+	url = https://github.com/dhruvasagar/vim-prosession.git
