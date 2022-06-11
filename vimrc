@@ -46,6 +46,7 @@ endif
 "     start
 "         kotlin-vim
 "         rust.vim
+"         typescript.vim
 "         vim-coffee-script
 "         vim-cpp-modern
 "         vim-cute-python
