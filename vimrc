@@ -104,6 +104,8 @@ endif
 " commands for filetypes
 
 augroup templates
+    autocmd!
+
     " c files
     autocmd BufNewFile *.c 0r $VIMDIR/templates/skeleton.c
 
@@ -231,6 +233,7 @@ augroup END
 
 " Automatically close the documentation window when a selection is made
 augroup completion
+    autocmd!
     autocmd CompleteDone * pclose
 augroup END
 
@@ -251,6 +254,13 @@ set signcolumn=yes
 
 " turn on hlsearch by default
 set hlsearch
+
+" when vim is resized, make splits equal
+augroup resize
+    autocmd!
+    autocmd VimResized * wincmd =
+    autocmd BufEnter * wincmd =
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
@@ -328,10 +338,11 @@ let g:vista_stay_on_open=0
 
 " close vista if the last buffer is closed
 augroup vista
-autocmd bufenter *
-    \ if winnr("$") == 1 && vista#sidebar#IsOpen() |
-        \ execute "normal! :q!\<CR>" |
-    \ endif
+    autocmd!
+    autocmd bufenter *
+        \ if winnr("$") == 1 && vista#sidebar#IsOpen() |
+            \ execute "normal! :q!\<CR>" |
+        \ endif
 augroup END
 
 
