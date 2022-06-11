@@ -37,15 +37,17 @@ endif
 "         NeoSolarized
 " LSP
 "     start
-"         ale
 "         coc.nvim
+"         vim-pythonx
 "     opt
+"         ale
 "         nvim-lspconfig
 " filetypes
 "     start
 "         kotlin-vim
 "         rust.vim
 "         vim-coffee-script
+"         vim-cpp-modern
 "         vim-cute-python
 "         vim-go
 "         vim-opencl
@@ -104,6 +106,7 @@ endif
 augroup templates
     " c files
     autocmd BufNewFile *.c 0r $VIMDIR/templates/skeleton.c
+
 
     " c header files
     autocmd BufNewFile *.h

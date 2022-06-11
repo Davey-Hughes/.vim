@@ -127,3 +127,9 @@
 [submodule "pack/colorschemes/start/NeoSolarized"]
 	path = pack/colorschemes/start/NeoSolarized
 	url = git@github.com:Davey-Hughes/NeoSolarized.git
+[submodule "pack/lsp/start/vim-pythonx"]
+	path = pack/lsp/start/vim-pythonx
+	url = https://github.com/reconquest/vim-pythonx.git
+[submodule "pack/filetypes/start/vim-cpp-modern"]
+	path = pack/filetypes/start/vim-cpp-modern
+	url = https://github.com/bfrg/vim-cpp-modern.git
