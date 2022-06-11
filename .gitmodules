@@ -133,3 +133,6 @@
 [submodule "pack/filetypes/start/vim-cpp-modern"]
 	path = pack/filetypes/start/vim-cpp-modern
 	url = https://github.com/bfrg/vim-cpp-modern.git
+[submodule "pack/filetypes/start/typescript-vim"]
+	path = pack/filetypes/start/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim.git
