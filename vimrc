@@ -261,7 +261,7 @@ set hlsearch
 augroup resize
     autocmd!
     autocmd VimResized * wincmd =
-    autocmd BufEnter * wincmd =
+    autocmd TabEnter * wincmd =
 augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
