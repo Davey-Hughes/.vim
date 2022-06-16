@@ -2,7 +2,7 @@
 
 # link nvim to this directory
 mkdir -p $HOME/.config
-ln -s $HOME/.vim $HOME/.config/nvim
+ln -sfn $HOME/.vim $HOME/.config/nvim
 
 # initialize all submodules
 git submodule update --init --recursive
