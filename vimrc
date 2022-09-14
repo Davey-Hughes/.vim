@@ -412,6 +412,11 @@ let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
 " if hidden is not set, TextEdit might fail.
 set hidden
 
+" make inlay hint background the correct color
+if has('nvim')
+  highlight CocInlayHint ctermfg=7 ctermbg=0 guifg=LightGrey guibg=1
+endif
+
 " Better display for messages
 set cmdheight=2
 
