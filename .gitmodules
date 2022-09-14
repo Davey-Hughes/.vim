@@ -142,3 +142,6 @@
 [submodule "pack/filetypes/start/fish.vim"]
 	path = pack/filetypes/start/fish.vim
 	url = https://github.com/nickeb96/fish.vim.git
+[submodule "pack/filetypes/start/vim-asm_ca65"]
+	path = pack/filetypes/start/vim-asm_ca65
+	url = https://github.com/maxbane/vim-asm_ca65.git
