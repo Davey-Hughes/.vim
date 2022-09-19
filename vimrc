@@ -608,7 +608,6 @@ set backupdir-=.
 set backupdir+=.
 set backupdir-=~/
 execute 'set backupdir^=' . $VIMSUBDIR . '/backup//'
-set backupdir^=./.vim-backup/
 set backup
 
 " save your swp files to a less annoying place than the current directory.
