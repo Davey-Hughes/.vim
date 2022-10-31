@@ -401,6 +401,15 @@ nnoremap <silent> [fzf-p]q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
 nnoremap <silent> [fzf-p]l     :<C-u>CocCommand fzf-preview.LocationList<CR>
 
 
+""" Pytest """
+nmap <silent><Leader>yf <Esc>:Pytest file<CR>
+nmap <silent><Leader>yc <Esc>:Pytest class<CR>
+nmap <silent><Leader>ym <Esc>:Pytest method<CR>
+
+""" vim-coverage """
+nmap <silent><Leader>t :CoverageToggle<CR>
+
+
 """ ALE """
 " change error format
 let g:ale_echo_msg_error_str='E'
