@@ -1,4 +1,6 @@
 {
+  "coc.preferences.jumpCommand": "tab drop",
+
   "languageserver": {
     "ccls": {
       "command": "ccls",
