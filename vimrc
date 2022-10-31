@@ -25,7 +25,7 @@ if has('nvim')
     lua require('lsp_config')
 
     " initialize treesitter for nvim
-    lua require('treesitter')
+    " lua require('treesitter')
 else
     " load ale in vim
     packadd ale
