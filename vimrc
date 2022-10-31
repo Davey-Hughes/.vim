@@ -375,7 +375,7 @@ nnoremap <C-P> :PRg<CR>
 
 let g:fzf_action={
   \ 'ctrl-t': 'Tabdrop',
-  \ 'ctrl-c': 'split',
+  \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit',
 \ }
 
