@@ -56,6 +56,8 @@ endif
 "         vim-go
 "         vim-opencl
 "         vimtex
+"     opt
+"         nvim-treesitter
 " formatters
 "     start
 "         vim-autopep8
@@ -71,6 +73,8 @@ endif
 "         vim-fugitive
 " misc
 "     start
+"         pytest.vim
+"         vim-coverage
 "         vim-dispatch
 "         vim-obsession
 "         vim-prosession
@@ -87,6 +91,7 @@ endif
 "         vim-speeddating
 "         vim-surround
 "         vim-unimpaired
+"
 " tmux
 "     start
 "         vim-tmux-focus-events
