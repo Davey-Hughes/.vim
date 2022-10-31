@@ -145,3 +145,6 @@
 [submodule "pack/filetypes/start/vim-asm_ca65"]
 	path = pack/filetypes/start/vim-asm_ca65
 	url = https://github.com/maxbane/vim-asm_ca65.git
+[submodule "pack/fzf/start/fzf"]
+	path = pack/fzf/start/fzf
+	url = https://github.com/junegunn/fzf.git
