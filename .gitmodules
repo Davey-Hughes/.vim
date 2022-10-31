@@ -157,3 +157,6 @@
 [submodule "pack/misc/start/vim-maktaba"]
 	path = pack/misc/start/vim-maktaba
 	url = https://github.com/google/vim-maktaba.git
+[submodule "pack/filetypes/opt/nvim-treesitter"]
+	path = pack/filetypes/opt/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter.git
