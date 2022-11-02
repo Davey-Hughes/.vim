@@ -21,19 +21,23 @@ if has('nvim')
 
     set guicursor=i:block
 
-    " initialize lsp_config for nvim
+    " initialize neovim-only plugins
     lua require('lsp_config')
+    lua require('misc')
 
-    " initialize treesitter for nvim
     " lua require('treesitter')
 else
-    " load ale in vim
+    " load vim-only plugins
     packadd ale
+    packadd vim-airline
+    packadd vim-airline-themes
+
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " plugins
+" [nvim] means neovim only
 
 " colorschemes
 "     start
@@ -44,7 +48,8 @@ endif
 "         vim-pythonx
 "     opt
 "         ale
-"         nvim-lspconfig
+"         goto-preview [nvim]
+"         nvim-lspconfig [nvim]
 " filetypes
 "     start
 "         kotlin-vim
@@ -57,7 +62,7 @@ endif
 "         vim-opencl
 "         vimtex
 "     opt
-"         nvim-treesitter
+"         nvim-treesitter [nvim]
 " formatters
 "     start
 "         vim-autopep8
@@ -81,6 +86,8 @@ endif
 "         vim-sleuth
 "         vim-slime
 "         webapi-vim
+"     opt
+"         sniprun [nvim]
 " text_editing
 "     start
 "         delimitMate
@@ -102,13 +109,19 @@ endif
 "         nerdtree
 "         tabline.vim
 "         undotree
-"         vim-airline
-"         vim-airline-themes
 "         vim-bookmarks
 "         vim-devicons
 "         vim-nerdtree-tabs
 "         vim-tabdrop
 "         vista.vim
+"     opt
+"         lualine.nvim [nvim]
+"         nvim-notify [nvim]
+"         nvim-numbertoggle [nvim]
+"         nvim-peekup [nvim]
+"         Shade.nvim [nvim]
+"         vim-airline
+"         vim-airline-themes
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " commands for filetypes
