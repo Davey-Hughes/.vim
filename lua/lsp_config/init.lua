@@ -1,15 +1,15 @@
 vim.cmd [[packadd nvim-lspconfig]]
 
-require'lspconfig'.rust_analyzer.setup {
+require('lspconfig').rust_analyzer.setup({
   on_attach = on_attach,
   settings = {
-    ["rust-analyzer"] = {
+    ['rust-analyzer'] = {
       assist = {
-        importMergeBehavior = "last",
-        importPrefix = "by_self",
+        importMergeBehavior = 'last',
+        importPrefix = 'by_self',
       },
       diagnostics = {
-        disabled = { "unresolved-import" }
+        disabled = { 'unresolved-import' }
       },
       cargo = {
           loadOutDirsFromCheck = true
@@ -18,14 +18,17 @@ require'lspconfig'.rust_analyzer.setup {
           enable = true
       },
       checkOnSave = {
-          command = "clippy"
+          command = 'clippy'
       },
     }
   }
-}
+})
+
+require('lspconfig').pyright.setup({})
+require('lspconfig').ccls.setup({})
 
 -- load ale for all languages not configured for lspconfig
 vim.cmd ([[
-  let blacklist=['rust']
+  let blacklist=['rust', 'python', 'c', 'cpp']
   autocmd Filetype * if index(blacklist, &ft) < 0 | packadd ale | endif
 ]])

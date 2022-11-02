@@ -5,7 +5,7 @@
 	path = pack/text_editing/start/nerdcommenter
 	url = https://github.com/scrooloose/nerdcommenter
 [submodule "pack/ui/start/vim-airline"]
-	path = pack/ui/start/vim-airline
+	path = pack/ui/opt/vim-airline
 	url = https://github.com/bling/vim-airline
 [submodule "pack/text_editing/start/vim-better-whitespace"]
 	path = pack/text_editing/start/vim-better-whitespace
@@ -53,7 +53,7 @@
 	path = pack/filetypes/start/vim-go
 	url = https://github.com/fatih/vim-go.git
 [submodule "pack/ui/start/vim-airline-themes"]
-	path = pack/ui/start/vim-airline-themes
+	path = pack/ui/opt/vim-airline-themes
 	url = https://github.com/vim-airline/vim-airline-themes.git
 [submodule "pack/ui/start/undotree"]
 	path = pack/ui/start/undotree
@@ -160,3 +160,21 @@
 [submodule "pack/filetypes/opt/nvim-treesitter"]
 	path = pack/filetypes/opt/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
+[submodule "pack/ui/opt/nvim-numbertoggle"]
+	path = pack/ui/opt/nvim-numbertoggle
+	url = https://github.com/sitiom/nvim-numbertoggle.git
+[submodule "pack/lsp/opt/goto-preview"]
+	path = pack/lsp/opt/goto-preview
+	url = https://github.com/rmagatti/goto-preview.git
+[submodule "pack/misc/opt/sniprun"]
+	path = pack/misc/opt/sniprun
+	url = https://github.com/michaelb/sniprun.git
+[submodule "pack/ui/opt/nvim-notify"]
+	path = pack/ui/opt/nvim-notify
+	url = https://github.com/rcarriga/nvim-notify.git
+[submodule "pack/ui/opt/lualine.nvim"]
+	path = pack/ui/opt/lualine.nvim
+	url = https://github.com/nvim-lualine/lualine.nvim.git
+[submodule "pack/ui/opt/nvim-web-devicons"]
+	path = pack/ui/opt/nvim-web-devicons
+	url = https://github.com/nvim-tree/nvim-web-devicons.git
