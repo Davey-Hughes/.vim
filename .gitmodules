@@ -151,12 +151,6 @@
 [submodule "pack/misc/start/pytest.vim"]
 	path = pack/misc/start/pytest.vim
 	url = https://github.com/alfredodeza/pytest.vim.git
-[submodule "pack/misc/start/vim-coverage"]
-	path = pack/misc/start/vim-coverage
-	url = https://github.com/google/vim-coverage.git
-[submodule "pack/misc/start/vim-maktaba"]
-	path = pack/misc/start/vim-maktaba
-	url = https://github.com/google/vim-maktaba.git
 [submodule "pack/filetypes/opt/nvim-treesitter"]
 	path = pack/filetypes/opt/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
@@ -178,3 +172,9 @@
 [submodule "pack/ui/opt/nvim-web-devicons"]
 	path = pack/ui/opt/nvim-web-devicons
 	url = https://github.com/nvim-tree/nvim-web-devicons.git
+[submodule "pack/misc/opt/plenary.nvim"]
+	path = pack/misc/opt/plenary.nvim
+	url = https://github.com/nvim-lua/plenary.nvim.git
+[submodule "pack/misc/opt/nvim-coverage"]
+	path = pack/misc/opt/nvim-coverage
+	url = https://github.com/andythigpen/nvim-coverage.git
