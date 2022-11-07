@@ -79,7 +79,6 @@ endif
 " misc
 "     start
 "         pytest.vim
-"         vim-coverage
 "         vim-dispatch
 "         vim-obsession
 "         vim-prosession
@@ -87,6 +86,8 @@ endif
 "         vim-slime
 "         webapi-vim
 "     opt
+"         nvim.coverage [nvim]
+"         plenary.nvim [nvim]
 "         sniprun [nvim]
 " text_editing
 "     start
@@ -427,7 +428,7 @@ nmap <silent><Leader>yf <Esc>:Pytest file<CR>
 nmap <silent><Leader>yc <Esc>:Pytest class<CR>
 nmap <silent><Leader>ym <Esc>:Pytest method<CR>
 
-""" vim-coverage """
+""" nvim-coverage """
 nmap <silent><Leader>t :CoverageToggle<CR>
 
 
