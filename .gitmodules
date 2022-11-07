@@ -148,9 +148,6 @@
 [submodule "pack/fzf/start/fzf"]
 	path = pack/fzf/start/fzf
 	url = https://github.com/junegunn/fzf.git
-[submodule "pack/misc/start/pytest.vim"]
-	path = pack/misc/start/pytest.vim
-	url = https://github.com/alfredodeza/pytest.vim.git
 [submodule "pack/filetypes/opt/nvim-treesitter"]
 	path = pack/filetypes/opt/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
@@ -178,3 +175,6 @@
 [submodule "pack/misc/opt/nvim-coverage"]
 	path = pack/misc/opt/nvim-coverage
 	url = https://github.com/andythigpen/nvim-coverage.git
+[submodule "pack/misc/start/vim-test"]
+	path = pack/misc/start/vim-test
+	url = https://github.com/vim-test/vim-test.git

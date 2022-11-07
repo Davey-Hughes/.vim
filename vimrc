@@ -78,12 +78,12 @@ endif
 "         vim-fugitive
 " misc
 "     start
-"         pytest.vim
 "         vim-dispatch
 "         vim-obsession
 "         vim-prosession
 "         vim-sleuth
 "         vim-slime
+"         vim-test
 "         webapi-vim
 "     opt
 "         nvim.coverage [nvim]
@@ -423,10 +423,15 @@ nnoremap <silent> [fzf-p]q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
 nnoremap <silent> [fzf-p]l     :<C-u>CocCommand fzf-preview.LocationList<CR>
 
 
-""" Pytest """
-nmap <silent><Leader>yf <Esc>:Pytest file<CR>
-nmap <silent><Leader>yc <Esc>:Pytest class<CR>
-nmap <silent><Leader>ym <Esc>:Pytest method<CR>
+""" vim-test """
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+let test#strategy='neovim'
+
 
 """ nvim-coverage """
 nmap <silent><Leader>t :CoverageToggle<CR>
