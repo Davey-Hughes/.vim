@@ -16,6 +16,12 @@ git submodule foreach --recursive \
             git checkout main ;; \
         'pack/filetypes/start/vim-apl') \
             git checkout main ;; \
+        'pack/lsp/opt/goto-preview') \
+            git checkout main ;; \
+        'pack/misc/opt/nvim-coverage') \
+            git checkout main ;; \
+        'pack/ui/opt/nvim-numbertoggle') \
+            git checkout main ;; \
         *) git checkout master ;; \
     esac"'
 
