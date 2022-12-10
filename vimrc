@@ -11,6 +11,13 @@ else
     let g:Darwin=0
 endif
 
+" Unix/Linux detection
+if has ('unix')
+    let g:Unix=1
+else
+    let g:Unix=0
+endif
+
 " vim folder location
 let $VIMDIR='~/.vim'
 let $VIMSUBDIR=$VIMDIR . '/vim'
@@ -285,6 +292,35 @@ augroup resize
     autocmd VimResized * wincmd =
     autocmd TabEnter * wincmd =
 augroup END
+
+" Unix and MacOS system clipboard integration
+if g:Darwin || g:Unix
+    if g:Darwin
+        function! ClipboardYank()
+            call system('pbcopy', @@)
+        endfunction
+
+        function! ClipboardPaste()
+            let @@ = system('pbpaste')
+        endfunction
+
+    elseif g:Unix
+        function! ClipboardYank()
+            call system('xclip -i -selection clipboard', @@)
+        endfunction
+
+        function! ClipboardPaste()
+            let @@ = system('xclip -o -selection clipboard')
+        endfunction
+
+    endif
+
+    vnoremap <silent> y y:call ClipboardYank()<cr>
+    vnoremap <silent> d d:call ClipboardYank()<cr>
+    nnoremap <silent> p :call ClipboardPaste()<cr>p
+    onoremap <silent> y y:call ClipboardYank()<cr>
+    onoremap <silent> d d:call ClipboardYank()<cr>
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " plugin specific settings
