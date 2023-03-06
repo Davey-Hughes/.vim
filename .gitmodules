@@ -178,3 +178,9 @@
 [submodule "pack/misc/start/vim-test"]
 	path = pack/misc/start/vim-test
 	url = https://github.com/vim-test/vim-test.git
+[submodule "pack/filetypes/start/salt-vim"]
+	path = pack/filetypes/start/salt-vim
+	url = https://github.com/vmware-archive/salt-vim.git
+[submodule "pack/filetypes/csv.vim"]
+	path = pack/filetypes/start/csv.vim
+	url = https://github.com/chrisbra/csv.vim.git
