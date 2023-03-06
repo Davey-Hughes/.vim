@@ -32,7 +32,7 @@ if has('nvim')
     lua require('lsp_config')
     lua require('misc')
 
-    " lua require('treesitter')
+    lua require('treesitter')
 else
     " load vim-only plugins
     packadd ale

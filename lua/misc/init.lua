@@ -26,8 +26,8 @@ require('coverage').setup({
   lang = {},
 })
 
-vim.cmd [[packadd nvim-numbertoggle]]
-require'numbertoggle'.setup ({})
+-- vim.cmd [[packadd nvim-numbertoggle]]
+-- require'numbertoggle'.setup ({})
 
 vim.cmd [[packadd goto-preview]]
 require('goto-preview').setup({
