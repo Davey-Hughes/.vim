@@ -184,3 +184,6 @@
 [submodule "pack/filetypes/csv.vim"]
 	path = pack/filetypes/start/csv.vim
 	url = https://github.com/chrisbra/csv.vim.git
+[submodule "pack/git/start/vim-rhubarb"]
+	path = pack/git/start/vim-rhubarb
+	url = https://github.com/tpope/vim-rhubarb.git
