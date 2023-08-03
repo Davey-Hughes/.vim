@@ -1,6 +1,12 @@
 {
   "coc.preferences.jumpCommand": "tab drop",
 
+  "workspace.ignoredFolders": [
+    "$HOME",
+    "$HOME/.cargo/**",
+    "$HOME/.rustup/**"
+  ],
+
   "languageserver": {
     "ccls": {
       "command": "ccls",
