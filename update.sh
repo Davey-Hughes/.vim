@@ -38,7 +38,3 @@ if [ ! -f package.json ]
 then
     echo '{"dependencies":{}}'> package.json
 fi
-
-# npm install coc-git
-npm install coc-git coc-java coc-json coc-pyright coc-go coc-vimlsp coc-fzf-preview coc-rust-analyzer \
-    --global-style --ignore-scripts --no-bin-links --no-package-lock --only=prod

@@ -315,11 +315,11 @@ if g:Darwin || g:Unix
 
     endif
 
-    vnoremap <silent> y y:call ClipboardYank()<cr>
-    vnoremap <silent> d d:call ClipboardYank()<cr>
-    nnoremap <silent> p :call ClipboardPaste()<cr>p
-    onoremap <silent> y y:call ClipboardYank()<cr>
-    onoremap <silent> d d:call ClipboardYank()<cr>
+    " vnoremap <silent> y y:call ClipboardYank()<cr>
+    " vnoremap <silent> d d:call ClipboardYank()<cr>
+    " nnoremap <silent> p :call ClipboardPaste()<cr>p
+    " onoremap <silent> y y:call ClipboardYank()<cr>
+    " onoremap <silent> d d:call ClipboardYank()<cr>
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -598,6 +598,17 @@ command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.org
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+let g:coc_global_extensions = [
+\ 'coc-vimlsp',
+\ 'coc-json',
+\ 'coc-git',
+\ 'coc-fzf-preview',
+\ 'coc-rust-analyzer',
+\ 'coc-pyright',
+\ 'coc-java',
+\ 'coc-go',
+\ ]
 
 
 """ DELIMITMATE """
