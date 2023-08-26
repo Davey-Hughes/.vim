@@ -14,6 +14,8 @@ git submodule foreach --recursive \
             git checkout release/rpc ;; \
         'pack/misc/start/vim-slime') \
             git checkout main ;; \
+        'pack/misc/start/copilot.vim') \
+            git checkout release ;; \
         'pack/filetypes/start/vim-apl') \
             git checkout main ;; \
         'pack/lsp/opt/goto-preview') \
