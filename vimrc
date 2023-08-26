@@ -49,19 +49,16 @@ endif
 " colorschemes
 "     start
 "         NeoSolarized
-" LSP
-"     start
-"         coc.nvim
-"         vim-pythonx
-"     opt
-"         ale
-"         goto-preview [nvim]
-"         nvim-lspconfig [nvim]
 " filetypes
 "     start
+"         csv.vim
+"         fish.vim
 "         kotlin-vim
 "         rust.vim
+"         salt.vim
 "         typescript.vim
+"         vim-apl
+"         vim-asm_ca65
 "         vim-coffee-script
 "         vim-cpp-modern
 "         vim-cute-python
@@ -83,6 +80,15 @@ endif
 "     start
 "         vim-flog
 "         vim-fugitive
+"         vim-rhubarb
+" lsp
+"     start
+"         coc.nvim
+"         vim-pythonx
+"     opt
+"         ale
+"         goto-preview [nvim]
+"         nvim-lspconfig [nvim]
 " misc
 "     start
 "         vim-dispatch
@@ -99,7 +105,6 @@ endif
 " text_editing
 "     start
 "         delimitMate
-"         emmet-vim
 "         nerdcommenter
 "         vim-better-whitespace
 "         vim-endwise
@@ -113,7 +118,6 @@ endif
 "         vim-tmux-navigator
 " ui
 "     start
-"         indentLine
 "         nerdtree
 "         tabline.vim
 "         undotree
@@ -126,8 +130,6 @@ endif
 "         lualine.nvim [nvim]
 "         nvim-notify [nvim]
 "         nvim-numbertoggle [nvim]
-"         nvim-peekup [nvim]
-"         Shade.nvim [nvim]
 "         vim-airline
 "         vim-airline-themes
 
@@ -256,7 +258,7 @@ set autoread
 " (happens when dropping a file on gvim).
 augroup cursorpos
     autocmd!
-    autocmd BufReadPost *
+    autocmd BufEnter *
         \ if line("'\"") >= 1 && line("'\"") <= line("$") |
         \     exe "normal! g`\"" |
         \ endif
@@ -356,6 +358,7 @@ set background=dark
 set termguicolors
 let g:neosolarized_patched=1
 colorscheme NeoSolarized
+highlight CopilotSuggestion guifg=#586e75 ctermfg=8
 
 " make split indicator look thinner
 highlight VertSplit ctermbg=NONE
