@@ -187,3 +187,6 @@
 [submodule "pack/git/start/vim-rhubarb"]
 	path = pack/git/start/vim-rhubarb
 	url = https://github.com/tpope/vim-rhubarb.git
+[submodule "pack/misc/start/copilot.vim"]
+	path = pack/misc/start/copilot.vim
+	url = https://github.com/github/copilot.vim.git
