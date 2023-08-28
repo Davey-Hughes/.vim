@@ -64,6 +64,7 @@ endif
 "         vim-cute-python
 "         vim-go
 "         vim-opencl
+"         vim-ruby
 "         vimtex
 "     opt
 "         nvim-treesitter [nvim]
@@ -100,6 +101,7 @@ endif
 "         webapi-vim
 "     opt
 "         nvim.coverage [nvim]
+"         nvim-dap [nvim]
 "         plenary.nvim [nvim]
 "         sniprun [nvim]
 " text_editing
@@ -293,6 +295,11 @@ augroup resize
     autocmd!
     autocmd VimResized * wincmd =
     autocmd TabEnter * wincmd =
+augroup END
+
+" change vim's current working directory when entering a buffer
+augroup cwd
+    autocmd BufEnter * lcd %:p:h
 augroup END
 
 " Unix and MacOS system clipboard integration

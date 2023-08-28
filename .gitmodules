@@ -190,3 +190,9 @@
 [submodule "pack/misc/start/copilot.vim"]
 	path = pack/misc/start/copilot.vim
 	url = https://github.com/github/copilot.vim.git
+[submodule "pack/filetypes/start/vim-ruby"]
+	path = pack/filetypes/start/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "pack/misc/opt/nvim-dap"]
+	path = pack/misc/opt/nvim-dap
+	url = https://github.com/mfussenegger/nvim-dap.git
