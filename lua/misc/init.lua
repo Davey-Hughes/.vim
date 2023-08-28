@@ -26,6 +26,19 @@ require('coverage').setup({
   lang = {},
 })
 
+vim.cmd [[packadd nvim-dap]]
+local dap = require('dap')
+dap.adapters.python = {
+  type = 'executable';
+  command = os.getenv('HOME') .. '/opt/homebrew/bin/python3';
+  args = { '-m', 'debugpy.adapter' };
+}
+dap.adapters.kotlin = {
+  type = 'executable',
+  command = 'kotlin-debug-adapter'
+}
+
+
 -- vim.cmd [[packadd nvim-numbertoggle]]
 -- require'numbertoggle'.setup ({})
 
