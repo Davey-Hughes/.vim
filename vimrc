@@ -260,7 +260,7 @@ set autoread
 " (happens when dropping a file on gvim).
 augroup cursorpos
     autocmd!
-    autocmd BufEnter *
+    autocmd BufReadPost *
         \ if line("'\"") >= 1 && line("'\"") <= line("$") |
         \     exe "normal! g`\"" |
         \ endif
@@ -298,9 +298,9 @@ augroup resize
 augroup END
 
 " change vim's current working directory when entering a buffer
-augroup cwd
-    autocmd BufEnter * lcd %:p:h
-augroup END
+" augroup cwd
+    " autocmd BufEnter * lcd %:p:h
+" augroup END
 
 " Unix and MacOS system clipboard integration
 if g:Darwin || g:Unix
