@@ -21,3 +21,5 @@
 
 # ignore ctags file
 tags
+
+lazy-lock.json
