@@ -5,13 +5,12 @@
 */sessions/*
 
 # files
+*/viminfo
 .config/c
 .netrwhist
 
 # symlinks for neovim
 .vim
-
-*/viminfo
 
 #filetypes
 *.pyc
@@ -21,3 +20,5 @@
 
 # ignore ctags file
 tags
+
+lazy-lock.json
