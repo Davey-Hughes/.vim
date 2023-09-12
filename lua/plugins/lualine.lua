@@ -7,7 +7,7 @@ return {
   config = function()
     require("lualine").setup {
       options = {
-        theme = "solarized_dark",
+        theme = "auto",
       },
 
       sections = {

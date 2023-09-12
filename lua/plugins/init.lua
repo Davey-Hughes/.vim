@@ -1,25 +1,4 @@
 return {
-  -- colorscheme
-  {
-    "Davey-Hughes/NeoSolarized",
-    priority = 1000,
-    config = function()
-      vim.opt.background = "dark"
-      vim.opt.termguicolors = true
-      vim.g.neosolarized_patched = 1
-      vim.cmd [[
-        colorscheme NeoSolarized
-
-        " make split indicator look thinner
-        highlight VertSplit ctermbg=NONE
-        highlight VertSplit guibg=NONE
-
-        " make SignColumn the same color as the line number column
-        highlight! link SignColumn LineNr
-      ]]
-    end,
-  },
-
   -- filetype
   { "bfrg/vim-cpp-modern", ft = "cpp" },
   { "chrisbra/csv.vim", ft = "csv" },

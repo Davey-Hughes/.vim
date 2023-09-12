@@ -1,5 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" commands for filetypes
+""""""""""""""""""""""""""" commands for filetypes """"""""""""""""""""""""""""
 
 augroup templates
     autocmd!
@@ -52,7 +51,7 @@ function! MoveCursor()
     endif
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""" misc autocmds """""""""""""""""""""""""""""""""
 
 " Automatically close the documentation window when a selection is made
 augroup completion
@@ -67,8 +66,7 @@ augroup resize
     autocmd TabEnter * wincmd =
 augroup END
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" basic toggle function
+""""""""""""""""""""""""""" basic toggle function """""""""""""""""""""""""""""
 
 " Map key to toggle opt
 function MapToggle(key, opt)
@@ -88,8 +86,7 @@ MapToggle <F11>  spell
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" basic keybinds
+""""""""""""""""""""""""""""""" basic keybinds """"""""""""""""""""""""""""""""
 
 " allow changing of splits without typing ctrl-w first
 nnoremap <C-J> <C-W><C-J>
@@ -107,7 +104,8 @@ nnoremap <leader><Tab> i<C-V><Tab><Esc>
 map j gj
 map k gk
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""" backup/swap/undo """""""""""""""""""""""""""""""
+
 " set backup/swap/undo/ location to permanent directory in .vim folder
 " executes are necessary to expand variables like $VIMDIR
 
@@ -151,7 +149,8 @@ if exists('+undofile')
     set undofile
 endif
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""" misc functions """"""""""""""""""""""""""""""""
+
 " save the previous search and restore after executing the command
 function! SafeSearchCommand(theCommand)
     let l:search=@/
@@ -159,7 +158,6 @@ function! SafeSearchCommand(theCommand)
     let @/=l:search
 endfunction
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " trim blank lines at end of file on write
 function! TrimEndLines()
     let l:save_cursor=getpos('.')
@@ -172,8 +170,7 @@ augroup onwrite
     autocmd BufWritePre * call TrimEndLines()
 augroup END
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 80 character line guides
+"""""""""""""""""""""""""" 80 character line guides """""""""""""""""""""""""""
 
 " highlight characters over 80 line limit
 nnoremap <Leader>H :call<SID>LongLineHLToggle()<cr>
