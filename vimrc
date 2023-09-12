@@ -84,9 +84,7 @@ MapToggle <F2> wrap
 MapToggle <F3> list
 
 " Behavior-altering option toggles
-MapToggle <F9>  spell
-MapToggle <F10> scrollbind
-MapToggle <F11> ignorecase
+MapToggle <F11>  spell
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
