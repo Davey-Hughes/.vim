@@ -21,35 +21,37 @@ return {
   },
 
   -- filetype
-  "bfrg/vim-cpp-modern",
-  "chrisbra/csv.vim",
-  "ehamberg/vim-cute-python",
-  "fatih/vim-go",
-  "kchmck/vim-coffee-script",
-  "leafgarland/typescript-vim",
+  { "bfrg/vim-cpp-modern", ft = "cpp" },
+  { "chrisbra/csv.vim", ft = "csv" },
+  { "ehamberg/vim-cute-python", ft = "python" },
+  { "fatih/vim-go", ft = "go" },
+  { "kchmck/vim-coffee-script", ft = "coffee" },
+  { "leafgarland/typescript-vim", ft = "typescript" },
 
   {
     "lervag/vimtex",
+    ft = "tex",
     config = function()
       vim.g.vimtex_latexmk_callback = 0
       vim.g.vimtext_compiler_latexmk = "{'callback' : 0}"
     end,
   },
 
-  "maxbane/vim-asm_ca65",
-  "nickeb96/fish.vim",
-  "PyGamer0/vim-apl",
-  "rust-lang/rust.vim",
-  "udalov/kotlin-vim",
-  "vim-ruby/vim-ruby",
+  { "maxbane/vim-asm_ca65", ft = "ca65" },
+  { "nickeb96/fish.vim", ft = "fish" },
+  { "PyGamer0/vim-apl", ft = "apl" },
+  { "rust-lang/rust.vim", ft = "rust" },
+  { "udalov/kotlin-vim", ft = "kotlin" },
+  { "vim-ruby/vim-ruby", ft = "ruby" },
 
   -- formatters
-  "prettier/vim-prettier",
-  "rhysd/vim-clang-format",
-  "tell-k/vim-autopep8",
+  { "prettier/vim-prettier", ft = "javascript" },
+  { "rhysd/vim-clang-format", ft = { "c", "cpp" } },
+  { "tell-k/vim-autopep8", ft = "python" },
 
   {
     "wesleimp/stylua.nvim",
+    ft = "lua",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -111,7 +113,7 @@ return {
                 \ endif
         augroup END
 
-        nnoremap <F8> :Vista!!<CR>
+        nnoremap <F10> :Vista!!<CR>
       ]]
     end,
   },
@@ -120,7 +122,7 @@ return {
     "mbbill/undotree",
     config = function()
       vim.cmd [[
-    nnoremap <F5> :UndotreeToggle<CR>
+    nnoremap <F4> :UndotreeToggle<CR>
     ]]
     end,
   },
