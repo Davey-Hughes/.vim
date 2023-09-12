@@ -111,7 +111,7 @@ return {
                 \ endif
         augroup END
 
-        nnoremap <F8> :Vista!!<CR>
+        nnoremap <F10> :Vista!!<CR>
       ]]
     end,
   },
@@ -120,7 +120,7 @@ return {
     "mbbill/undotree",
     config = function()
       vim.cmd [[
-    nnoremap <F5> :UndotreeToggle<CR>
+    nnoremap <F4> :UndotreeToggle<CR>
     ]]
     end,
   },
