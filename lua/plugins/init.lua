@@ -66,12 +66,14 @@ return {
   "tpope/vim-sleuth",
 
   {
-    "dhruvasagar/vim-prosession",
-    dependencies = {
-      "tpope/vim-obsession",
-    },
-    init = function()
-      vim.g.prosession_dir = "~/.vim/local/sessions/"
+    "rmagatti/auto-session",
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Downloads", "/" },
+      }
+
+      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
     end,
   },
 
@@ -86,6 +88,44 @@ return {
   },
 
   -- ui
+  {
+    "gelguy/wilder.nvim",
+    build = ":UpdateRemotePlugins",
+    config = function()
+      local wilder = require "wilder"
+      wilder.setup { modes = { ":", "/", "?" } }
+
+      wilder.set_option("pipeline", {
+        wilder.branch(
+          wilder.cmdline_pipeline {
+            fuzzy = 1,
+            set_pcre2_pattern = 1,
+          },
+          wilder.python_search_pipeline {
+            pattern = "fuzzy",
+          }
+        ),
+      })
+
+      local highlighters = {
+        wilder.pcre2_highlighter(),
+        wilder.basic_highlighter(),
+      }
+
+      wilder.set_option(
+        "renderer",
+        wilder.renderer_mux {
+          [":"] = wilder.wildmenu_renderer {
+            highlighter = highlighters,
+          },
+          ["/"] = wilder.wildmenu_renderer {
+            highlighter = highlighters,
+          },
+        }
+      )
+    end,
+  },
+
   {
     "ipod825/vim-tabdrop",
     config = function()
@@ -127,6 +167,53 @@ return {
   },
 
   "mkitt/tabline.vim",
+  {
+    "p00f/godbolt.nvim",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("godbolt").setup {
+        language = {
+          c = {
+            compiler = "cclang1600",
+          },
+          cpp = {
+            compiler = "cclang1600",
+          },
+          rust = {
+            compiler = "beta",
+          },
+          go = {
+            compiler = "gccgo132",
+          },
+          python = {
+            compiler = "python311",
+          },
+          java = {
+            compiler = "java2000",
+          },
+          kotlin = {
+            compiler = "kotlinc1900",
+          },
+          javascript = {
+            compiler = "v8trunk",
+          },
+          haskell = {
+            compiler = "ghc961",
+          },
+          zig = {
+            compiler = "ztrunk",
+          },
+        },
+      }
+
+      vim.cmd [[
+        vnoremap <leader>gb :Godbolt<CR>
+        vnoremap <leader>gc :GodboltCompiler telescope<CR>
+      ]]
+    end,
+  },
   "rcarriga/nvim-notify",
   {
     "rmagatti/goto-preview",
@@ -176,8 +263,8 @@ return {
         block = "<leader>cb",
       },
       opleader = {
-        line = "<leader>c",
-        block = "<leader>b",
+        line = "<leader>c<leader>",
+        block = "<leader>b<leader>",
       },
       extra = {
         above = "<leader>cO",
