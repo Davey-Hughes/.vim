@@ -1,25 +1,4 @@
 return {
-  -- colorscheme
-  {
-    "Davey-Hughes/NeoSolarized",
-    priority = 1000,
-    config = function()
-      vim.opt.background = "dark"
-      vim.opt.termguicolors = true
-      vim.g.neosolarized_patched = 1
-      vim.cmd [[
-        colorscheme NeoSolarized
-
-        " make split indicator look thinner
-        highlight VertSplit ctermbg=NONE
-        highlight VertSplit guibg=NONE
-
-        " make SignColumn the same color as the line number column
-        highlight! link SignColumn LineNr
-      ]]
-    end,
-  },
-
   -- filetype
   { "bfrg/vim-cpp-modern", ft = "cpp" },
   { "chrisbra/csv.vim", ft = "csv" },
@@ -38,7 +17,6 @@ return {
   },
 
   { "maxbane/vim-asm_ca65", ft = "ca65" },
-  { "nickeb96/fish.vim", ft = "fish" },
   { "PyGamer0/vim-apl", ft = "apl" },
   { "rust-lang/rust.vim", ft = "rust" },
   { "udalov/kotlin-vim", ft = "kotlin" },
@@ -74,6 +52,7 @@ return {
   "tpope/vim-rhubarb",
 
   -- misc
+  "nanotee/zoxide.vim",
   "tpope/vim-sleuth",
 
   {
@@ -148,6 +127,12 @@ return {
     end,
   },
   "ryanoasis/vim-devicons",
+  {
+    "NvChad/nvim-colorizer.lua",
+    config = function()
+      require("colorizer").setup()
+    end,
+  },
   "sitiom/nvim-numbertoggle",
 
   -- text editing
@@ -190,6 +175,21 @@ return {
   "tpope/vim-unimpaired",
 
   -- tmux
-  "christoomey/vim-tmux-navigator",
+  {
+    "alexghergh/nvim-tmux-navigation",
+    config = function()
+      local nvim_tmux_nav = require "nvim-tmux-navigation"
+
+      nvim_tmux_nav.setup {
+        disable_when_zoomed = true,
+      }
+
+      vim.keymap.set("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
+      vim.keymap.set("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
+      vim.keymap.set("n", "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
+      vim.keymap.set("n", "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
+      vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
+    end,
+  },
   "tmux-plugins/vim-tmux-focus-events",
 }
