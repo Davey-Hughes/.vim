@@ -20,7 +20,7 @@ return {
     vim.opt.shortmess:append { c = true }
 
     -- Better display for messages
-    vim.opt.cmdheight = 2
+    vim.opt.cmdheight = 1
 
     -- Some servers have issues with backup files, see #649
     vim.opt.backup = false

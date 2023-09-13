@@ -88,12 +88,6 @@ set pastetoggle=<F12>
 
 """"""""""""""""""""""""""""""" basic keybinds """"""""""""""""""""""""""""""""
 
-" allow changing of splits without typing ctrl-w first
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
 " <leader><CR> enters a newline without enter insert mode
 nnoremap <leader><CR> o<Esc>
 
