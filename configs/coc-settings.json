@@ -1,9 +1,7 @@
 {
   "suggest.enablePreselect": false,
-
   "coc.preferences.jumpCommand": "tab drop",
-
-  "diagnostic.displayByAle": true,
+  "diagnostic.displayByAle": false,
 
   "workspace.ignoredFolders": [
     "$HOME",
