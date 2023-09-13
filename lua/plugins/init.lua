@@ -62,6 +62,11 @@ return {
   "tpope/vim-rhubarb",
 
   -- misc
+  {
+    "michaelb/sniprun",
+    build = "sh ./install.sh",
+  },
+
   "nanotee/zoxide.vim",
   "tpope/vim-sleuth",
 
@@ -88,6 +93,7 @@ return {
   },
 
   -- ui
+  "folke/twilight.nvim",
   {
     "gelguy/wilder.nvim",
     build = ":UpdateRemotePlugins",
@@ -223,6 +229,7 @@ return {
       }
     end,
   },
+  "RRethy/vim-illuminate",
   "ryanoasis/vim-devicons",
   {
     "NvChad/nvim-colorizer.lua",
