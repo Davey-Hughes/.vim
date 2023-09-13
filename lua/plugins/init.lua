@@ -19,6 +19,16 @@ return {
   { "maxbane/vim-asm_ca65", ft = "ca65" },
   { "PyGamer0/vim-apl", ft = "apl" },
   { "rust-lang/rust.vim", ft = "rust" },
+  {
+    "simrat39/rust-tools.nvim",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    ft = "rust",
+    config = function()
+      require("rust-tools").setup {}
+    end,
+  },
   { "udalov/kotlin-vim", ft = "kotlin" },
   { "vim-ruby/vim-ruby", ft = "ruby" },
 
@@ -158,18 +168,26 @@ return {
   },
 
   {
-    "scrooloose/nerdcommenter",
+    "numToStr/Comment.nvim",
     priority = -1000, -- ensure this loads last
-    config = function()
-      vim.g.NERDSpaceDelims = 1
-      vim.cmd [[
-      let g:NERDCustomDelimiters={
-          \ 'python': {'left': '#', 'leftAlt': '#'},
-          \ 'c': {'left': '/*', 'leftAlt': '//', 'right': '*/', 'rightAlt': ''}
-      \ }
-    ]]
-    end,
+    opts = {
+      toggler = {
+        line = "<leader>c<leader>",
+        block = "<leader>cb",
+      },
+      opleader = {
+        line = "<leader>c",
+        block = "<leader>b",
+      },
+      extra = {
+        above = "<leader>cO",
+        below = "<leader>co",
+        eol = "<leader>cA",
+      },
+    },
+    lazy = false,
   },
+
   "tpope/vim-speeddating",
   "tpope/vim-surround",
   "tpope/vim-unimpaired",
