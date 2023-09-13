@@ -3,9 +3,13 @@ return {
   {
     "Davey-Hughes/NeoSolarized",
     priority = 1000,
-    cond = false,
+    cond = (vim.env.COLORSCHEME == "neosolarized"),
     config = function()
       vim.opt.background = "dark"
+      if vim.env.COLORSCHEME_VARIANT == "light" then
+        vim.opt.background = "dark"
+      end
+
       vim.opt.termguicolors = true
       vim.g.neosolarized_patched = 1
       vim.cmd [[
@@ -24,11 +28,20 @@ return {
   {
     "folke/tokyonight.nvim",
     priority = 1000,
-    cond = true,
+    cond = (vim.env.COLORSCHEME == "tokyonight"),
     config = function()
-      vim.cmd [[
-        colorscheme tokyonight-moon
+      -- tokyonight-moon is the default
+      vim.cmd [[colorscheme tokyonight-moon]]
 
+      if vim.env.COLORSCHEME_VARIANT == "night" then
+        vim.cmd [[colorscheme tokyonight-night]]
+      elseif vim.env.COLORSCHEME_VARIANT == "storm" then
+        vim.cmd [[colorscheme tokyonight-storm]]
+      elseif vim.env.COLORSCHEME_VARIANT == "day" then
+        vim.cmd [[colorscheme tokyonight-day]]
+      end
+
+      vim.cmd [[
         " make SignColumn the same color as the line number column
         highlight! link SignColumn LineNr
         highlight! link DiffAdd LineNr
