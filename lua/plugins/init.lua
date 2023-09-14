@@ -4,7 +4,6 @@ return {
   { "chrisbra/csv.vim", ft = "csv" },
   { "ehamberg/vim-cute-python", ft = "python" },
   { "fatih/vim-go", ft = "go" },
-  { "kchmck/vim-coffee-script", ft = "coffee" },
   { "leafgarland/typescript-vim", ft = "typescript" },
 
   {
@@ -220,6 +219,18 @@ return {
       ]]
     end,
   },
+
+  {
+    "nvimdev/dashboard-nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    event = "VimEnter",
+    config = function()
+      require("dashboard").setup {}
+    end,
+  },
+
   "rcarriga/nvim-notify",
   {
     "rmagatti/goto-preview",
@@ -230,7 +241,7 @@ return {
     end,
   },
   "RRethy/vim-illuminate",
-  "ryanoasis/vim-devicons",
+  "nvim-tree/nvim-web-devicons",
   {
     "NvChad/nvim-colorizer.lua",
     config = function()
