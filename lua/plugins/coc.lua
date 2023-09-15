@@ -8,8 +8,6 @@ return {
   },
 
   config = function()
-    vim.g.coc_config_home = "$HOME/.vim/configs/"
-
     -- if hidden is not set, TextEdit might fail
     vim.opt.hidden = true
 
@@ -218,5 +216,11 @@ return {
     end
 
     remap("i", "<CR>", "v:lua.MUtils.completion_confirm()", { expr = true, noremap = true })
+
+    local Rule = require "nvim-autopairs.rule"
+    local cond = require "nvim-autopairs.conds"
+    npairs.add_rules {
+      Rule("<", ">", { "rust" }):with_pair(cond.not_before_regex " "),
+    }
   end,
 }

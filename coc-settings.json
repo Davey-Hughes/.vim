@@ -1,6 +1,6 @@
 {
   "suggest.enablePreselect": false,
-  "coc.preferences.jumpCommand": "tab drop",
+  "coc.preferences.jumpCommand": "Tabdrop",
   "diagnostic.displayByAle": false,
 
   "workspace.ignoredFolders": [
