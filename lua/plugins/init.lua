@@ -1,9 +1,9 @@
 return {
   -- filetype
-  { "bfrg/vim-cpp-modern", ft = "cpp" },
-  { "chrisbra/csv.vim", ft = "csv" },
-  { "ehamberg/vim-cute-python", ft = "python" },
-  { "fatih/vim-go", ft = "go" },
+  { "bfrg/vim-cpp-modern",        ft = "cpp" },
+  { "chrisbra/csv.vim",           ft = "csv" },
+  { "ehamberg/vim-cute-python",   ft = "python" },
+  { "fatih/vim-go",               ft = "go" },
   { "leafgarland/typescript-vim", ft = "typescript" },
 
   {
@@ -15,45 +15,16 @@ return {
     end,
   },
 
-  { "maxbane/vim-asm_ca65", ft = "ca65" },
-  { "PyGamer0/vim-apl", ft = "apl" },
-  { "rust-lang/rust.vim", ft = "rust" },
-  {
-    "simrat39/rust-tools.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-    ft = "rust",
-    config = function()
-      require("rust-tools").setup {}
-    end,
-  },
-  { "udalov/kotlin-vim", ft = "kotlin" },
-  { "vim-ruby/vim-ruby", ft = "ruby" },
+  { "maxbane/vim-asm_ca65",   ft = "ca65" },
+  { "PyGamer0/vim-apl",       ft = "apl" },
+  { "rust-lang/rust.vim",     ft = "rust" },
+  { "udalov/kotlin-vim",      ft = "kotlin" },
+  { "vim-ruby/vim-ruby",      ft = "ruby" },
 
   -- formatters
-  { "prettier/vim-prettier", ft = "javascript" },
+  { "prettier/vim-prettier",  ft = "javascript" },
   { "rhysd/vim-clang-format", ft = { "c", "cpp" } },
-  { "tell-k/vim-autopep8", ft = "python" },
-
-  {
-    "wesleimp/stylua.nvim",
-    ft = "lua",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-
-    config = function()
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = vim.g.stylua,
-        pattern = { "*.lua" },
-        callback = function(args)
-          local stylua_path = vim.fn.expand "$HOME/.vim/configs/" .. "stylua.toml"
-          require("stylua").format { config_path = stylua_path }
-        end,
-      })
-    end,
-  },
+  -- { "tell-k/vim-autopep8",    ft = "python" },
 
   -- git
   "rbong/vim-flog",

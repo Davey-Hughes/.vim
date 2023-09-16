@@ -3,6 +3,7 @@ return {
   branch = "master",
   build = "yarn install --frozen-lockfile",
   priority = -999,
+  enabled = false,
   dependencies = {
     "windwp/nvim-autopairs",
   },

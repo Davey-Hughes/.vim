@@ -63,7 +63,7 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = true
 
 -- use zsh
-vim.opt.shell = "zsh"
+vim.opt.shell = "fish"
 
 -- put new splits on the right and bottom
 vim.opt.splitbelow = true
