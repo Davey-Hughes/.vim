@@ -7,40 +7,40 @@ vim.g.mapleader = " "
 -- makes buffer modifiable
 vim.opt.modifiable = true
 
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  }
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup "plugins"
+require("lazy").setup("plugins")
 
 ------------------------------- System detection ------------------------------
-if vim.fn.has "mac" then
-  vim.g.Darwin = 1
+if vim.fn.has("mac") then
+	vim.g.Darwin = 1
 else
-  vim.g.Darwin = 0
+	vim.g.Darwin = 0
 end
 
-if vim.fn.has "unix" then
-  vim.g.Unix = 1
+if vim.fn.has("unix") then
+	vim.g.Unix = 1
 else
-  vim.g.Unix = 0
+	vim.g.Unix = 0
 end
 
 -- vim folder location
-vim.cmd [[let $VIMDIR='~/.vim']]
+vim.cmd([[let $VIMDIR='~/.vim']])
 
 ------------------------------- General settings ------------------------------
 
-vim.cmd [[filetype plugin indent on]]
+vim.cmd([[filetype plugin indent on]])
 
 -- wide cursor in insert mode
 vim.opt.guicursor = "i:block"
@@ -63,7 +63,7 @@ vim.opt.relativenumber = true
 vim.opt.cursorline = true
 
 -- use zsh
-vim.opt.shell = "zsh"
+vim.opt.shell = "fish"
 
 -- put new splits on the right and bottom
 vim.opt.splitbelow = true
@@ -93,7 +93,7 @@ vim.opt.lazyredraw = true
 vim.opt.magic = true
 
 -- disable auditory bell
-vim.cmd [[set visualbell t_vb=]]
+vim.cmd([[set visualbell t_vb=]])
 
 -- read files if changed on disk automatically
 -- for vim in the terminal, requires the plugin vim-tmux-focus-events and for
@@ -116,15 +116,17 @@ vim.opt.hlsearch = true
 -- Don't do it when the position is invalid or when inside an event handler
 -- (happens when dropping a file on gvim).
 vim.api.nvim_create_autocmd("BufReadPost", {
-  group = vim.g.cursorpos,
-  callback = function(args)
-    local valid_line = vim.fn.line [['"]] >= 1 and vim.fn.line [['"]] <= vim.fn.line "$"
-    local not_commit = vim.b[args.buf].filetype ~= "commit"
+	group = vim.g.cursorpos,
+	callback = function(args)
+		local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) <= vim.fn.line("$")
+		local not_commit = vim.b[args.buf].filetype ~= "commit"
 
-    if valid_line and not_commit then
-      vim.cmd [[normal! g`"]]
-    end
-  end,
+		if valid_line and not_commit then
+			vim.cmd([[normal! g`"]])
+		end
+	end,
 })
 
-vim.cmd [[source $VIMDIR/vimrc]]
+require("davey.remap")
+
+vim.cmd([[source $VIMDIR/vimrc]])

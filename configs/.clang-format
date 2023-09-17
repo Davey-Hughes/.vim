@@ -1,0 +1,53 @@
+BasedOnStyle: Google
+
+# indentation
+IndentWidth: 8
+ContinuationIndentWidth: 8
+UseTab: AlignWithSpaces
+IndentCaseLabels: false
+
+AllowShortIfStatementsOnASingleLine: false
+
+# pointer symbol (& *) alignment
+DerivePointerAlignment: false
+PointerAlignment: Right
+
+# put function return type on new line
+AlwaysBreakAfterReturnType: TopLevelDefinitions
+BreakBeforeBraces: Custom
+BraceWrapping:
+    AfterCaseLabel: false
+    AfterClass: false
+    AfterControlStatement: false
+    AfterEnum: false
+    AfterFunction: true
+    AfterNamespace: false
+    AfterStruct: false
+    AfterUnion: false
+    AfterExternBlock: false
+    BeforeCatch: false
+    BeforeElse: false
+    BeforeLambdaBody: false
+    BeforeWhile: false
+
+# allow functions in classes to be on a single line
+AllowShortFunctionsOnASingleLine: Inline
+
+# column to wrap on
+ColumnLimit: 120
+
+# comment alignment and reflow
+AlignTrailingComments: true
+ReflowComments: true
+
+# ensure empty line before public/protected/private
+EmptyLineBeforeAccessModifier: Always
+AccessModifierOffset: -8
+# SeparateDefinitionBlocks: Always # clang-14
+
+SpaceAfterCStyleCast: true
+SpacesBeforeTrailingComments: 1
+SpaceBeforeRangeBasedForLoopColon: false
+
+# sort includes
+SortIncludes: CaseInsensitive

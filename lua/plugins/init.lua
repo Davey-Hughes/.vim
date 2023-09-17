@@ -5,6 +5,11 @@ return {
   { "ehamberg/vim-cute-python", ft = "python" },
   { "fatih/vim-go", ft = "go" },
   { "leafgarland/typescript-vim", ft = "typescript" },
+  { "maxbane/vim-asm_ca65", ft = "ca65" },
+  { "PyGamer0/vim-apl", ft = "apl" },
+  { "rust-lang/rust.vim", ft = "rust" },
+  { "udalov/kotlin-vim", ft = "kotlin" },
+  { "vim-ruby/vim-ruby", ft = "ruby" },
 
   {
     "lervag/vimtex",
@@ -12,46 +17,6 @@ return {
     config = function()
       vim.g.vimtex_latexmk_callback = 0
       vim.g.vimtext_compiler_latexmk = "{'callback' : 0}"
-    end,
-  },
-
-  { "maxbane/vim-asm_ca65", ft = "ca65" },
-  { "PyGamer0/vim-apl", ft = "apl" },
-  { "rust-lang/rust.vim", ft = "rust" },
-  {
-    "simrat39/rust-tools.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
-    ft = "rust",
-    config = function()
-      require("rust-tools").setup {}
-    end,
-  },
-  { "udalov/kotlin-vim", ft = "kotlin" },
-  { "vim-ruby/vim-ruby", ft = "ruby" },
-
-  -- formatters
-  { "prettier/vim-prettier", ft = "javascript" },
-  { "rhysd/vim-clang-format", ft = { "c", "cpp" } },
-  { "tell-k/vim-autopep8", ft = "python" },
-
-  {
-    "wesleimp/stylua.nvim",
-    ft = "lua",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-
-    config = function()
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        group = vim.g.stylua,
-        pattern = { "*.lua" },
-        callback = function(args)
-          local stylua_path = vim.fn.expand "$HOME/.vim/configs/" .. "stylua.toml"
-          require("stylua").format { config_path = stylua_path }
-        end,
-      })
     end,
   },
 
@@ -72,10 +37,10 @@ return {
   {
     "rmagatti/auto-session",
     config = function()
-      require("auto-session").setup {
+      require("auto-session").setup({
         log_level = "error",
         auto_session_suppress_dirs = { "~/", "~/Downloads", "/" },
-      }
+      })
 
       vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
     end,
@@ -97,18 +62,18 @@ return {
     "gelguy/wilder.nvim",
     build = ":UpdateRemotePlugins",
     config = function()
-      local wilder = require "wilder"
-      wilder.setup { modes = { ":", "/", "?" } }
+      local wilder = require("wilder")
+      wilder.setup({ modes = { ":", "/", "?" } })
 
       wilder.set_option("pipeline", {
         wilder.branch(
-          wilder.cmdline_pipeline {
+          wilder.cmdline_pipeline({
             fuzzy = 1,
             set_pcre2_pattern = 1,
-          },
-          wilder.python_search_pipeline {
+          }),
+          wilder.python_search_pipeline({
             pattern = "fuzzy",
-          }
+          })
         ),
       })
 
@@ -119,14 +84,14 @@ return {
 
       wilder.set_option(
         "renderer",
-        wilder.renderer_mux {
-          [":"] = wilder.wildmenu_renderer {
+        wilder.renderer_mux({
+          [":"] = wilder.wildmenu_renderer({
             highlighter = highlighters,
-          },
-          ["/"] = wilder.wildmenu_renderer {
+          }),
+          ["/"] = wilder.wildmenu_renderer({
             highlighter = highlighters,
-          },
-        }
+          }),
+        })
       )
     end,
   },
@@ -134,10 +99,10 @@ return {
   {
     "ipod825/vim-tabdrop",
     config = function()
-      vim.cmd [[
+      vim.cmd([[
         nnoremap <C-]> :TagTabdrop<CR>
         vnoremap <C-]> <Esc>:TagTabdrop<CR>
-      ]]
+      ]])
     end,
   },
 
@@ -147,7 +112,7 @@ return {
       vim.g.vista_icon_indent = '["╰─▸ ", "├─▸ "]'
       vim.g["vista#renderer#enable_icon"] = 1
       vim.g.vista_stay_on_open = 0
-      vim.cmd [[
+      vim.cmd([[
         " close vista if the last buffer is closed
         augroup vista
             autocmd!
@@ -158,16 +123,16 @@ return {
         augroup END
 
         nnoremap <F10> :Vista!!<CR>
-      ]]
+      ]])
     end,
   },
 
   {
     "mbbill/undotree",
     config = function()
-      vim.cmd [[
+      vim.cmd([[
     nnoremap <F4> :UndotreeToggle<CR>
-    ]]
+    ]])
     end,
   },
 
@@ -178,7 +143,7 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     config = function()
-      require("godbolt").setup {
+      require("godbolt").setup({
         language = {
           c = {
             compiler = "cclang1600",
@@ -211,12 +176,12 @@ return {
             compiler = "ztrunk",
           },
         },
-      }
+      })
 
-      vim.cmd [[
+      vim.cmd([[
         vnoremap <leader>gb :Godbolt<CR>
         vnoremap <leader>gc :GodboltCompiler telescope<CR>
-      ]]
+      ]])
     end,
   },
 
@@ -227,7 +192,7 @@ return {
     },
     event = "VimEnter",
     config = function()
-      require("dashboard").setup {}
+      require("dashboard").setup({})
     end,
   },
 
@@ -235,9 +200,9 @@ return {
   {
     "rmagatti/goto-preview",
     config = function()
-      require("goto-preview").setup {
+      require("goto-preview").setup({
         default_mappings = true,
-      }
+      })
     end,
   },
   "RRethy/vim-illuminate",
@@ -254,7 +219,7 @@ return {
   {
     "ntpeters/vim-better-whitespace",
     config = function()
-      vim.cmd [[
+      vim.cmd([[
         " blacklist
         let g:better_whitespace_filetypes_blacklist=[
             \ 'go', 'diff', 'gitcommit', 'unite', 'qf', 'help'
@@ -268,7 +233,7 @@ return {
             autocmd!
             autocmd FileType markdown let b:strip_whitespace_on_save=0
         augroup END
-      ]]
+      ]])
     end,
   },
 
@@ -301,11 +266,11 @@ return {
   {
     "alexghergh/nvim-tmux-navigation",
     config = function()
-      local nvim_tmux_nav = require "nvim-tmux-navigation"
+      local nvim_tmux_nav = require("nvim-tmux-navigation")
 
-      nvim_tmux_nav.setup {
+      nvim_tmux_nav.setup({
         disable_when_zoomed = true,
-      }
+      })
 
       vim.keymap.set("n", "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
       vim.keymap.set("n", "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)

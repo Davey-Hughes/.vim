@@ -86,18 +86,6 @@ MapToggle <F11>  spell
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
-""""""""""""""""""""""""""""""" basic keybinds """"""""""""""""""""""""""""""""
-
-" <leader><CR> enters a newline without enter insert mode
-nnoremap <leader><CR> o<Esc>
-
-" <leader><Tab> inserts a real tab even when expandtab is on
-nnoremap <leader><Tab> i<C-V><Tab><Esc>
-
-" let j and k move up and down lines that have been wrapped
-map j gj
-map k gk
-
 """""""""""""""""""""""""""""" backup/swap/undo """""""""""""""""""""""""""""""
 
 " set backup/swap/undo/ location to permanent directory in .vim folder
