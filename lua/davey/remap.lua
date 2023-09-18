@@ -3,6 +3,9 @@ vim.cmd([[
   :command Q q
   :command Wq wq
   :command WQ wq
+  :command Wqa wqa
+  :command WQa wqa
+  :command WQA wqa
 ]])
 
 -- <leader><CR> enters a newline without enter insert mode
@@ -39,12 +42,6 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 -- <leader>d to delete into system clipboard
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
-
--- quickfix navigation
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
 -- <leader>s starts replacing word cursor is on
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
