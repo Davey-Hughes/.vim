@@ -8,13 +8,19 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
-    require("telescope").setup {
+    require("telescope").setup({
       defaults = {
         path_display = { "smart" },
       },
-    }
 
-    local builtin = require "telescope.builtin"
+      extensions = {
+        persisted = {
+          layout_config = { width = 0.55, height = 0.55 },
+        },
+      },
+    })
+
+    local builtin = require("telescope.builtin")
     vim.keymap.set("n", "<c-p>", builtin.git_files, {})
     vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
     vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})

@@ -86,34 +86,15 @@ MapToggle <F11>  spell
 MapToggle <F12> paste
 set pastetoggle=<F12>
 
-"""""""""""""""""""""""""""""" backup/swap/undo """""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""" undo """""""""""""""""""""""""""""""""""""
 
-" set backup/swap/undo/ location to permanent directory in .vim folder
+" set undo location to permanent directory in .vim folder
 " executes are necessary to expand variables like $VIMDIR
 
 " Save your backups to a less annoying place than the current directory.
 " If you have .vim-backup in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/backup or . if all else fails.
 let $VIMLOCAL=$VIMDIR . '/local'
-if isdirectory($VIMLOCAL . '/backup') == 0
-  execute 'silent !mkdir -p ' . $VIMLOCAL . '/backup >/dev/null 2>&1'
-endif
-set backupdir-=.
-set backupdir+=.
-set backupdir-=~/
-execute 'set backupdir^=' . $VIMLOCAL . '/backup//'
-set backup
-
-" save your swp files to a less annoying place than the current directory.
-" If you have .vim-swap in the current directory, it'll use that.
-" Otherwise it saves it to ~/.vim/swap, ~/tmp or .
-if isdirectory($VIMLOCAL . '/swap') == 0
-    execute 'silent !mkdir -p ' . $VIMLOCAL . '/swap >/dev/null 2>&1'
-endif
-set directory=./.vim-swap//
-execute 'set directory+=' . $VIMLOCAL . '/swap//'
-set directory+=~/tmp//
-set directory+=.
 
 " viminfo stores the the state of your previous editing session
 execute 'set viminfofile=' . $VIMLOCAL . '/viminfo'

@@ -23,40 +23,77 @@ return {
 
     local lsp = require("lsp-zero").preset({})
 
+    local function on_list(options)
+      vim.api.nvim_command("Tabdrop")
+    end
+
+    vim.opt.updatetime = 300
+
+    -- Function to check if a floating dialog exists and if not
+    -- then check for diagnostics under the cursor
+    function OpenDiagnosticIfNoFloat()
+      for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+        if vim.api.nvim_win_get_config(winid).zindex then
+          return
+        end
+      end
+      -- THIS IS FOR BUILTIN LSP
+      vim.diagnostic.open_float(0, {
+        scope = "cursor",
+        focusable = false,
+        close_events = {
+          "CursorMoved",
+          "CursorMovedI",
+          "BufHidden",
+          "InsertCharPre",
+          "WinLeave",
+        },
+      })
+    end
+    -- Show diagnostics under the cursor when holding position
+    vim.api.nvim_create_augroup("LSPConfig", { clear = true })
+    vim.api.nvim_create_autocmd({ "CursorHold" }, {
+      group = "LSPConfig",
+      pattern = "*",
+      callback = OpenDiagnosticIfNoFloat,
+      desc = "Show diagnostic information when holding cursor if no other floating window",
+    })
+
     lsp.on_attach(function(client, bufnr)
       lsp.default_keymaps({ buffer = bufnr })
       local opts = { buffer = bufnr, remap = false }
 
       vim.keymap.set("n", "gd", function()
-        vim.lsp.buf.definition()
+        vim.lsp.buf.definition({ reuse_win = true })
       end, opts)
-      vim.keymap.set("n", "K", function()
-        vim.lsp.buf.hover()
-      end, opts)
-      vim.keymap.set("n", "<leader>vws", function()
+
+      vim.keymap.set("n", "<leader>ws", function()
         vim.lsp.buf.workspace_symbol()
       end, opts)
-      vim.keymap.set("n", "<leader>vd", function()
-        vim.diagnostic.open_float()
-      end, opts)
-      vim.keymap.set("n", "[d", function()
-        vim.diagnostic.goto_next()
-      end, opts)
-      vim.keymap.set("n", "]d", function()
-        vim.diagnostic.goto_prev()
-      end, opts)
-      vim.keymap.set("n", "<leader>vca", function()
+      vim.keymap.set("n", "<leader>ca", function()
         vim.lsp.buf.code_action()
       end, opts)
-      vim.keymap.set("n", "<leader>vrr", function()
-        vim.lsp.buf.references()
-      end, opts)
-      vim.keymap.set("n", "<leader>vrn", function()
+      vim.keymap.set("n", "<leader>rn", function()
         vim.lsp.buf.rename()
       end, opts)
       vim.keymap.set("i", "<C-h>", function()
         vim.lsp.buf.signature_help()
       end, opts)
+
+      if client.server_capabilities.codeLensProvider then
+        vim.api.nvim_create_autocmd({ "BufWritePost", "CursorHold", "CursorHoldI", "InsertLeave" }, {
+          group = "LSPConfig",
+          pattern = "*",
+          callback = vim.lsp.codelens.refresh,
+        })
+
+        vim.api.nvim_create_autocmd("LspDetach", {
+          group = "LSPConfig",
+          callback = function(opt)
+            vim.lsp.codelens.clear(opt.data.client_id, opt.buf)
+          end,
+        })
+      end
     end)
 
     lsp.set_preferences({
@@ -164,20 +201,26 @@ return {
     })
 
     local rust_tools = require("rust-tools")
-
     rust_tools.setup({
       server = {
-        on_attach = function(_, bufnr)
+        on_attach = function(client, bufnr)
           vim.keymap.set("n", "<leader>ca", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
+          ih.on_attach(client, bufnr)
         end,
+      },
+      tools = {
+        inlay_hints = {
+          auto = false,
+        },
       },
     })
 
-    rust_tools.inlay_hints.enable()
-
     vim.cmd([[
-      highlight! link LspInlayHint DiagnosticHint
+      highlight! link DiagnosticVirtualTextError DiagnosticError
+      highlight! link DiagnosticVirtualTextWarn DiagnosticWarn
+      highlight! link DiagnosticVirtualTextInfo DiagnosticInfo
       highlight! link DiagnosticVirtualTextHint DiagnosticHint
+      highlight! link LspInlayHint DiagnosticHint
     ]])
 
     -- nvim-cmp setup
@@ -200,8 +243,6 @@ return {
           -- they way you will only jump inside the snippet region
           elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
-          elseif has_words_before() then
-            cmp.complete()
           else
             fallback()
           end
@@ -228,6 +269,7 @@ return {
     npairs.setup({
       check_ts = true,
       ts_config = {},
+      fast_wrap = {},
     })
 
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
@@ -256,12 +298,9 @@ return {
     cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
 
     local cond = require("nvim-autopairs.conds")
-    local ts_conds = require("nvim-autopairs.ts-conds")
 
     npairs.add_rules({
-      Rule("%", "%", "lua"):with_pair(ts_conds.is_ts_node({ "string", "comment" })),
-      Rule("$", "$", "lua"):with_pair(ts_conds.is_not_ts_node({ "function" })),
-      Rule("<", ">"):with_pair(cond.before_regex("%a+:?")):with_move(function(opts)
+      Rule("<", ">"):with_pair(cond.before_regex("%a+")):with_move(function(opts)
         return opts.char == ">"
       end),
     })

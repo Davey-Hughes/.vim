@@ -9,14 +9,14 @@ vim.opt.modifiable = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -24,15 +24,15 @@ require("lazy").setup("plugins")
 
 ------------------------------- System detection ------------------------------
 if vim.fn.has("mac") then
-	vim.g.Darwin = 1
+  vim.g.Darwin = 1
 else
-	vim.g.Darwin = 0
+  vim.g.Darwin = 0
 end
 
 if vim.fn.has("unix") then
-	vim.g.Unix = 1
+  vim.g.Unix = 1
 else
-	vim.g.Unix = 0
+  vim.g.Unix = 0
 end
 
 -- vim folder location
@@ -112,19 +112,23 @@ vim.opt.signcolumn = "yes"
 -- turn on hlsearch by default
 vim.opt.hlsearch = true
 
+-- turn off swapfile and backup files
+vim.opt.swapfile = false
+vim.opt.backup = false
+
 -- when editing a file, always jump to the last known cursor position.
 -- Don't do it when the position is invalid or when inside an event handler
 -- (happens when dropping a file on gvim).
 vim.api.nvim_create_autocmd("BufReadPost", {
-	group = vim.g.cursorpos,
-	callback = function(args)
-		local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) <= vim.fn.line("$")
-		local not_commit = vim.b[args.buf].filetype ~= "commit"
+  group = vim.g.cursorpos,
+  callback = function(args)
+    local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) <= vim.fn.line("$")
+    local not_commit = vim.b[args.buf].filetype ~= "commit"
 
-		if valid_line and not_commit then
-			vim.cmd([[normal! g`"]])
-		end
-	end,
+    if valid_line and not_commit then
+      vim.cmd([[normal! g`"]])
+    end
+  end,
 })
 
 require("davey.remap")

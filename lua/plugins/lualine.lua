@@ -5,7 +5,7 @@ return {
   },
 
   config = function()
-    require("lualine").setup {
+    require("lualine").setup({
       options = {
         theme = "auto",
       },
@@ -13,7 +13,7 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
-        lualine_c = { require("auto-session.lib").current_session_name, "filename" },
+        lualine_c = { "filename" },
         lualine_x = { "encoding", "fileformat", "filetype" },
         lualine_y = { "progress" },
         lualine_z = { "location" },
@@ -30,6 +30,6 @@ return {
       winbar = {},
       inactive_winbar = {},
       extensions = {},
-    }
+    })
   end,
 }
