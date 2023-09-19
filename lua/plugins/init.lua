@@ -20,11 +20,6 @@ return {
     end,
   },
 
-  -- git
-  "rbong/vim-flog",
-  "tpope/vim-fugitive",
-  "tpope/vim-rhubarb",
-
   -- misc
   {
     "glacambre/firenvim",
