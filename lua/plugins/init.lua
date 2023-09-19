@@ -27,6 +27,15 @@ return {
 
   -- misc
   {
+    "glacambre/firenvim",
+    -- Lazy load firenvim
+    lazy = not vim.g.started_by_firenvim,
+    enabled = false,
+    build = function()
+      vim.fn["firenvim#install"](0)
+    end,
+  },
+  {
     "michaelb/sniprun",
     build = "sh ./install.sh",
   },
@@ -43,12 +52,17 @@ return {
   },
 
   {
-    "glacambre/firenvim",
-    -- Lazy load firenvim
-    lazy = not vim.g.started_by_firenvim,
-    enabled = false,
-    build = function()
-      vim.fn["firenvim#install"](0)
+    "zbirenbaum/copilot.lua",
+    dependencies = {
+      { "zbirenbaum/copilot-cmp" },
+    },
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = true, auto_trigger = false },
+        panel = { enabled = false },
+      })
+
+      require("copilot_cmp").setup()
     end,
   },
 

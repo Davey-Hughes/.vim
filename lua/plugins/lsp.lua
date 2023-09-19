@@ -13,6 +13,7 @@ return {
     { "hrsh7th/nvim-cmp" },
     { "hrsh7th/cmp-nvim-lsp" },
     { "L3MON4D3/LuaSnip" },
+    { "onsails/lspkind.nvim" },
 
     { "windwp/nvim-autopairs" },
   },
@@ -135,6 +136,121 @@ return {
       },
     })
 
+    vim.cmd([[
+      highlight! link DiagnosticVirtualTextError DiagnosticError
+      highlight! link DiagnosticVirtualTextWarn DiagnosticWarn
+      highlight! link DiagnosticVirtualTextInfo DiagnosticInfo
+      highlight! link DiagnosticVirtualTextHint DiagnosticHint
+      highlight! link LspInlayHint DiagnosticHint
+    ]])
+
+    -- nvim-cmp setup
+    local cmp = require("cmp")
+    local luasnip = require("luasnip")
+    local lspkind = require("lspkind")
+
+    local has_words_before = function()
+      unpack = unpack or table.unpack
+      -- local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      -- return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+        return false
+      end
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+    end
+
+    cmp.setup({
+      sources = {
+        { name = "nvim_lsp", group_index = 2 },
+        { name = "copilot", group_index = 2 },
+      },
+      formatting = {
+        format = lspkind.cmp_format({
+          mode = "symbol",
+          maxwidth = 50,
+          ellipsis_char = "...",
+          symbol_map = { Copilot = "" },
+        }),
+      },
+      mapping = {
+        -- ["<Tab>"] = cmp.mapping(function(fallback)
+        --   if cmp.visible() then
+        --     cmp.select_next_item()
+        --   -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+        --   -- they way you will only jump inside the snippet region
+        --   elseif luasnip.expand_or_jumpable() then
+        --     luasnip.expand_or_jump()
+        --   else
+        --     fallback()
+        --   end
+        -- end, { "i", "s" }),
+        ["<Tab>"] = vim.schedule_wrap(function(fallback)
+          if cmp.visible() and has_words_before() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end),
+
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+
+        ["<CR>"] = cmp.mapping.confirm({ select = false }),
+      },
+    })
+
+    -- autopairs setup
+    local npairs = require("nvim-autopairs")
+    local Rule = require("nvim-autopairs.rule")
+
+    npairs.setup({
+      check_ts = true,
+      ts_config = {},
+      fast_wrap = {},
+    })
+
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    local ts_utils = require("nvim-treesitter.ts_utils")
+
+    local ts_node_func_parens_disabled = {
+      -- ecma
+      named_imports = true,
+      -- rust
+      use_declaration = true,
+    }
+
+    local default_handler = cmp_autopairs.filetypes["*"]["("].handler
+    cmp_autopairs.filetypes["*"]["("].handler = function(char, item, bufnr, rules, commit_character)
+      local node_type = ts_utils.get_node_at_cursor():type()
+      if ts_node_func_parens_disabled[node_type] then
+        if item.data then
+          item.data.funcParensDisabled = true
+        else
+          char = ""
+        end
+      end
+      default_handler(char, item, bufnr, rules, commit_character)
+    end
+
+    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
+
+    local cond = require("nvim-autopairs.conds")
+
+    npairs.add_rules({
+      Rule("<", ">"):with_pair(cond.before_regex("%a+")):with_move(function(opts)
+        return opts.char == ">"
+      end),
+    })
+
+    -- LSP specific setup
     require("lspconfig").lua_ls.setup({
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
@@ -200,6 +316,8 @@ return {
       },
     })
 
+    require("lspconfig").gopls.setup({})
+
     local rust_tools = require("rust-tools")
     rust_tools.setup({
       server = {
@@ -213,96 +331,6 @@ return {
           auto = false,
         },
       },
-    })
-
-    vim.cmd([[
-      highlight! link DiagnosticVirtualTextError DiagnosticError
-      highlight! link DiagnosticVirtualTextWarn DiagnosticWarn
-      highlight! link DiagnosticVirtualTextInfo DiagnosticInfo
-      highlight! link DiagnosticVirtualTextHint DiagnosticHint
-      highlight! link LspInlayHint DiagnosticHint
-    ]])
-
-    -- nvim-cmp setup
-    local cmp = require("cmp")
-    local luasnip = require("luasnip")
-    local cmp_action = require("lsp-zero").cmp_action()
-
-    local has_words_before = function()
-      unpack = unpack or table.unpack
-      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-    end
-
-    cmp.setup({
-      mapping = {
-        ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-          -- they way you will only jump inside the snippet region
-          elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { "i", "s" }),
-
-        ["<CR>"] = cmp.mapping.confirm({ select = false }),
-      },
-    })
-
-    -- autopairs setup
-    local npairs = require("nvim-autopairs")
-    local Rule = require("nvim-autopairs.rule")
-
-    npairs.setup({
-      check_ts = true,
-      ts_config = {},
-      fast_wrap = {},
-    })
-
-    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-    local ts_utils = require("nvim-treesitter.ts_utils")
-
-    local ts_node_func_parens_disabled = {
-      -- ecma
-      named_imports = true,
-      -- rust
-      use_declaration = true,
-    }
-
-    local default_handler = cmp_autopairs.filetypes["*"]["("].handler
-    cmp_autopairs.filetypes["*"]["("].handler = function(char, item, bufnr, rules, commit_character)
-      local node_type = ts_utils.get_node_at_cursor():type()
-      if ts_node_func_parens_disabled[node_type] then
-        if item.data then
-          item.data.funcParensDisabled = true
-        else
-          char = ""
-        end
-      end
-      default_handler(char, item, bufnr, rules, commit_character)
-    end
-
-    cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({}))
-
-    local cond = require("nvim-autopairs.conds")
-
-    npairs.add_rules({
-      Rule("<", ">"):with_pair(cond.before_regex("%a+")):with_move(function(opts)
-        return opts.char == ">"
-      end),
     })
   end,
 }

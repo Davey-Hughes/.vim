@@ -8,6 +8,8 @@ return {
     "nvim-tree/nvim-web-devicons",
   },
   config = function()
+    require("telescope").load_extension("persisted")
+
     require("telescope").setup({
       defaults = {
         path_display = { "smart" },
