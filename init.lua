@@ -4,9 +4,6 @@
 -- set mapleader to spacebar (needs to be done before Lazy.vim is bootstrapped)
 vim.g.mapleader = " "
 
--- makes buffer modifiable
-vim.opt.modifiable = true
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -53,7 +50,6 @@ vim.opt.expandtab = true
 
 -- character encoding
 vim.opt.encoding = "utf-8"
-vim.opt.fileencoding = "utf-8"
 
 -- number column
 vim.opt.number = true

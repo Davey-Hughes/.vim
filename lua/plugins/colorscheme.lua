@@ -32,7 +32,15 @@ return {
     config = function()
       require("tokyonight").setup({
         on_colors = function(colors)
+          local util = require("tokyonight.util")
           colors.hint = colors.fg_gutter
+          --   colors.diff = {
+          colors.diff = {
+            add = util.darken(colors.green2, 0.20),
+            delete = util.darken(colors.red1, 0.30),
+            change = util.darken(colors.blue7, 0.10),
+            text = colors.blue7,
+          }
         end,
       })
 
@@ -46,15 +54,6 @@ return {
       elseif vim.env.COLORSCHEME_VARIANT == "day" then
         vim.cmd([[colorscheme tokyonight-day]])
       end
-
-      vim.cmd([[
-        " make SignColumn the same color as the line number column
-        highlight! link SignColumn LineNr
-        highlight! link DiffAdd LineNr
-        highlight! link DiffChange LineNr
-        highlight! link DiffDelete LineNr
-        highlight! link DiffText LineNr
-      ]])
     end,
   },
 }
