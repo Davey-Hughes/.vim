@@ -12,7 +12,11 @@ return {
     -- Autocompletion
     { "hrsh7th/nvim-cmp" },
     { "hrsh7th/cmp-nvim-lsp" },
-    { "L3MON4D3/LuaSnip" },
+    {
+      "L3MON4D3/LuaSnip",
+      version = "2.*",
+      build = "make install_jsregexp",
+    },
     { "onsails/lspkind.nvim" },
 
     { "windwp/nvim-autopairs" },
@@ -125,7 +129,7 @@ return {
         "lemminx",
         "lua_ls",
         "marksman",
-        "pyright",
+        "pylyzer",
         "solargraph",
         "sqlls",
         "taplo",
@@ -273,9 +277,14 @@ return {
     })
 
     require("lspconfig").tsserver.setup({
+      enabled = false,
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
       end,
+      filetypes = {
+        "javascript",
+        "typescript",
+      },
       settings = {
         typescript = {
           hint = {
@@ -290,7 +299,27 @@ return {
       },
     })
 
-    require("lspconfig").pyright.setup({
+    require("lspconfig").eslint.setup({
+      enabled = false,
+      filetypes = {
+        "javascript",
+      },
+    })
+
+    -- require("lspconfig").pyright.setup({
+    --   on_attach = function(client, bufnr)
+    --     ih.on_attach(client, bufnr)
+    --   end,
+    --   settings = {
+    --     python = {
+    --       hint = {
+    --         enable = true,
+    --       },
+    --     },
+    --   },
+    -- })
+
+    require("lspconfig").pylyzer.setup({
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
       end,
@@ -302,9 +331,10 @@ return {
         },
       },
     })
-
     require("lspconfig").gopls.setup({})
     require("lspconfig").kotlin_language_server.setup({})
+    require("lspconfig").flow.setup({})
+    require("lspconfig").solargraph.setup({})
 
     local rust_tools = require("rust-tools")
     rust_tools.setup({

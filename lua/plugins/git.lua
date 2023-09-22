@@ -1,7 +1,9 @@
 return {
   "rbong/vim-flog",
   "tpope/vim-fugitive",
-  "tpope/vim-rhubarb",
+  {
+    "tpope/vim-rhubarb",
+  },
   {
     "sindrets/diffview.nvim",
     config = function()
