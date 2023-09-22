@@ -47,6 +47,27 @@ return {
   },
 
   {
+    "ThePrimeagen/harpoon",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    config = function()
+      require("harpoon").setup({
+        menu = {
+          width = vim.api.nvim_win_get_width(0) - 4,
+        },
+      })
+
+      local mark = require("harpoon.mark")
+      local ui = require("harpoon.ui")
+      vim.keymap.set("n", "<leader>hm", mark.add_file, {})
+      vim.keymap.set("n", "<leader>hn", ui.nav_next, {})
+      vim.keymap.set("n", "<leader>hp", ui.nav_prev, {})
+    end,
+  },
+
+  {
     "zbirenbaum/copilot.lua",
     dependencies = {
       { "zbirenbaum/copilot-cmp" },
