@@ -163,6 +163,10 @@ return {
     end
 
     cmp.setup({
+      window = {
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
+      },
       sources = {
         { name = "nvim_lsp", group_index = 2 },
         { name = "copilot", group_index = 2 },
@@ -343,6 +347,13 @@ return {
           vim.keymap.set("n", "<leader>ca", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
           ih.on_attach(client, bufnr)
         end,
+        settings = {
+          ["rust-analyzer"] = {
+            checkOnSave = {
+              command = "clippy",
+            },
+          },
+        },
       },
       tools = {
         inlay_hints = {
