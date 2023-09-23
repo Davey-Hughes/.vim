@@ -20,6 +20,34 @@ return {
     { "onsails/lspkind.nvim" },
 
     { "windwp/nvim-autopairs" },
+    {
+      "ray-x/go.nvim",
+      dependencies = {
+        "ray-x/guihua.lua",
+        "neovim/nvim-lspconfig",
+        "nvim-treesitter/nvim-treesitter",
+      },
+
+      config = function()
+        require("go").setup({
+          lsp_cfg = false,
+          lsp_keymaps = false,
+        })
+
+        local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          pattern = "*.go",
+          callback = function()
+            require("go.format").goimport()
+          end,
+          group = format_sync_grp,
+        })
+      end,
+
+      event = { "CmdlineEnter" },
+      ft = { "go", "gomod" },
+      build = ':lua require("go.install").update_all_sync()',
+    },
   },
 
   config = function()
@@ -42,6 +70,7 @@ return {
           return
         end
       end
+
       -- THIS IS FOR BUILTIN LSP
       vim.diagnostic.open_float(0, {
         scope = "cursor",
@@ -86,7 +115,7 @@ return {
       end, opts)
 
       if client.server_capabilities.codeLensProvider then
-        vim.api.nvim_create_autocmd({ "BufWritePost", "CursorHold", "CursorHoldI", "InsertLeave" }, {
+        vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
           group = "LSPConfig",
           pattern = "*",
           callback = vim.lsp.codelens.refresh,
@@ -167,6 +196,7 @@ return {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
+      preselect = cmp.PreselectMode.None,
       sources = {
         { name = "nvim_lsp", group_index = 2 },
         { name = "copilot", group_index = 2 },
@@ -335,7 +365,10 @@ return {
         },
       },
     })
-    require("lspconfig").gopls.setup({})
+
+    local cfg = require("go.lsp").config()
+    require("lspconfig").gopls.setup(cfg)
+
     require("lspconfig").kotlin_language_server.setup({})
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
