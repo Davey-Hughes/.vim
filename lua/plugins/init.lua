@@ -3,7 +3,6 @@ return {
   { "bfrg/vim-cpp-modern", ft = "cpp" },
   { "chrisbra/csv.vim", ft = "csv" },
   { "ehamberg/vim-cute-python", ft = "python" },
-  { "fatih/vim-go", ft = "go" },
   { "leafgarland/typescript-vim", ft = "typescript" },
   { "maxbane/vim-asm_ca65", ft = "ca65" },
   { "PyGamer0/vim-apl", ft = "apl" },
