@@ -22,6 +22,17 @@ return {
 
   -- misc
   {
+    "bennypowers/nvim-regexplainer",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "MunifTanjim/nui.nvim",
+    },
+    config = function()
+      require("regexplainer").setup()
+    end,
+  },
+  "Eandrju/cellular-automaton.nvim",
+  {
     "glacambre/firenvim",
     -- Lazy load firenvim
     lazy = not vim.g.started_by_firenvim,

@@ -56,4 +56,18 @@ return {
       end
     end,
   },
+
+  {
+    "rebelot/kanagawa.nvim",
+    priority = 1000,
+    build = ":KanagawaCompile",
+    cond = (vim.env.COLORSCHEME == "kanagawa"),
+    config = function()
+      require("kanagawa").setup({
+        compile = true,
+        theme = "dragon",
+      })
+      vim.cmd([[colorscheme kanagawa]])
+    end,
+  },
 }
