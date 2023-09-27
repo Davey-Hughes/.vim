@@ -10,8 +10,13 @@ return {
     { "lvimuser/lsp-inlayhints.nvim" },
 
     -- Autocompletion
-    { "hrsh7th/nvim-cmp" },
-    { "hrsh7th/cmp-nvim-lsp" },
+    {
+      "hrsh7th/nvim-cmp",
+      dependencies = {
+        "hrsh7th/cmp-path",
+        "hrsh7th/cmp-nvim-lsp",
+      },
+    },
     {
       "L3MON4D3/LuaSnip",
       version = "2.*",
@@ -179,6 +184,7 @@ return {
 
     -- nvim-cmp setup
     local cmp = require("cmp")
+    local compare = require("cmp.config.compare")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
 
@@ -192,12 +198,22 @@ return {
     end
 
     cmp.setup({
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          compare.exact,
+        },
+      },
+      completion = {
+        completopt = "menu,menuone,noinsert,noselect",
+      },
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
       },
       preselect = cmp.PreselectMode.None,
       sources = {
+        { name = "path", group_index = 1 },
         { name = "nvim_lsp", group_index = 2 },
         { name = "copilot", group_index = 2 },
       },
