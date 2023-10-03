@@ -1,11 +1,10 @@
 return {
-  "rbong/vim-flog",
-  "tpope/vim-fugitive",
-  {
-    "tpope/vim-rhubarb",
-  },
+  { "rbong/vim-flog", event = "VeryLazy" },
+  { "tpope/vim-fugitive", event = "VeryLazy" },
+  { "tpope/vim-rhubarb", event = "VeryLazy" },
   {
     "sindrets/diffview.nvim",
+    event = "VeryLazy",
     config = function()
       vim.opt.fillchars:append({ diff = "╱" })
     end,
@@ -13,11 +12,13 @@ return {
 
   {
     "akinsho/git-conflict.nvim",
+    event = "VeryLazy",
     version = "*",
     config = true,
   },
   {
     "kdheepak/lazygit.nvim",
+    event = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -27,6 +28,7 @@ return {
   },
   {
     "lewis6991/gitsigns.nvim",
+    event = "VeryLazy",
     config = function()
       require("gitsigns").setup()
     end,

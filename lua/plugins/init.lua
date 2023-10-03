@@ -22,6 +22,7 @@ return {
   -- misc
   {
     "bennypowers/nvim-regexplainer",
+    event = "VeryLazy",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "MunifTanjim/nui.nvim",
@@ -30,7 +31,8 @@ return {
       require("regexplainer").setup()
     end,
   },
-  "Eandrju/cellular-automaton.nvim",
+  { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
+
   {
     "glacambre/firenvim",
     -- Lazy load firenvim
@@ -42,10 +44,11 @@ return {
   },
   {
     "michaelb/sniprun",
+    event = "VeryLazy",
     build = "sh ./install.sh",
   },
 
-  "nanotee/zoxide.vim",
+  { "nanotee/zoxide.vim", event = "VeryLazy" },
   "tpope/vim-sleuth",
 
   {
@@ -58,6 +61,7 @@ return {
 
   {
     "ThePrimeagen/harpoon",
+    event = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
@@ -79,6 +83,7 @@ return {
 
   {
     "zbirenbaum/copilot.lua",
+    event = "VeryLazy",
     dependencies = {
       { "zbirenbaum/copilot-cmp" },
     },
@@ -93,9 +98,10 @@ return {
   },
 
   -- ui
-  "folke/twilight.nvim",
+  { "folke/twilight.nvim", event = "VeryLazy" },
   {
     "gelguy/wilder.nvim",
+    event = "VeryLazy",
     build = ":UpdateRemotePlugins",
     config = function()
       local wilder = require("wilder")
@@ -134,6 +140,7 @@ return {
 
   {
     "ipod825/vim-tabdrop",
+    event = "VeryLazy",
     config = function()
       vim.cmd([[
         nnoremap <C-]> :TagTabdrop<CR>
@@ -144,6 +151,7 @@ return {
 
   {
     "liuchengxu/vista.vim",
+    event = "VeryLazy",
     config = function()
       vim.g.vista_icon_indent = '["╰─▸ ", "├─▸ "]'
       vim.g["vista#renderer#enable_icon"] = 1
@@ -165,6 +173,7 @@ return {
 
   {
     "mbbill/undotree",
+    event = "VeryLazy",
     config = function()
       vim.cmd([[
     nnoremap <F4> :UndotreeToggle<CR>
@@ -175,6 +184,7 @@ return {
   "mkitt/tabline.vim",
   {
     "p00f/godbolt.nvim",
+    event = "VeryLazy",
     dependencies = {
       "nvim-telescope/telescope.nvim",
     },
@@ -226,34 +236,37 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    event = "VimEnter",
+    event = "VeryLazy",
     config = function()
       require("dashboard").setup({})
     end,
   },
 
-  "rcarriga/nvim-notify",
+  { "rcarriga/nvim-notify", event = "VeryLazy" },
   {
     "rmagatti/goto-preview",
+    event = "VeryLazy",
     config = function()
       require("goto-preview").setup({
         default_mappings = true,
       })
     end,
   },
-  "RRethy/vim-illuminate",
+  { "RRethy/vim-illuminate", event = "VeryLazy" },
   "nvim-tree/nvim-web-devicons",
   {
     "NvChad/nvim-colorizer.lua",
+    event = "VeryLazy",
     config = function()
       require("colorizer").setup()
     end,
   },
-  "sitiom/nvim-numbertoggle",
+  { "sitiom/nvim-numbertoggle", event = "VeryLazy" },
 
   -- text editing
   {
     "ntpeters/vim-better-whitespace",
+    event = "VeryLazy",
     config = function()
       vim.cmd([[
         " blacklist
@@ -275,6 +288,7 @@ return {
 
   {
     "numToStr/Comment.nvim",
+    event = "VeryLazy",
     priority = -1000, -- ensure this loads last
     opts = {
       toggler = {
@@ -291,16 +305,16 @@ return {
         eol = "<leader>cA",
       },
     },
-    lazy = false,
   },
 
-  "tpope/vim-speeddating",
-  "tpope/vim-surround",
-  "tpope/vim-unimpaired",
+  { "tpope/vim-speeddating", event = "VeryLazy" },
+  { "tpope/vim-surround", event = "VeryLazy" },
+  { "tpope/vim-unimpaired", event = "VeryLazy" },
 
   -- tmux
   {
     "alexghergh/nvim-tmux-navigation",
+    event = "VeryLazy",
     config = function()
       local nvim_tmux_nav = require("nvim-tmux-navigation")
 
@@ -315,5 +329,4 @@ return {
       vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
     end,
   },
-  "tmux-plugins/vim-tmux-focus-events",
 }
