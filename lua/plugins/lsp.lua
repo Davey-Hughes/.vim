@@ -1,12 +1,13 @@
 return {
   "VonHeikemen/lsp-zero.nvim",
   branch = "v2.x",
+  event = "VeryLazy",
   dependencies = {
     -- LSP Support
     { "neovim/nvim-lspconfig" },
     { "williamboman/mason.nvim" },
     { "williamboman/mason-lspconfig.nvim" },
-    { "simrat39/rust-tools.nvim" },
+    { "simrat39/rust-tools.nvim", ft = "rust" },
     { "lvimuser/lsp-inlayhints.nvim" },
 
     -- Autocompletion
@@ -49,7 +50,7 @@ return {
         })
       end,
 
-      event = { "CmdlineEnter" },
+      event = "CmdlineEnter",
       ft = { "go", "gomod" },
       build = ':lua require("go.install").update_all_sync()',
     },
@@ -355,19 +356,6 @@ return {
         "javascript",
       },
     })
-
-    -- require("lspconfig").pyright.setup({
-    --   on_attach = function(client, bufnr)
-    --     ih.on_attach(client, bufnr)
-    --   end,
-    --   settings = {
-    --     python = {
-    --       hint = {
-    --         enable = true,
-    --       },
-    --     },
-    --   },
-    -- })
 
     require("lspconfig").pylyzer.setup({
       on_attach = function(client, bufnr)
