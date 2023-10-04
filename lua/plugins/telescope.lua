@@ -71,5 +71,6 @@ return {
     vim.keymap.set("n", "<leader>fl", builtin.lsp_dynamic_workspace_symbols, {})
     vim.keymap.set("n", "<space>fe", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
     vim.keymap.set("n", "<leader>fm", harpoon.marks, {})
+    vim.keymap.set("n", "<leader>fn", ":Noice telescope<CR>", {})
   end,
 }

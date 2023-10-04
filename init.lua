@@ -82,9 +82,6 @@ vim.opt.smartcase = true
 -- makes search act like search in modern browsers
 vim.opt.incsearch = true
 
--- don't redraw while executing macros (good performance config)
-vim.opt.lazyredraw = true
-
 -- for regular expressions turn magic on
 vim.opt.magic = true
 

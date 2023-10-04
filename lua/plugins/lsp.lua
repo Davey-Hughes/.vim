@@ -1,7 +1,7 @@
 return {
   "VonHeikemen/lsp-zero.nvim",
   branch = "v2.x",
-  event = "VeryLazy",
+  event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     -- LSP Support
     { "neovim/nvim-lspconfig" },
@@ -26,6 +26,12 @@ return {
     { "onsails/lspkind.nvim" },
 
     { "windwp/nvim-autopairs" },
+    {
+      "smjonas/inc-rename.nvim",
+      config = function()
+        require("inc_rename").setup()
+      end,
+    },
     {
       "ray-x/go.nvim",
       dependencies = {
@@ -114,8 +120,8 @@ return {
         vim.lsp.buf.code_action()
       end, opts)
       vim.keymap.set("n", "<leader>rn", function()
-        vim.lsp.buf.rename()
-      end, opts)
+        return ":IncRename " .. vim.fn.expand("<cword>")
+      end, { expr = true })
       vim.keymap.set("i", "<C-h>", function()
         vim.lsp.buf.signature_help()
       end, opts)
@@ -188,6 +194,8 @@ return {
     local compare = require("cmp.config.compare")
     local luasnip = require("luasnip")
     local lspkind = require("lspkind")
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    capabilities.offsetEncoding = "utf-8"
 
     local has_words_before = function()
       unpack = unpack or table.unpack
@@ -313,6 +321,7 @@ return {
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
       end,
+      capabilities = capabilities,
       settings = {
         c = {
           hint = {
