@@ -26,6 +26,7 @@ return {
 
         indent = {
           enable = true,
+          disable = { "javascript" },
         },
 
         highlight = {
