@@ -58,6 +58,9 @@ vim.opt.relativenumber = true
 -- highlight cursor line
 vim.opt.cursorline = true
 
+-- set cmdheight
+vim.opt.cmdheight = 0
+
 -- use zsh
 vim.opt.shell = "fish"
 
