@@ -13,12 +13,41 @@ return {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
     },
+    "nvim-telescope/telescope-live-grep-args.nvim",
   },
   config = function()
+    local ts_select_dir_for_grep_args = function(prompt_bufnr)
+      local action_state = require("telescope.actions.state")
+      local fb = require("telescope").extensions.file_browser
+      local lga = require("telescope").extensions.live_grep_args
+      local current_line = action_state.get_current_line()
+
+      fb.file_browser({
+        files = false,
+        depth = false,
+        attach_mappings = function(prompt_bufnr)
+          require("telescope.actions").select_default:replace(function()
+            local entry_path = action_state.get_selected_entry().Path
+            local dir = entry_path:is_dir() and entry_path or entry_path:parent()
+            local relative = dir:make_relative(vim.fn.getcwd())
+            local absolute = dir:absolute()
+
+            lga.live_grep_args({
+              results_title = relative .. "/",
+              cwd = absolute,
+              default_text = current_line,
+            })
+          end)
+
+          return true
+        end,
+      })
+    end
+
     local fb_actions = require("telescope").extensions.file_browser.actions
+    local lga_actions = require("telescope-live-grep-args.actions")
 
     require("telescope").setup({
-
       defaults = {
         path_display = { "smart" },
 
@@ -35,6 +64,8 @@ return {
         },
       },
 
+      pickers = {},
+
       extensions = {
         persisted = {
           layout_config = { width = 0.55, height = 0.55 },
@@ -49,6 +80,20 @@ return {
             },
           },
         },
+
+        live_grep_args = {
+          auto_quoting = true,
+          mappings = {
+            i = {
+              ["<C-k>"] = lga_actions.quote_prompt(),
+              ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob " }),
+              ["<C-f>"] = ts_select_dir_for_grep_args,
+            },
+            n = {
+              ["<C-f>"] = ts_select_dir_for_grep_args,
+            },
+          },
+        },
       },
     })
 
@@ -56,12 +101,14 @@ return {
     require("telescope").load_extension("smart_history")
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("file_browser")
+    local lga = require("telescope").load_extension("live_grep_args")
     local harpoon = require("telescope").load_extension("harpoon")
 
     local builtin = require("telescope.builtin")
     vim.keymap.set("n", "<c-p>", builtin.git_files, {})
     vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
     vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
+    vim.keymap.set("n", "<leader>fa", lga.live_grep_args, {})
     vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
     vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
     vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
