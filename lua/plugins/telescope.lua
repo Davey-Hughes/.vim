@@ -14,6 +14,7 @@ return {
       build = "make",
     },
     "nvim-telescope/telescope-live-grep-args.nvim",
+    "kkharji/sqlite.lua",
   },
   config = function()
     local ts_select_dir_for_grep_args = function(prompt_bufnr)

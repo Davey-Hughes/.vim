@@ -122,9 +122,9 @@ return {
       vim.keymap.set("n", "<leader>rn", function()
         return ":IncRename " .. vim.fn.expand("<cword>")
       end, { expr = true })
-      vim.keymap.set("i", "<C-h>", function()
-        vim.lsp.buf.signature_help()
-      end, opts)
+      -- vim.keymap.set("i", "<C-h>", function()
+      --   vim.lsp.buf.signature_help()
+      -- end, opts)
 
       if client.server_capabilities.codeLensProvider then
         vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
@@ -337,7 +337,7 @@ return {
     })
 
     require("lspconfig").tsserver.setup({
-      enabled = false,
+      enabled = true,
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
       end,
