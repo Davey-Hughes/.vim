@@ -43,6 +43,14 @@ return {
     end,
   },
   {
+    "HakonHarnes/img-clip.nvim",
+    event = "VeryLazy",
+    opts = {},
+    keys = {
+      { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
+    },
+  },
+  {
     "michaelb/sniprun",
     event = "VeryLazy",
     build = "sh ./install.sh",
