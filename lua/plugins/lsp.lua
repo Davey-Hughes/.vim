@@ -7,7 +7,7 @@ return {
     { "neovim/nvim-lspconfig" },
     { "williamboman/mason.nvim" },
     { "williamboman/mason-lspconfig.nvim" },
-    { "simrat39/rust-tools.nvim", ft = "rust" },
+    { "mrcjkb/rustaceanvim", ft = "rust" },
     { "lvimuser/lsp-inlayhints.nvim" },
 
     -- Autocompletion
@@ -74,6 +74,16 @@ return {
 
     vim.opt.updatetime = 300
 
+    -- show which LSP server triggered the message
+    vim.diagnostic.config({
+      virtual_text = {
+        source = "always",
+      },
+      float = {
+        source = "always",
+      },
+    })
+
     -- Function to check if a floating dialog exists and if not
     -- then check for diagnostics under the cursor
     function OpenDiagnosticIfNoFloat()
@@ -85,6 +95,7 @@ return {
 
       -- THIS IS FOR BUILTIN LSP
       vim.diagnostic.open_float(0, {
+        source = "always",
         scope = "cursor",
         focusable = false,
         close_events = {
@@ -116,15 +127,18 @@ return {
       vim.keymap.set("n", "<leader>ws", function()
         vim.lsp.buf.workspace_symbol()
       end, opts)
+
       vim.keymap.set("n", "<leader>ca", function()
         vim.lsp.buf.code_action()
       end, opts)
+
       vim.keymap.set("n", "<leader>rn", function()
         return ":IncRename " .. vim.fn.expand("<cword>")
       end, { expr = true })
-      -- vim.keymap.set("i", "<C-h>", function()
-      --   vim.lsp.buf.signature_help()
-      -- end, opts)
+
+      vim.keymap.set("i", "<C-h>", function()
+        vim.lsp.buf.signature_help()
+      end, opts)
 
       if client.server_capabilities.codeLensProvider then
         vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
@@ -160,6 +174,7 @@ return {
       ensure_installed = {
         "asm_lsp",
         "bashls",
+        "biome",
         "clangd",
         "eslint",
         "gopls",
@@ -385,15 +400,18 @@ return {
     require("lspconfig").kotlin_language_server.setup({})
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
+    require("lspconfig").biome.setup({})
 
-    local rust_tools = require("rust-tools")
-    rust_tools.setup({
+    vim.g.rustaceanvim = {
+      -- Plugin configuration
+      tools = {},
+      -- LSP configuration
       server = {
         on_attach = function(client, bufnr)
-          vim.keymap.set("n", "<leader>ca", rust_tools.hover_actions.hover_actions, { buffer = bufnr })
-          ih.on_attach(client, bufnr)
+          -- you can also put keymaps in here
         end,
         settings = {
+          -- rust-analyzer language server configuration
           ["rust-analyzer"] = {
             checkOnSave = {
               command = "clippy",
@@ -401,11 +419,8 @@ return {
           },
         },
       },
-      tools = {
-        inlay_hints = {
-          auto = false,
-        },
-      },
-    })
+      -- DAP configuration
+      dap = {},
+    }
   end,
 }
