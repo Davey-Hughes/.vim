@@ -135,6 +135,14 @@ return {
             ["vim.lsp.util.stylize_markdown"] = true,
             ["cmp.entry.get_documentation"] = true,
           },
+
+          hover = {
+            enabled = false,
+          },
+
+          signature = {
+            enabled = false,
+          },
         },
         presets = {
           bottom_search = true,
@@ -152,45 +160,6 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
   { "folke/twilight.nvim", event = "VeryLazy" },
-  {
-    "gelguy/wilder.nvim",
-    event = "VeryLazy",
-    build = ":UpdateRemotePlugins",
-    config = function()
-      local wilder = require("wilder")
-      wilder.setup({ modes = { ":", "/", "?" } })
-
-      wilder.set_option("pipeline", {
-        wilder.branch(
-          wilder.cmdline_pipeline({
-            fuzzy = 1,
-            set_pcre2_pattern = 1,
-          }),
-          wilder.python_search_pipeline({
-            pattern = "fuzzy",
-          })
-        ),
-      })
-
-      local highlighters = {
-        wilder.pcre2_highlighter(),
-        wilder.basic_highlighter(),
-      }
-
-      wilder.set_option(
-        "renderer",
-        wilder.renderer_mux({
-          [":"] = wilder.wildmenu_renderer({
-            highlighter = highlighters,
-          }),
-          ["/"] = wilder.wildmenu_renderer({
-            highlighter = highlighters,
-          }),
-        })
-      )
-    end,
-  },
-
   {
     "ipod825/vim-tabdrop",
     event = "VeryLazy",
