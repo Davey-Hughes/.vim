@@ -9,6 +9,15 @@ return {
     { "williamboman/mason-lspconfig.nvim" },
     { "mrcjkb/rustaceanvim", ft = "rust" },
     { "lvimuser/lsp-inlayhints.nvim" },
+    {
+      "kosayoda/nvim-lightbulb",
+
+      config = function()
+        require("nvim-lightbulb").setup({
+          autocmd = { enabled = true },
+        })
+      end,
+    },
 
     -- Autocompletion
     {
