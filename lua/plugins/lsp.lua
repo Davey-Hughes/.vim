@@ -32,6 +32,7 @@ return {
     },
     {
       "kosayoda/nvim-lightbulb",
+      cond = not vim.g.vscode,
 
       config = function()
         require("nvim-lightbulb").setup({
@@ -50,7 +51,7 @@ return {
     },
     {
       "L3MON4D3/LuaSnip",
-      version = "2.*",
+      version = "v2.*",
       build = "make install_jsregexp",
     },
     { "onsails/lspkind.nvim" },
@@ -90,7 +91,10 @@ return {
       ft = { "go", "gomod" },
       build = ':lua require("go.install").update_all_sync()',
     },
-    { "pest-parser/pest.vim" },
+    {
+      "pest-parser/pest.vim",
+      ft = "pest",
+    },
   },
 
   config = function()
@@ -151,8 +155,6 @@ return {
       lsp.default_keymaps({ buffer = bufnr })
       local opts = { buffer = bufnr, remap = false }
 
-      vim.keymap.del("n", "<F4>", { buffer = bufnr })
-
       vim.keymap.set("n", "gd", function()
         vim.lsp.buf.definition({ reuse_win = true })
       end, opts)
@@ -173,15 +175,20 @@ return {
         vim.lsp.buf.signature_help()
       end, opts)
 
+      vim.keymap.set("n", "<leader>cf", function()
+        vim.lsp.buf.format()
+      end)
+
       if client.server_capabilities.codeLensProvider then
         vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
           group = "LSPConfig",
-          pattern = "*",
+          buffer = bufnr,
           callback = vim.lsp.codelens.refresh,
         })
 
         vim.api.nvim_create_autocmd("LspDetach", {
           group = "LSPConfig",
+          buffer = bufnr,
           callback = function(opt)
             vim.lsp.codelens.clear(opt.data.client_id, opt.buf)
           end,

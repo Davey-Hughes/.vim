@@ -57,7 +57,7 @@ return {
   },
 
   { "nanotee/zoxide.vim", event = "VeryLazy" },
-  "tpope/vim-sleuth",
+  { "tpope/vim-sleuth" },
 
   {
     "olimorris/persisted.nvim",
@@ -217,12 +217,14 @@ return {
     event = "VeryLazy",
     config = function()
       vim.cmd([[
-        nnoremap <F4> :UndotreeToggle<CR>
+        nnoremap <F5> :UndotreeToggle<CR>
     ]])
     end,
   },
 
-  "mkitt/tabline.vim",
+  {
+    "mkitt/tabline.vim",
+  },
   {
     "p00f/godbolt.nvim",
     event = "VeryLazy",
