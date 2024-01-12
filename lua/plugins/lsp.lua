@@ -422,6 +422,7 @@ return {
       },
     })
 
+    require("lspconfig").pyright.setup({})
     require("lspconfig").pylyzer.setup({
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
@@ -442,7 +443,18 @@ return {
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
     require("lspconfig").biome.setup({})
-    require("pest-vim").setup({})
+    require("pest-vim").setup({
+      on_attach = function(client, bufnr)
+        local pest_format = vim.api.nvim_create_augroup("PestFormat", {})
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format()
+          end,
+          group = pest_format,
+        })
+      end,
+    })
 
     vim.g.rustaceanvim = {
       tools = {},
