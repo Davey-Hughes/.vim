@@ -171,6 +171,15 @@ return {
   },
   { "folke/twilight.nvim", event = "VeryLazy" },
   {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 300
+    end,
+    opts = {},
+  },
+  {
     "ipod825/vim-tabdrop",
     event = "VeryLazy",
     config = function()
@@ -286,7 +295,7 @@ return {
     end,
   },
   { "RRethy/vim-illuminate", event = "VeryLazy" },
-  "nvim-tree/nvim-web-devicons",
+  { "nvim-tree/nvim-web-devicons" },
   {
     "NvChad/nvim-colorizer.lua",
     event = "VeryLazy",
