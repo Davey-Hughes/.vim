@@ -1,11 +1,11 @@
 vim.cmd([[
-  :command W w
-  :command Q q
-  :command Wq wq
-  :command WQ wq
-  :command Wqa wqa
-  :command WQa wqa
-  :command WQA wqa
+  :command! W w
+  :command! Q q
+  :command! Wq wq
+  :command! WQ wq
+  :command! Wqa wqa
+  :command! WQa wqa
+  :command! WQA wqa
 ]])
 
 -- <leader><CR> enters a newline without enter insert mode

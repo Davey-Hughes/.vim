@@ -99,9 +99,11 @@ return {
   {
     "zbirenbaum/copilot.lua",
     event = "VeryLazy",
-    cond = false,
     dependencies = {
-      { "zbirenbaum/copilot-cmp" },
+      {
+        "zbirenbaum/copilot-cmp",
+        "hrsh7th/nvim-cmp",
+      },
     },
     config = function()
       require("copilot").setup({
@@ -117,6 +119,7 @@ return {
   {
     "folke/noice.nvim",
     event = "VeryLazy",
+    cond = not vim.g.vscode,
     dependencies = {
       "MunifTanjim/nui.nvim",
       "rcarriga/nvim-notify",
@@ -205,7 +208,7 @@ return {
     event = "VeryLazy",
     config = function()
       vim.cmd([[
-    nnoremap <F4> :UndotreeToggle<CR>
+        nnoremap <F4> :UndotreeToggle<CR>
     ]])
     end,
   },
@@ -320,21 +323,28 @@ return {
     "numToStr/Comment.nvim",
     event = "VeryLazy",
     priority = -1000, -- ensure this loads last
-    opts = {
-      toggler = {
-        line = "<leader>c<leader>",
-        block = "<leader>cb",
-      },
-      opleader = {
-        line = "<leader>c<leader>",
-        block = "<leader>b<leader>",
-      },
-      extra = {
-        above = "<leader>cO",
-        below = "<leader>co",
-        eol = "<leader>cA",
-      },
-    },
+
+    config = function()
+      require("Comment").setup({
+        toggler = {
+          line = "<leader>c<leader>",
+          block = "<leader>cb",
+        },
+        opleader = {
+          line = "<leader>c<leader>",
+          block = "<leader>b<leader>",
+        },
+        extra = {
+          above = "<leader>cO",
+          below = "<leader>co",
+          eol = "<leader>cA",
+        },
+      })
+
+      local ft = require("Comment.ft")
+
+      ft.pest = { "//%s", "/*%s*/" }
+    end,
   },
 
   { "tpope/vim-speeddating", event = "VeryLazy" },

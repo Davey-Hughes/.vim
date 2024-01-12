@@ -7,8 +7,29 @@ return {
     { "neovim/nvim-lspconfig" },
     { "williamboman/mason.nvim" },
     { "williamboman/mason-lspconfig.nvim" },
-    { "mrcjkb/rustaceanvim", ft = "rust" },
-    { "lvimuser/lsp-inlayhints.nvim" },
+    {
+      "mrcjkb/rustaceanvim",
+      ft = "rust",
+      version = "^3",
+    },
+    {
+      "lvimuser/lsp-inlayhints.nvim",
+      config = function()
+        vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+        vim.api.nvim_create_autocmd("LspAttach", {
+          group = "LspAttach_inlayhints",
+          callback = function(args)
+            if not (args.data and args.data.client_id) then
+              return
+            end
+
+            local bufnr = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            require("lsp-inlayhints").on_attach(client, bufnr)
+          end,
+        })
+      end,
+    },
     {
       "kosayoda/nvim-lightbulb",
 
@@ -69,6 +90,7 @@ return {
       ft = { "go", "gomod" },
       build = ':lua require("go.install").update_all_sync()',
     },
+    { "pest-parser/pest.vim" },
   },
 
   config = function()
@@ -128,6 +150,8 @@ return {
     lsp.on_attach(function(client, bufnr)
       lsp.default_keymaps({ buffer = bufnr })
       local opts = { buffer = bufnr, remap = false }
+
+      vim.keymap.del("n", "<F4>", { buffer = bufnr })
 
       vim.keymap.set("n", "gd", function()
         vim.lsp.buf.definition({ reuse_win = true })
@@ -194,6 +218,7 @@ return {
         "lemminx",
         "lua_ls",
         "marksman",
+        "pest_ls",
         "pylyzer",
         "solargraph",
         "sqlls",
@@ -410,17 +435,13 @@ return {
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
     require("lspconfig").biome.setup({})
+    require("pest-vim").setup({})
 
     vim.g.rustaceanvim = {
-      -- Plugin configuration
       tools = {},
-      -- LSP configuration
       server = {
-        on_attach = function(client, bufnr)
-          -- you can also put keymaps in here
-        end,
+        on_attach = function(client, bufnr) end,
         settings = {
-          -- rust-analyzer language server configuration
           ["rust-analyzer"] = {
             checkOnSave = {
               command = "clippy",
@@ -428,8 +449,6 @@ return {
           },
         },
       },
-      -- DAP configuration
-      dap = {},
     }
   end,
 }
