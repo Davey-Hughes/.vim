@@ -20,6 +20,9 @@ return {
       event = "VeryLazy",
       branch = "harpoon2",
     },
+    {
+      "viniarck/telescope-tmuxdir.nvim",
+    },
   },
   config = function()
     local ts_select_dir_for_grep_args = function(prompt_bufnr)
@@ -100,6 +103,10 @@ return {
             },
           },
         },
+        tmuxdir = {
+          base_dirs = { "~/projects" },
+          find_cmd = { "fd", "-HI", "^.git$", "-d", "2" },
+        },
       },
     })
 
@@ -133,21 +140,28 @@ return {
     local lga = require("telescope").load_extension("live_grep_args")
 
     local builtin = require("telescope.builtin")
-    vim.keymap.set("n", "<c-p>", builtin.git_files, {})
-    vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
-    vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
-    vim.keymap.set("n", "<leader>fa", lga.live_grep_args, {})
-    vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
-    vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
-    vim.keymap.set("n", "<leader>ft", builtin.help_tags, {})
-    vim.keymap.set("n", "<leader>fm", builtin.man_pages, {})
-    vim.keymap.set("n", "<leader>fr", builtin.registers, {})
-    vim.keymap.set("n", "<leader>fc", builtin.commands, {})
-    vim.keymap.set("n", "<leader>fl", builtin.lsp_dynamic_workspace_symbols, {})
-    vim.keymap.set("n", "<space>fe", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
-    vim.keymap.set("n", "<leader>fn", ":Noice telescope<CR>", {})
+    vim.keymap.set("n", "<c-p>", builtin.git_files, { desc = "Git files" })
+    vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
+    vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
+    vim.keymap.set("n", "<leader>fa", lga.live_grep_args, { desc = "Live grep args" })
+    vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Old files" })
+    vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
+    vim.keymap.set("n", "<leader>ft", builtin.help_tags, { desc = "Help tags" })
+    vim.keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "Man pages" })
+    vim.keymap.set("n", "<leader>fr", builtin.registers, { desc = "Registers" })
+    vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Commands" })
+    vim.keymap.set("n", "<leader>fl", builtin.lsp_dynamic_workspace_symbols, { desc = "LSP dynamic workspace symbols" })
+    vim.keymap.set(
+      "n",
+      "<space>fe",
+      ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
+      { noremap = true, desc = "Telescope file browser" }
+    )
+    vim.keymap.set("n", "<leader>fn", ":Noice telescope<CR>", { desc = "Noice telescope" })
     vim.keymap.set("n", "<leader>fh", function()
       toggle_telescope(harpoon:list())
     end, { desc = "Open harpoon window" })
+    vim.keymap.set("n", "<leader>fs", ":Telescope tmuxdir sessions<CR>", { desc = "Tmuxdir sessions" })
+    vim.keymap.set("n", "<leader>fd", ":Telescope tmuxdir dirs<CR>", { desc = "Tmuxdir dirs" })
   end,
 }
