@@ -55,7 +55,6 @@ return {
       build = "make install_jsregexp",
     },
     { "onsails/lspkind.nvim" },
-
     { "windwp/nvim-autopairs" },
     {
       "smjonas/inc-rename.nvim",
@@ -153,31 +152,30 @@ return {
 
     lsp.on_attach(function(client, bufnr)
       lsp.default_keymaps({ buffer = bufnr })
-      local opts = { buffer = bufnr, remap = false }
 
       vim.keymap.set("n", "gd", function()
         vim.lsp.buf.definition({ reuse_win = true })
-      end, opts)
+      end, { buffer = bufnr, remap = false, desc = "Goto definition" })
 
       vim.keymap.set("n", "<leader>ws", function()
         vim.lsp.buf.workspace_symbol()
-      end, opts)
+      end, { buffer = bufnr, remap = false, desc = "Workspace symbol" })
 
       vim.keymap.set("n", "<leader>ca", function()
         vim.lsp.buf.code_action()
-      end, opts)
+      end, { buffer = bufnr, remap = false, desc = "Code action" })
 
       vim.keymap.set("n", "<leader>rn", function()
         return ":IncRename " .. vim.fn.expand("<cword>")
-      end, { expr = true })
+      end, { buffer = bufnr, remap = false, expr = true, desc = "Increname" })
 
       vim.keymap.set("i", "<C-h>", function()
         vim.lsp.buf.signature_help()
-      end, opts)
+      end, { buffer = bufnr, remap = false, desc = "Signature help" })
 
       vim.keymap.set("n", "<leader>cf", function()
         vim.lsp.buf.format()
-      end)
+      end, { buffer = bufnr, remap = false, desc = "Buffer format" })
 
       if client.server_capabilities.codeLensProvider then
         vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
@@ -226,8 +224,7 @@ return {
         "lua_ls",
         "marksman",
         "pest_ls",
-        "pylyzer",
-        "solargraph",
+        "ruff_lsp",
         "sqlls",
         "taplo",
         "tsserver",
@@ -351,7 +348,7 @@ return {
     local cond = require("nvim-autopairs.conds")
 
     npairs.add_rules({
-      Rule("<", ">"):with_pair(cond.before_regex("%a+")):with_move(function(opts)
+      Rule("<", ">", { "rust" }):with_pair(cond.before_regex("[%a<:]+")):with_move(function(opts)
         return opts.char == ">"
       end),
     })
@@ -423,18 +420,7 @@ return {
     })
 
     require("lspconfig").pyright.setup({})
-    require("lspconfig").pylyzer.setup({
-      on_attach = function(client, bufnr)
-        ih.on_attach(client, bufnr)
-      end,
-      settings = {
-        python = {
-          hint = {
-            enable = true,
-          },
-        },
-      },
-    })
+    require("lspconfig").ruff_lsp.setup({})
 
     local cfg = require("go.lsp").config()
     require("lspconfig").gopls.setup(cfg)
@@ -464,6 +450,15 @@ return {
           ["rust-analyzer"] = {
             checkOnSave = {
               command = "clippy",
+              -- stylua: ignore
+              extraArgs = {
+                "--",
+                "-W", "clippy::pedantic",
+                "-W", "clippy::nursery",
+                "-W", "clippy::unwrap_used",
+                "-W", "clippy::expect_used",
+                "-W", "clippy::cargo"
+              },
             },
           },
         },
