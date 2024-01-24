@@ -14,8 +14,8 @@ return {
     "lervag/vimtex",
     ft = "tex",
     config = function()
-      vim.g.vimtex_latexmk_callback = 0
-      vim.g.vimtext_compiler_latexmk = "{'callback' : 0}"
+      -- vim.g.vimtex_latexmk_callback = 0
+      -- vim.g.vimtext_compiler_latexmk = "{'callback' : 0}"
     end,
   },
 
@@ -279,7 +279,6 @@ return {
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    event = "VeryLazy",
     config = function()
       require("dashboard").setup({})
     end,
