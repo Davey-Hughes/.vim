@@ -128,5 +128,6 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 require("davey.remap")
+require("davey.filetype")
 
 vim.cmd([[source $VIMDIR/vimrc]])

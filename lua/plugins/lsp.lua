@@ -222,6 +222,7 @@ return {
         "jsonls",
         "lemminx",
         "lua_ls",
+        "ltex",
         "marksman",
         "pest_ls",
         "ruff_lsp",
@@ -354,6 +355,17 @@ return {
     })
 
     -- LSP specific setup
+    require("lspconfig").pyright.setup({})
+    require("lspconfig").ruff_lsp.setup({})
+    require("lspconfig").kotlin_language_server.setup({})
+    require("lspconfig").flow.setup({})
+    require("lspconfig").solargraph.setup({})
+    require("lspconfig").biome.setup({})
+
+    require("lspconfig").ltex.setup({
+      filetypes = { "bib", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd" },
+    })
+
     require("lspconfig").lua_ls.setup({
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
@@ -419,16 +431,22 @@ return {
       },
     })
 
-    require("lspconfig").pyright.setup({})
-    require("lspconfig").ruff_lsp.setup({})
-
     local cfg = require("go.lsp").config()
     require("lspconfig").gopls.setup(cfg)
 
-    require("lspconfig").kotlin_language_server.setup({})
-    require("lspconfig").flow.setup({})
-    require("lspconfig").solargraph.setup({})
-    require("lspconfig").biome.setup({})
+    require("lspconfig").uiua.setup({
+      on_attach = function(client, bufnr)
+        local uiua_format = vim.api.nvim_create_augroup("UiuaFormat", {})
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format()
+          end,
+          group = uiua_format,
+        })
+      end,
+    })
+
     require("pest-vim").setup({
       on_attach = function(client, bufnr)
         local pest_format = vim.api.nvim_create_augroup("PestFormat", {})
@@ -455,9 +473,8 @@ return {
                 "--",
                 "-W", "clippy::pedantic",
                 "-W", "clippy::nursery",
-                "-W", "clippy::unwrap_used",
-                "-W", "clippy::expect_used",
-                "-W", "clippy::cargo"
+                -- "-W", "clippy::unwrap_used",
+                -- "-W", "clippy::expect_used",
               },
             },
           },
