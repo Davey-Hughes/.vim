@@ -141,6 +141,7 @@ return {
         },
       })
     end
+
     -- Show diagnostics under the cursor when holding position
     vim.api.nvim_create_augroup("LSPConfig", { clear = true })
     vim.api.nvim_create_autocmd({ "CursorHold" }, {
@@ -363,6 +364,7 @@ return {
     require("lspconfig").biome.setup({})
 
     require("lspconfig").ltex.setup({
+      enabled = false,
       filetypes = { "bib", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd" },
     })
 
