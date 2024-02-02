@@ -64,6 +64,7 @@ return {
     opts = {
       autosave = true,
       autoload = true,
+      silent = true,
     },
   },
 
