@@ -178,6 +178,10 @@ return {
         vim.lsp.buf.format()
       end, { buffer = bufnr, remap = false, desc = "Buffer format" })
 
+      vim.keymap.set("n", "<leader>lr", function()
+        vim.lsp.buf.references()
+      end, { buffer = bufnr, remap = false, desc = "Buffer format" })
+
       if client.server_capabilities.codeLensProvider then
         vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
           group = "LSPConfig",
@@ -361,7 +365,19 @@ return {
     require("lspconfig").kotlin_language_server.setup({})
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
-    require("lspconfig").biome.setup({})
+
+    require("lspconfig").biome.setup({
+      on_attach = function(client, bufnr)
+        local biome_format = vim.api.nvim_create_augroup("BiomeFormat", {})
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          callback = function()
+            vim.lsp.buf.format()
+          end,
+          group = biome_format,
+        })
+      end,
+    })
 
     require("lspconfig").ltex.setup({
       enabled = false,

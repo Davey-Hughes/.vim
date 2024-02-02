@@ -138,6 +138,7 @@ return {
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("file_browser")
     local lga = require("telescope").load_extension("live_grep_args")
+    local fb = require("telescope").extensions.file_browser
 
     local builtin = require("telescope.builtin")
     vim.keymap.set("n", "<c-p>", builtin.git_files, { desc = "Git files" })
@@ -151,12 +152,9 @@ return {
     vim.keymap.set("n", "<leader>fr", builtin.registers, { desc = "Registers" })
     vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Commands" })
     vim.keymap.set("n", "<leader>fl", builtin.lsp_dynamic_workspace_symbols, { desc = "LSP dynamic workspace symbols" })
-    vim.keymap.set(
-      "n",
-      "<space>fe",
-      ":Telescope file_browser path=%:p:h select_buffer=true<CR>",
-      { noremap = true, desc = "Telescope file browser" }
-    )
+    vim.keymap.set("n", "<space>fe", function()
+      fb.file_browser({ path = "%:p:h", select_buffer = true, hidden = true })
+    end, { noremap = true, desc = "Telescope file browser" })
     vim.keymap.set("n", "<leader>fn", ":Noice telescope<CR>", { desc = "Noice telescope" })
     vim.keymap.set("n", "<leader>fh", function()
       toggle_telescope(harpoon:list())
