@@ -16,16 +16,16 @@ return {
         ruby = filetypes.ruby.rubocop,
         fish = filetypes.fish.fishindent,
         graphql = filetypes.graphql.prettierd,
-        javascript = js_ts_filetype,
         json = filetypes.json.prettierd,
         kotlin = filetypes.kotlin.ktlint,
-        python = filetypes.python.autopep8,
         sh = filetypes.sh.shfmt,
         sql = filetypes.sql.pgformat,
         toml = filetypes.toml.taplo,
-        typescript = js_ts_filetype,
         yaml = filetypes.yaml.prettierd,
         zig = filetypes.zig.zigfmt,
+
+        -- javascript = js_ts_filetype,
+        -- typescript = js_ts_filetype,
 
         lua = {
           require("formatter.filetypes.lua").stylua,
@@ -53,21 +53,21 @@ return {
           end,
         },
 
-        c = {
-          function()
-            return {
-              exe = "clang-format",
-              args = {
-                "-assume-filename",
-                util.escape_path(util.get_current_buffer_file_name()),
-                "--style",
-                "file:" .. vim.env.HOME .. "/.vim/configs/.clang-format",
-              },
-              stdin = true,
-              try_node_modules = true,
-            }
-          end,
-        },
+        -- c = {
+        --   function()
+        --     return {
+        --       exe = "clang-format",
+        --       args = {
+        --         "-assume-filename",
+        --         util.escape_path(util.get_current_buffer_file_name()),
+        --         "--style",
+        --         "file:" .. vim.env.HOME .. "/.vim/configs/.clang-format",
+        --       },
+        --       stdin = true,
+        --       try_node_modules = true,
+        --     }
+        --   end,
+        -- },
 
         cpp = {
           function()

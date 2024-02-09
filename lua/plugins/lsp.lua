@@ -230,6 +230,7 @@ return {
         "ltex",
         "marksman",
         "pest_ls",
+        "pyright",
         "ruff_lsp",
         "sqlls",
         "taplo",
@@ -359,23 +360,35 @@ return {
       end),
     })
 
+    -- setup format for LSP servers
+    local enable_lsp_format = function(client, bufnr)
+      local lsp_format = vim.api.nvim_create_augroup("LspFormat" .. client.name .. "," .. bufnr, {})
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        buffer = bufnr,
+        callback = function()
+          local v = vim.fn.winsaveview()
+          vim.lsp.buf.format()
+          vim.fn.winrestview(v)
+        end,
+        group = lsp_format,
+      })
+    end
+
     -- LSP specific setup
-    require("lspconfig").pyright.setup({})
-    require("lspconfig").ruff_lsp.setup({})
     require("lspconfig").kotlin_language_server.setup({})
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
+    require("lspconfig").pyright.setup({})
+
+    require("lspconfig").ruff_lsp.setup({
+      on_attach = function(client, bufnr)
+        enable_lsp_format(client, bufnr)
+      end,
+    })
 
     require("lspconfig").biome.setup({
       on_attach = function(client, bufnr)
-        local biome_format = vim.api.nvim_create_augroup("BiomeFormat", {})
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = bufnr,
-          callback = function()
-            vim.lsp.buf.format()
-          end,
-          group = biome_format,
-        })
+        enable_lsp_format(client, bufnr)
       end,
     })
 
@@ -420,7 +433,6 @@ return {
     })
 
     require("lspconfig").tsserver.setup({
-      enabled = true,
       on_attach = function(client, bufnr)
         ih.on_attach(client, bufnr)
       end,
@@ -454,27 +466,13 @@ return {
 
     require("lspconfig").uiua.setup({
       on_attach = function(client, bufnr)
-        local uiua_format = vim.api.nvim_create_augroup("UiuaFormat", {})
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = bufnr,
-          callback = function()
-            vim.lsp.buf.format()
-          end,
-          group = uiua_format,
-        })
+        enable_lsp_format(client, bufnr)
       end,
     })
 
     require("pest-vim").setup({
       on_attach = function(client, bufnr)
-        local pest_format = vim.api.nvim_create_augroup("PestFormat", {})
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = bufnr,
-          callback = function()
-            vim.lsp.buf.format()
-          end,
-          group = pest_format,
-        })
+        enable_lsp_format(client, bufnr)
       end,
     })
 
