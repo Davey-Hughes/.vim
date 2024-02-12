@@ -20,6 +20,15 @@ return {
     end,
   },
 
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  },
+
   -- misc
   {
     "bennypowers/nvim-regexplainer",
@@ -248,7 +257,12 @@ return {
       init = function()
         vim.g.barbar_auto_setup = false
       end,
-      opts = {},
+      opts = {
+        animation = false,
+        hide = {
+          visible = true,
+        },
+      },
     },
   },
 
