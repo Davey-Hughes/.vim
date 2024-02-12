@@ -4,38 +4,38 @@ augroup templates
     autocmd!
 
     " c files
-    autocmd BufNewFile *.c 0r $VIMDIR/templates/skeleton.c
+    autocmd BufNewFile *.c silent! 0r $VIMDIR/templates/skeleton.c
 
 
     " c header files
     autocmd BufNewFile *.h
-        \ 0r $HOME/.vim/templates/skeleton.h |
+        \ silent! 0r $HOME/.vim/templates/skeleton.h |
         \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
 
     " cpp files
-    autocmd BufNewFile *.cc,*cpp 0r $VIMDIR/templates/skeleton.cc
+    autocmd BufNewFile *.cc,*cpp silent! 0r $VIMDIR/templates/skeleton.cc
 
     " cpp header files
     autocmd BufNewFile *.hh
-        \ 0r $HOME/.vim/templates/skeleton.hh |
+        \ silent! 0r $HOME/.vim/templates/skeleton.hh |
         \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
 
     " python files
-    autocmd BufNewFile *.py 0r $VIMDIR/templates/skeleton.py
+    autocmd BufNewFile *.py silent! 0r $VIMDIR/templates/skeleton.py
 
     " go files
-    autocmd BufNewFile *.go 0r $VIMDIR/templates/skeleton.go
+    autocmd BufNewFile *.go silent! 0r $VIMDIR/templates/skeleton.go
 
     " html files
-    autocmd BufNewFile *.html 0r $VIMDIR/templates/skeleton.html
+    autocmd BufNewFile *.html silent! 0r $VIMDIR/templates/skeleton.html
 
     " java files
     autocmd BufNewFile *.java
-        \ 0r $VIMDIR/templates/skeleton.java |
+        \ silent! 0r $VIMDIR/templates/skeleton.java |
         \ %substitute#\[:FILENAME:\]#\=expand('%:t:r')
 
     " rust files
-    autocmd BufNewFile *.rs 0r $VIMDIR/templates/skeleton.rs
+    autocmd BufNewFile *.rs silent! 0r $VIMDIR/templates/skeleton.rs
 
     " Move cursor to [:CURSOR:] in file
     autocmd BufNewFile * call MoveCursor()
