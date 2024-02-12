@@ -5,7 +5,6 @@ return {
     local util = require("formatter.util")
     local defaults = require("formatter.defaults")
     local filetypes = require("formatter.filetypes")
-    local js_ts_filetype = { defaults.eslint_d, defaults.prettierd }
 
     require("formatter").setup({
       logging = true,
@@ -23,9 +22,6 @@ return {
         toml = filetypes.toml.taplo,
         yaml = filetypes.yaml.prettierd,
         zig = filetypes.zig.zigfmt,
-
-        -- javascript = js_ts_filetype,
-        -- typescript = js_ts_filetype,
 
         lua = {
           require("formatter.filetypes.lua").stylua,
@@ -53,21 +49,21 @@ return {
           end,
         },
 
-        -- c = {
-        --   function()
-        --     return {
-        --       exe = "clang-format",
-        --       args = {
-        --         "-assume-filename",
-        --         util.escape_path(util.get_current_buffer_file_name()),
-        --         "--style",
-        --         "file:" .. vim.env.HOME .. "/.vim/configs/.clang-format",
-        --       },
-        --       stdin = true,
-        --       try_node_modules = true,
-        --     }
-        --   end,
-        -- },
+        c = {
+          function()
+            return {
+              exe = "clang-format",
+              args = {
+                "-assume-filename",
+                util.escape_path(util.get_current_buffer_file_name()),
+                "--style",
+                "file:" .. vim.env.HOME .. "/.vim/configs/.clang-format",
+              },
+              stdin = true,
+              try_node_modules = true,
+            }
+          end,
+        },
 
         cpp = {
           function()

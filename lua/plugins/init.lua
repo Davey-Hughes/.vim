@@ -1,5 +1,6 @@
 return {
   -- filetype
+  { "apple/pkl-neovim", ft = "pkl" },
   { "bfrg/vim-cpp-modern", ft = "cpp" },
   { "chrisbra/csv.vim", ft = "csv" },
   { "ehamberg/vim-cute-python", ft = "python" },
@@ -230,8 +231,18 @@ return {
   },
 
   {
-    "mkitt/tabline.vim",
+    {
+      "romgrk/barbar.nvim",
+      dependencies = {
+        "nvim-tree/nvim-web-devicons",
+      },
+      init = function()
+        vim.g.barbar_auto_setup = false
+      end,
+      opts = {},
+    },
   },
+
   {
     "p00f/godbolt.nvim",
     event = "VeryLazy",
