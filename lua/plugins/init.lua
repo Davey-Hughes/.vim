@@ -59,13 +59,22 @@ return {
 
   { "nanotee/zoxide.vim", event = "VeryLazy" },
   { "tpope/vim-sleuth" },
-
   {
-    "olimorris/persisted.nvim",
+    "rmagatti/auto-session",
     opts = {
-      autosave = true,
-      autoload = true,
-      silent = true,
+      log_level = "error",
+
+      auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+
+      auto_save_enabled = true,
+      auto_restore_enabled = true,
+
+      session_lens = {
+        buftypes_to_ignore = {},
+        load_on_setup = true,
+        theme_conf = { border = true },
+        previewer = false,
+      },
     },
   },
 
