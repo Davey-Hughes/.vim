@@ -23,6 +23,9 @@ return {
     {
       "viniarck/telescope-tmuxdir.nvim",
     },
+    {
+      "rmagatti/auto-session",
+    },
   },
   config = function()
     local ts_select_dir_for_grep_args = function(prompt_bufnr)
@@ -76,9 +79,9 @@ return {
       pickers = {},
 
       extensions = {
-        persisted = {
-          layout_config = { width = 0.55, height = 0.55 },
-        },
+        -- persisted = {
+        --   layout_config = { width = 0.55, height = 0.55 },
+        -- },
 
         file_browser = {
           theme = "ivy",
@@ -133,7 +136,7 @@ return {
         :find()
     end
 
-    require("telescope").load_extension("persisted")
+    -- require("telescope").load_extension("persisted")
     require("telescope").load_extension("smart_history")
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("file_browser")
@@ -161,5 +164,8 @@ return {
     end, { desc = "Open harpoon window" })
     vim.keymap.set("n", "<leader>fs", ":Telescope tmuxdir sessions<CR>", { desc = "Tmuxdir sessions" })
     vim.keymap.set("n", "<leader>fd", ":Telescope tmuxdir dirs<CR>", { desc = "Tmuxdir dirs" })
+    vim.keymap.set("n", "<C-s>", require("auto-session.session-lens").search_session, {
+      noremap = true,
+    })
   end,
 }
