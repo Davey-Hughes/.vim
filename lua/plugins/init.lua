@@ -247,51 +247,16 @@ return {
     ]])
     end,
   },
-
   {
-    {
-      "romgrk/barbar.nvim",
-      dependencies = {
-        "nvim-tree/nvim-web-devicons",
-      },
-      init = function()
-        vim.g.barbar_auto_setup = false
-      end,
-
-      config = function()
-        require("barbar").setup({
-          animation = false,
-
-          hide = {
-            visible = true,
-          },
-
-          icons = {
-            buffer_index = true,
-            diagnostics = {
-              [vim.diagnostic.severity.ERROR] = { enabled = true, icon = "ﬀ" },
-              [vim.diagnostic.severity.WARN] = { enabled = false },
-              [vim.diagnostic.severity.INFO] = { enabled = false },
-              [vim.diagnostic.severity.HINT] = { enabled = false },
-            },
-          },
-        })
-
-        local opts = { noremap = true, silent = true }
-
-        vim.keymap.set("n", "gT", vim.cmd.BufferPrevious, opts)
-        vim.keymap.set("n", "gt", function()
-          vim.print(vim.v.count)
-          if vim.v.count == 0 then
-            vim.cmd.BufferNext()
-          else
-            vim.cmd.BufferGoto(vim.v.count)
-          end
-        end, opts)
-      end,
-    },
+    "crispgm/nvim-tabline",
+    dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional
+    config = function()
+      require("tabline").setup({
+        show_icon = true,
+        brackets = { "", "" },
+      })
+    end,
   },
-
   {
     "p00f/godbolt.nvim",
     event = "VeryLazy",
