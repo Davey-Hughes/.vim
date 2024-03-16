@@ -112,27 +112,6 @@ if exists('+undofile')
     set undofile
 endif
 
-""""""""""""""""""""""""""""""" misc functions """"""""""""""""""""""""""""""""
-
-" save the previous search and restore after executing the command
-function! SafeSearchCommand(theCommand)
-    let l:search=@/
-    execute a:theCommand
-    let @/=l:search
-endfunction
-
-" trim blank lines at end of file on write
-function! TrimEndLines()
-    let l:save_cursor=getpos('.')
-    :silent! call SafeSearchCommand('%substitute#\($\n\s*\)\+\%$##')
-    call setpos('.', l:save_cursor)
-endfunction
-
-augroup onwrite
-    autocmd!
-    autocmd BufWritePre * call TrimEndLines()
-augroup END
-
 """""""""""""""""""""""""" 80 character line guides """""""""""""""""""""""""""
 
 " highlight characters over 80 line limit

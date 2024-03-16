@@ -167,7 +167,7 @@ return {
       end, { buffer = bufnr, remap = false, desc = "Code action" })
 
       vim.keymap.set("n", "<leader>rn", function()
-        return ":IncRename " .. vim.fn.expand("<cword>")
+        return ":IncRename " .. vim.fn.expand("<cword>") .. "<C-f>"
       end, { buffer = bufnr, remap = false, expr = true, desc = "Increname" })
 
       vim.keymap.set("i", "<C-h>", function()
@@ -462,6 +462,15 @@ return {
     })
 
     local cfg = require("go.lsp").config()
+    cfg.settings.gopls.hints = {
+      assignVariableTypes = false,
+      compositeLiteralFields = false,
+      compositeLiteralTypes = false,
+      constantValues = false,
+      functionTypeParameters = false,
+      parameterNames = false,
+      rangeVariableTypes = false,
+    }
     require("lspconfig").gopls.setup(cfg)
 
     require("lspconfig").uiua.setup({
