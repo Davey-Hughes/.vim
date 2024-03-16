@@ -18,10 +18,27 @@ return {
         json = filetypes.json.prettierd,
         kotlin = filetypes.kotlin.ktlint,
         sh = filetypes.sh.shfmt,
-        sql = filetypes.sql.pgformat,
         toml = filetypes.toml.taplo,
         yaml = filetypes.yaml.prettierd,
         zig = filetypes.zig.zigfmt,
+
+        sql = {
+          function()
+            return {
+              exe = "sqlfluff",
+              args = {
+                "format",
+                "--dialect",
+                "postgres",
+                "--disable-progress-bar",
+                "--nocolor",
+                "-",
+              },
+              stdin = true,
+              ignore_exitcode = true,
+            }
+          end,
+        },
 
         lua = {
           require("formatter.filetypes.lua").stylua,
