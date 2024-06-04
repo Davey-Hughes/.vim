@@ -127,6 +127,12 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   end,
 })
 
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    vim.opt.hlsearch = false
+  end,
+})
+
 require("davey.remap")
 require("davey.filetype")
 

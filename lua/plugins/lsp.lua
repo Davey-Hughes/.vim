@@ -10,25 +10,6 @@ return {
     {
       "mrcjkb/rustaceanvim",
       ft = "rust",
-      version = "^3",
-    },
-    {
-      "lvimuser/lsp-inlayhints.nvim",
-      config = function()
-        vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-        vim.api.nvim_create_autocmd("LspAttach", {
-          group = "LspAttach_inlayhints",
-          callback = function(args)
-            if not (args.data and args.data.client_id) then
-              return
-            end
-
-            local bufnr = args.buf
-            local client = vim.lsp.get_client_by_id(args.data.client_id)
-            require("lsp-inlayhints").on_attach(client, bufnr)
-          end,
-        })
-      end,
     },
     {
       "kosayoda/nvim-lightbulb",
@@ -97,9 +78,6 @@ return {
   },
 
   config = function()
-    local ih = require("lsp-inlayhints")
-    ih.setup()
-
     local lsp = require("lsp-zero").preset({})
 
     local function on_list(options)
@@ -167,7 +145,7 @@ return {
       end, { buffer = bufnr, remap = false, desc = "Code action" })
 
       vim.keymap.set("n", "<leader>rn", function()
-        return ":IncRename " .. vim.fn.expand("<cword>") .. "<C-f>"
+        return ":IncRename " .. vim.fn.expand("<cword>")
       end, { buffer = bufnr, remap = false, expr = true, desc = "Increname" })
 
       vim.keymap.set("i", "<C-h>", function()
@@ -234,7 +212,7 @@ return {
         "ruff_lsp",
         "sqlls",
         "taplo",
-        "tsserver",
+        -- "tsserver",
         "vimls",
         "yamlls",
         "zls",
@@ -392,15 +370,33 @@ return {
       end,
     })
 
+    require("lspconfig").tsserver.setup({
+      on_attach = function(client, bufnr) end,
+      filetypes = {
+        "javascript",
+        "typescript",
+      },
+      settings = {
+        typescript = {
+          hint = {
+            enable = true,
+          },
+        },
+        javascript = {
+          hint = {
+            enable = true,
+          },
+        },
+      },
+    })
+
     require("lspconfig").ltex.setup({
       enabled = false,
       filetypes = { "bib", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd" },
     })
 
     require("lspconfig").lua_ls.setup({
-      on_attach = function(client, bufnr)
-        ih.on_attach(client, bufnr)
-      end,
+      on_attach = function(client, bufnr) end,
       settings = {
         Lua = {
           diagnostics = {
@@ -414,9 +410,7 @@ return {
     })
 
     require("lspconfig").clangd.setup({
-      on_attach = function(client, bufnr)
-        ih.on_attach(client, bufnr)
-      end,
+      on_attach = function(client, bufnr) end,
       capabilities = capabilities,
       settings = {
         c = {
@@ -425,28 +419,6 @@ return {
           },
         },
         cpp = {
-          hint = {
-            enable = true,
-          },
-        },
-      },
-    })
-
-    require("lspconfig").tsserver.setup({
-      on_attach = function(client, bufnr)
-        ih.on_attach(client, bufnr)
-      end,
-      filetypes = {
-        "javascript",
-        "typescript",
-      },
-      settings = {
-        typescript = {
-          hint = {
-            enable = true,
-          },
-        },
-        javascript = {
           hint = {
             enable = true,
           },
@@ -488,7 +460,14 @@ return {
     vim.g.rustaceanvim = {
       tools = {},
       server = {
-        on_attach = function(client, bufnr) end,
+        on_attach = function(client, bufnr)
+          if client.server_capabilities.inlayHintProvider then
+            vim.keymap.set("n", "<space>ih", function()
+              local current_setting = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+              vim.lsp.inlay_hint.enable(not current_setting)
+            end)
+          end
+        end,
         settings = {
           ["rust-analyzer"] = {
             checkOnSave = {
