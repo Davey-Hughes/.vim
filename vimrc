@@ -41,6 +41,12 @@ augroup templates
     autocmd BufNewFile * call MoveCursor()
 augroup END
 
+augroup ftdetect
+    " react files
+    autocmd BufNewFile,BufRead *.jsx set filetype=javascriptreact
+    autocmd BufNewFile,BufRead *.tsx set filetype=typescriptreact
+augroup END
+
 function! MoveCursor()
     normal! gg
     if (search('\[:CURSOR:\]', 'W'))
