@@ -15,8 +15,9 @@ return {
     "lervag/vimtex",
     ft = "tex",
     config = function()
-      -- vim.g.vimtex_latexmk_callback = 0
-      -- vim.g.vimtext_compiler_latexmk = "{'callback' : 0}"
+      vim.g.vimtex_view_general_viewer = "okular"
+      vim.g.vimtex_syntax_enabled = false
+      vim.g.vimtex_format_enabled = true
     end,
   },
 
@@ -30,17 +31,6 @@ return {
   },
 
   -- misc
-  {
-    "bennypowers/nvim-regexplainer",
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "MunifTanjim/nui.nvim",
-    },
-    config = function()
-      require("regexplainer").setup()
-    end,
-  },
   { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
 
   {
@@ -68,6 +58,7 @@ return {
 
   { "nanotee/zoxide.vim", event = "VeryLazy" },
   { "tpope/vim-sleuth" },
+  { "tpope/vim-abolish" },
   {
     "rmagatti/auto-session",
     opts = {
