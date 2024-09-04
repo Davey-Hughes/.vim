@@ -1,5 +1,6 @@
 return {
   "mhartington/formatter.nvim",
+  enabled = false,
   event = "VeryLazy",
   config = function()
     local util = require("formatter.util")
