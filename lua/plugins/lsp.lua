@@ -363,7 +363,7 @@ return {
     require("lspconfig").solargraph.setup({})
     require("lspconfig").pyright.setup({})
 
-    require("lspconfig").ruff_lsp.setup({
+    require("lspconfig").ruff.setup({
       on_attach = function(client, bufnr)
         enable_lsp_format(client, bufnr)
       end,
