@@ -9,3 +9,5 @@ set formatoptions=croql
 
 " run on <CR>
 nnoremap <leader><CR> :!python3 %<CR>
+
+set conceallevel=2
