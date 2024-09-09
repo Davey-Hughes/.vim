@@ -16,6 +16,7 @@ return {
         sql = { "sqlfluff" },
         tex = { "latexindent" },
         toml = { "taplo" },
+        uiua = { "uiua" },
         yaml = { "prettierd" },
         zig = { "zigfmt" },
       },
@@ -53,6 +54,15 @@ return {
             "2",
             "--",
             "-",
+          },
+        },
+
+        uiua = {
+          command = "uiua",
+          args = {
+            "fmt",
+            "--io",
+            "$FILENAME",
           },
         },
       },
