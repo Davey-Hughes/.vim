@@ -1,6 +1,6 @@
 return {
   "VonHeikemen/lsp-zero.nvim",
-  branch = "v2.x",
+  branch = "v4.x",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
     -- LSP Support
@@ -78,7 +78,17 @@ return {
   },
 
   config = function()
-    local lsp = require("lsp-zero").preset({})
+    local lsp_zero = require("lsp-zero")
+
+    lsp_zero.extend_lspconfig({
+      suggest_lsp_servers = false,
+      sign_icons = {
+        error = "E",
+        warn = "W",
+        hint = "H",
+        info = "I",
+      },
+    })
 
     local function on_list(options)
       vim.api.nvim_command("Tabdrop")
@@ -129,8 +139,8 @@ return {
       desc = "Show diagnostic information when holding cursor if no other floating window",
     })
 
-    lsp.on_attach(function(client, bufnr)
-      lsp.default_keymaps({ buffer = bufnr })
+    lsp_zero.on_attach(function(client, bufnr)
+      lsp_zero.default_keymaps({ buffer = bufnr })
 
       vim.keymap.set("n", "gd", function()
         vim.lsp.buf.definition({ reuse_win = true })
@@ -177,20 +187,9 @@ return {
       end
     end)
 
-    lsp.set_preferences({
-      suggest_lsp_servers = false,
-      sign_icons = {
-        error = "E",
-        warn = "W",
-        hint = "H",
-        info = "I",
-      },
-    })
+    lsp_zero.setup()
 
-    lsp.skip_server_setup({ "rust_analyzer" })
-
-    lsp.setup()
-
+    require("mason").setup({})
     require("mason-lspconfig").setup({
       ensure_installed = {
         "asm_lsp",
@@ -210,12 +209,16 @@ return {
         "pest_ls",
         "pyright",
         "ruff_lsp",
+        "rust_analyzer",
         "sqlls",
         "taplo",
-        -- "tsserver",
         "vimls",
         "yamlls",
         "zls",
+      },
+
+      handlers = {
+        rust_analyzer = lsp_zero.noop,
       },
     })
 
@@ -332,11 +335,13 @@ return {
 
     local cond = require("nvim-autopairs.conds")
 
-    npairs.add_rules({
-      Rule("<", ">", { "rust" }):with_pair(cond.before_regex("[%a<:]+")):with_move(function(opts)
-        return opts.char == ">"
-      end),
-    })
+    npairs.add_rule(Rule("<", ">", {
+      "-html",
+      "-javascriptreact",
+      "-typescriptreact",
+    }):with_pair(cond.before_regex("%a+:?:?$", 3)):with_move(function(opts)
+      return opts.char == ">"
+    end))
 
     -- setup format for LSP servers
     local enable_lsp_format = function(client, bufnr)
@@ -370,7 +375,7 @@ return {
       end,
     })
 
-    require("lspconfig").tsserver.setup({
+    require("lspconfig").ts_ls.setup({
       on_attach = function(client, bufnr) end,
       filetypes = {
         "javascript",

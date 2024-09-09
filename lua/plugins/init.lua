@@ -129,6 +129,7 @@ return {
   -- ui
   {
     "folke/noice.nvim",
+    version = "4.4.7",
     event = "VeryLazy",
     cond = not vim.g.vscode,
     dependencies = {
