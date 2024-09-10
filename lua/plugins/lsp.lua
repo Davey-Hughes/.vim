@@ -263,9 +263,9 @@ return {
       },
       preselect = cmp.PreselectMode.None,
       sources = {
-        { name = "path", group_index = 1 },
-        { name = "nvim_lsp", group_index = 2 },
-        { name = "copilot", group_index = 2 },
+        { name = "path", group_index = 0 },
+        { name = "nvim_lsp", group_index = 1 },
+        { name = "copilot", group_index = 1 },
       },
       formatting = {
         format = lspkind.cmp_format({
