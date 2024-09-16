@@ -22,6 +22,18 @@ return {
       end,
     },
 
+    {
+      "folke/lazydev.nvim",
+      ft = "lua",
+      opts = {
+        library = {
+          { path = "luvit-meta/library", words = { "vim%.uv" } },
+        },
+      },
+    },
+
+    { "Bilal2453/luvit-meta", lazy = true },
+
     -- Autocompletion
     {
       "hrsh7th/nvim-cmp",
@@ -29,6 +41,13 @@ return {
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
       },
+      opts = function(_, opts)
+        opts.sources = opts.sources or {}
+        table.insert(opts.sources, {
+          name = "lazydev",
+          group_index = 0, -- set group index to 0 to skip loading LuaLS completions
+        })
+      end,
     },
     {
       "L3MON4D3/LuaSnip",
@@ -40,7 +59,7 @@ return {
     {
       "smjonas/inc-rename.nvim",
       config = function()
-        require("inc_rename").setup()
+        require("inc_rename").setup({})
       end,
     },
     {
@@ -99,10 +118,10 @@ return {
     -- show which LSP server triggered the message
     vim.diagnostic.config({
       virtual_text = {
-        source = "always",
+        source = true,
       },
       float = {
-        source = "always",
+        source = true,
       },
     })
 
@@ -116,8 +135,8 @@ return {
       end
 
       -- THIS IS FOR BUILTIN LSP
-      vim.diagnostic.open_float(0, {
-        source = "always",
+      vim.diagnostic.open_float({
+        source = true,
         scope = "cursor",
         focusable = false,
         close_events = {
@@ -240,7 +259,7 @@ return {
 
     local has_words_before = function()
       unpack = unpack or table.unpack
-      if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then
+      if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then
         return false
       end
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -268,6 +287,8 @@ return {
         { name = "copilot", group_index = 1 },
       },
       formatting = {
+        expandable_indicator = true,
+        fields = { "abbr", "kind" },
         format = lspkind.cmp_format({
           mode = "symbol",
           maxwidth = 50,
@@ -278,6 +299,14 @@ return {
       mapping = {
         ["<Tab>"] = vim.schedule_wrap(function(fallback)
           if cmp.visible() and has_words_before() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          else
+            fallback()
+          end
+        end),
+
+        ["<C-Tab>"] = vim.schedule_wrap(function(fallback)
+          if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
           else
             fallback()
@@ -439,15 +468,18 @@ return {
     })
 
     local cfg = require("go.lsp").config()
-    cfg.settings.gopls.hints = {
-      assignVariableTypes = false,
-      compositeLiteralFields = false,
-      compositeLiteralTypes = false,
-      constantValues = false,
-      functionTypeParameters = false,
-      parameterNames = false,
-      rangeVariableTypes = false,
-    }
+    if cfg then
+      cfg.settings.gopls.hints = {
+        assignVariableTypes = false,
+        compositeLiteralFields = false,
+        compositeLiteralTypes = false,
+        constantValues = false,
+        functionTypeParameters = false,
+        parameterNames = false,
+        rangeVariableTypes = false,
+      }
+    end
+
     require("lspconfig").gopls.setup(cfg)
 
     require("lspconfig").uiua.setup({

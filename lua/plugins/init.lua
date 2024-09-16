@@ -325,8 +325,8 @@ return {
       })
 
       vim.cmd([[
-        vnoremap <leader>gb :Godbolt<CR>
-        vnoremap <leader>gc :GodboltCompiler telescope<CR>
+        vnoremap <leader>gb :Godbolt!<CR>
+        vnoremap <leader>gc :GodboltCompiler! telescope<CR>
       ]])
     end,
   },
