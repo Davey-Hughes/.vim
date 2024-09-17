@@ -1,34 +1,4 @@
 return {
-  -- filetype
-  { "apple/pkl-neovim", ft = "pkl" },
-  { "bfrg/vim-cpp-modern", ft = "cpp" },
-  { "chrisbra/csv.vim", ft = "csv" },
-  { "leafgarland/typescript-vim", ft = "typescript" },
-  { "maxbane/vim-asm_ca65", ft = "ca65" },
-  { "PyGamer0/vim-apl", ft = "apl" },
-  { "rust-lang/rust.vim", ft = "rust" },
-  { "udalov/kotlin-vim", ft = "kotlin" },
-  { "vim-ruby/vim-ruby", ft = "ruby" },
-
-  {
-    "lervag/vimtex",
-    ft = "tex",
-    config = function()
-      vim.g.vimtex_view_general_viewer = "okular"
-      vim.g.vimtex_syntax_enabled = false
-      vim.g.vimtex_format_enabled = true
-    end,
-  },
-
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function()
-      vim.fn["mkdp#util#install"]()
-    end,
-  },
-
   -- misc
   { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
 
@@ -87,6 +57,7 @@ return {
     },
     config = function()
       local harpoon = require("harpoon")
+      ---@diagnostic disable-next-line: missing-fields
       harpoon.setup({
         menu = {
           width = vim.api.nvim_win_get_width(0) - 4,
@@ -106,139 +77,10 @@ return {
     end,
   },
 
-  {
-    "zbirenbaum/copilot.lua",
-    event = "VeryLazy",
-    dependencies = {
-      {
-        "zbirenbaum/copilot-cmp",
-        "hrsh7th/nvim-cmp",
-      },
-    },
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = true, auto_trigger = false },
-        panel = { enabled = false },
-      })
-
-      require("copilot_cmp").setup()
-    end,
-  },
-
   -- ui
-  {
-    "folke/noice.nvim",
-    version = "4.4.7",
-    event = "VeryLazy",
-    cond = not vim.g.vscode,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "rcarriga/nvim-notify",
-    },
-    config = function()
-      require("noice").setup({
-        cmdline = {
-          view = "cmdline",
-        },
-        routes = {
-          {
-            filter = {
-              event = "msg_show",
-              kind = "",
-              find = "written",
-            },
-            opts = { skip = true },
-          },
-        },
-        lsp = {
-          override = {
-            ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-            ["vim.lsp.util.stylize_markdown"] = true,
-            ["cmp.entry.get_documentation"] = true,
-          },
-
-          hover = {
-            enabled = false,
-          },
-
-          signature = {
-            enabled = false,
-          },
-        },
-        presets = {
-          bottom_search = true,
-          command_palette = false,
-          long_message_to_split = true,
-          inc_rename = false,
-          lsp_doc_border = true,
-        },
-      })
-    end,
-  },
-  {
-    "folke/todo-comments.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
-  },
-  {
-    "folke/trouble.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    event = "VeryLazy",
-    cmd = "Trouble",
-    opts = {},
-    keys = {
-      {
-        "<leader>tx",
-        "<cmd>Trouble diagnostics toggle<cr>",
-        desc = "Diagnostics (Trouble)",
-      },
-      {
-        "<leader>tX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
-        desc = "Buffer Diagnostics (Trouble)",
-      },
-      {
-        "<leader>ts",
-        "<cmd>Trouble symbols toggle focus=false<cr>",
-        desc = "Symbols (Trouble)",
-      },
-      {
-        "<leader>tl",
-        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-        desc = "LSP Definitions / references / ... (Trouble)",
-      },
-      {
-        "<leader>tL",
-        "<cmd>Trouble loclist toggle<cr>",
-        desc = "Location List (Trouble)",
-      },
-      {
-        "<leader>tQ",
-        "<cmd>Trouble qflist toggle<cr>",
-        desc = "Quickfix List (Trouble)",
-      },
-    },
-  },
-  { "folke/twilight.nvim", event = "VeryLazy" },
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    init = function()
-      vim.o.timeout = true
-      vim.o.timeoutlen = 300
-    end,
-    opts = {},
-  },
   {
     "ipod825/vim-tabdrop",
     event = "VeryLazy",
-    config = function()
-      vim.cmd([[
-        nnoremap <C-]> :TagTabdrop<CR>
-        vnoremap <C-]> <Esc>:TagTabdrop<CR>
-      ]])
-    end,
   },
 
   {
@@ -266,11 +108,9 @@ return {
   {
     "mbbill/undotree",
     event = "VeryLazy",
-    config = function()
-      vim.cmd([[
-        nnoremap <F5> :UndotreeToggle<CR>
-    ]])
-    end,
+    keys = {
+      { "<F5>", "<cmd>UndotreeToggle<CR>", { desc = "Toggle Undo Tree" } },
+    },
   },
   {
     "crispgm/nvim-tabline",
@@ -323,12 +163,12 @@ return {
           },
         },
       })
-
-      vim.cmd([[
-        vnoremap <leader>gb :Godbolt!<CR>
-        vnoremap <leader>gc :GodboltCompiler! telescope<CR>
-      ]])
     end,
+
+    keys = {
+      { "<leader>gb", "<cmd>Godbolt!<cr>", { desc = "Godbolt" }, mode = "v" },
+      { "<leader>gc", "<cmd>GodboltCompiler! telescope", { desc = "Godbolt Compiler in Telescope" }, mode = "v" },
+    },
   },
 
   {
@@ -367,7 +207,7 @@ return {
     opts = {},
     config = true,
     keys = {
-      { "-", "<CMD>Oil --float<CR>", { desc = "Open parent directory" } },
+      { "-", "<cmd>Oil --float<CR>", { desc = "Open parent directory" } },
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
@@ -391,6 +231,7 @@ return {
     priority = -1000, -- ensure this loads last
 
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
       require("Comment").setup({
         toggler = {
           line = "<leader>c<leader>",
@@ -421,6 +262,9 @@ return {
   {
     "alexghergh/nvim-tmux-navigation",
     event = "VeryLazy",
+    opts = {
+      disable_when_zoomed = true,
+    },
     config = function()
       local nvim_tmux_nav = require("nvim-tmux-navigation")
 

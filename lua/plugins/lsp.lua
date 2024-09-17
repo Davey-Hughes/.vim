@@ -23,6 +23,25 @@ return {
     },
 
     {
+      "zbirenbaum/copilot.lua",
+      event = "VeryLazy",
+      dependencies = {
+        {
+          "zbirenbaum/copilot-cmp",
+          "hrsh7th/nvim-cmp",
+        },
+      },
+      config = function()
+        require("copilot").setup({
+          suggestion = { enabled = true, auto_trigger = false },
+          panel = { enabled = false },
+        })
+
+        require("copilot_cmp").setup()
+      end,
+    },
+
+    {
       "folke/lazydev.nvim",
       ft = "lua",
       opts = {
