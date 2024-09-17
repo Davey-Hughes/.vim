@@ -358,10 +358,19 @@ return {
     "NvChad/nvim-colorizer.lua",
     event = "VeryLazy",
     config = function()
-      require("colorizer").setup()
+      require("colorizer").setup({})
     end,
   },
   { "sitiom/nvim-numbertoggle", event = "VeryLazy" },
+  {
+    "stevearc/oil.nvim",
+    opts = {},
+    config = true,
+    keys = {
+      { "-", "<CMD>Oil --float<CR>", { desc = "Open parent directory" } },
+    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
 
   -- text editing
   {
