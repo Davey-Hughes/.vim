@@ -117,32 +117,3 @@ if exists('+undofile')
     execute 'set undodir+=' . $VIMLOCAL . '/undo//'
     set undofile
 endif
-
-"""""""""""""""""""""""""" 80 character line guides """""""""""""""""""""""""""
-
-" highlight characters over 80 line limit
-nnoremap <Leader>H :call<SID>LongLineHLToggle()<cr>
-hi OverLength ctermbg=none cterm=none
-match OverLength /\%>81v/
-function! s:LongLineHLToggle()
-    if !exists('w:longlinehl')
-        let w:longlinehl = matchadd('ErrorMsg', '.\%>80v', 0)
-        echo 'Long lines highlighted'
-    else
-        call matchdelete(w:longlinehl)
-        unl w:longlinehl
-        echo 'Long lines unhighlighted'
-    endif
-endfunction
-
-highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
-
-" toggle 80 character wrap guide
-nnoremap <Leader>h :call<SID>ToggleWrapGuide()<cr>
-fun! s:ToggleWrapGuide()
-    if &colorcolumn
-        set colorcolumn=
-    else
-        set colorcolumn=80
-    endif
-endfunction
