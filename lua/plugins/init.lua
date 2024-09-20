@@ -204,7 +204,11 @@ return {
   { "sitiom/nvim-numbertoggle", event = "VeryLazy" },
   {
     "stevearc/oil.nvim",
-    opts = {},
+    opts = {
+      view_options = {
+        show_hidden = true,
+      },
+    },
     config = true,
     keys = {
       { "-", "<cmd>Oil --float<CR>", { desc = "Open parent directory" } },
@@ -225,6 +229,7 @@ return {
       filetype_exclude = { "markdown", "diff" },
     },
   },
+  { "Bekaboo/deadcolumn.nvim" },
   {
     "numToStr/Comment.nvim",
     event = "VeryLazy",

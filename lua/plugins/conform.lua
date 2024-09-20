@@ -30,6 +30,7 @@ return {
             "file:" .. vim.env.HOME .. "/.vim/configs/.clang-format",
           },
         },
+
         sqlfluff = {
           args = {
             "format",
