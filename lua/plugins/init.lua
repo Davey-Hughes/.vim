@@ -33,13 +33,12 @@ return {
     opts = {
       log_level = "error",
 
-      auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      suppressed_dirs = { "~/", "~/projects", "~/Downloads", "/" },
 
       auto_save_enabled = true,
       auto_restore_enabled = true,
 
       session_lens = {
-        buftypes_to_ignore = {},
         load_on_setup = true,
         theme_conf = { border = true },
         previewer = false,
