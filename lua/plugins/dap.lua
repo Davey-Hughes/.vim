@@ -23,11 +23,15 @@ return {
       local dap, dapui = require("dap"), require("dapui")
       local mason_path = vim.fn.stdpath("data") .. "/mason"
 
-      dap.adapters.cppdbg = {
-        id = "cppdbg",
-        type = "executable",
-        command = mason_path .. "/bin/OpenDebugAD7",
-      }
+      vim.api.nvim_set_hl(0, "DapBreakpoint", { ctermbg = 0, fg = "red", bg = "" })
+      vim.api.nvim_set_hl(0, "DapLogPoint", { ctermbg = 0, fg = "yellow", bg = "" })
+      vim.api.nvim_set_hl(0, "DapStopped", { ctermbg = 0, fg = "green", bg = "" })
+
+      vim.fn.sign_define("DapBreakpoint", { text = "B", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+      vim.fn.sign_define("DapBreakpointCondition", { text = "C", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+      vim.fn.sign_define("DapBreakpointRejected", { text = "R", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+      vim.fn.sign_define("DapLogPoint", { text = "L", texthl = "DapLogPoint", linehl = "", numhl = "" })
+      vim.fn.sign_define("DapStopped", { text = "S", texthl = "DapStopped", linehl = "", numhl = "" })
 
       dap.adapters.lldb = {
         id = "lldb",
@@ -39,7 +43,7 @@ return {
         },
       }
 
-      dap.configurations.rust = {
+      dap.configurations.c = {
         {
           name = "launch file",
           type = "lldb",
@@ -47,14 +51,12 @@ return {
           program = function()
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
           end,
-          miDebuggerPath = mason_path .. "/packages/cpptools/extension/debugAdapters/lldb-mi/bin/lldb-mi",
-          MIMode = "lldb",
           cwd = "${workspaceFolder}",
           stopOnEntry = true,
         },
       }
 
-      dap.configurations.c = dap.configurations.rust
+      dap.configurations.cpp = dap.configurations.c
 
       local function set_ui_keymaps()
         vim.keymap.set("n", "<down>", dap.step_over)
