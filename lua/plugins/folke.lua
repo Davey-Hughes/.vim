@@ -9,6 +9,12 @@ return {
       "rcarriga/nvim-notify",
     },
     config = function()
+      ---@diagnostic disable-next-line: missing-fields
+      require("notify").setup({
+        timeout = 500,
+        stages = "fade_in_slide_out",
+      })
+
       require("noice").setup({
         cmdline = {
           view = "cmdline",
@@ -87,7 +93,7 @@ return {
         desc = "Location List (Trouble)",
       },
       {
-        "<leader>tQ",
+        "<leader>tq",
         "<cmd>Trouble qflist toggle<cr>",
         desc = "Quickfix List (Trouble)",
       },

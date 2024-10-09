@@ -1,7 +1,6 @@
 return {
   -- misc
   { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
-
   {
     "glacambre/firenvim",
     -- Lazy load firenvim
@@ -171,13 +170,22 @@ return {
   },
 
   {
-    "nvimdev/dashboard-nvim",
+    "Davey-Hughes/dashboard-nvim",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },
-    config = function()
-      require("dashboard").setup({})
-    end,
+    opts = {
+      config = {
+        shortcut = {
+          { desc = "󰊳 LazyUpdate", group = "@property", action = "Lazy update", key = "u" },
+          { desc = "󰊳 TSUpdate", group = "@property", action = "TSUpdate", key = "t" },
+          { desc = "Close", group = "@property", action = "bdelete", key = "q", hide = true },
+        },
+        week_header = {
+          enable = true,
+        },
+      },
+    },
   },
 
   {
