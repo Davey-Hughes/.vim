@@ -8,6 +8,7 @@ return {
   { "rust-lang/rust.vim", ft = "rust" },
   { "udalov/kotlin-vim", ft = "kotlin" },
   { "vim-ruby/vim-ruby", ft = "ruby" },
+  { "ziglang/zig.vim", ft = "zig" },
 
   {
     "lervag/vimtex",
@@ -22,7 +23,7 @@ return {
   {
     "iamcco/markdown-preview.nvim",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
+    ft = "markdown",
     build = function()
       vim.fn["mkdp#util#install"]()
     end,
