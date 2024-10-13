@@ -264,4 +264,22 @@ return {
       vim.keymap.set("n", "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
     end,
   },
+
+  {
+    "LunarVim/bigfile.nvim",
+    opts = {
+      filesize = 2,
+      pattern = { "*" },
+      features = {
+        "indent_blankline",
+        "illuminate",
+        "lsp",
+        "treesitter",
+        "syntax",
+        "matchparen",
+        "vimopts",
+        "filetype",
+      },
+    },
+  },
 }
