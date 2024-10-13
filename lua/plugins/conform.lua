@@ -28,6 +28,7 @@ return {
         cpp = { "clang-format" },
         fish = { "fish_indent" },
         graphql = { "prettierd" },
+        html = { "prettierd" },
         json = { "prettierd", "prettier", stop_after_first = true },
         kotlin = { "ktlint" },
         latex = { "latexindent" },
