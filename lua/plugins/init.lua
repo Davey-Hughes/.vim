@@ -1,15 +1,20 @@
 return {
-  -- misc
+  { "Bekaboo/deadcolumn.nvim" },
   { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
-  {
-    "glacambre/firenvim",
-    -- Lazy load firenvim
-    lazy = not vim.g.started_by_firenvim,
-    enabled = false,
-    build = function()
-      vim.fn["firenvim#install"](0)
-    end,
-  },
+  { "RRethy/vim-illuminate", event = "VeryLazy" },
+  { "ipod825/vim-tabdrop", event = "VeryLazy" },
+  { "kevinhwang91/nvim-hlslens", opts = {} },
+  { "mcauley-penney/tidy.nvim", opts = { filetype_exclude = { "markdown", "diff" } } },
+  { "michaelb/sniprun", event = "VeryLazy", build = "sh ./install.sh" },
+  { "nanotee/zoxide.vim", event = "VeryLazy" },
+  { "nvim-tree/nvim-web-devicons" },
+  { "sitiom/nvim-numbertoggle", event = "VeryLazy" },
+  { "tpope/vim-abolish" },
+  { "tpope/vim-sleuth" },
+  { "tpope/vim-speeddating", event = "VeryLazy" },
+  { "tpope/vim-surround", event = "VeryLazy" },
+  { "tpope/vim-unimpaired", event = "VeryLazy" },
+
   {
     "HakonHarnes/img-clip.nvim",
     event = "VeryLazy",
@@ -18,15 +23,7 @@ return {
       { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
     },
   },
-  {
-    "michaelb/sniprun",
-    event = "VeryLazy",
-    build = "sh ./install.sh",
-  },
 
-  { "nanotee/zoxide.vim", event = "VeryLazy" },
-  { "tpope/vim-sleuth" },
-  { "tpope/vim-abolish" },
   {
     "rmagatti/auto-session",
     opts = {
@@ -43,6 +40,18 @@ return {
         previewer = false,
       },
     },
+  },
+
+  {
+    "rmagatti/goto-preview",
+    event = "VeryLazy",
+    config = function()
+      require("goto-preview").setup({
+        default_mappings = true,
+        width = 120,
+        height = 80,
+      })
+    end,
   },
 
   {
@@ -75,12 +84,6 @@ return {
     end,
   },
 
-  -- ui
-  {
-    "ipod825/vim-tabdrop",
-    event = "VeryLazy",
-  },
-
   {
     "liuchengxu/vista.vim",
     event = "VeryLazy",
@@ -110,6 +113,7 @@ return {
       { "<F5>", "<cmd>UndotreeToggle<CR>", { desc = "Toggle Undo Tree" } },
     },
   },
+
   {
     "crispgm/nvim-tabline",
     dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional
@@ -120,6 +124,7 @@ return {
       })
     end,
   },
+
   {
     "p00f/godbolt.nvim",
     event = "VeryLazy",
@@ -189,26 +194,13 @@ return {
   },
 
   {
-    "rmagatti/goto-preview",
-    event = "VeryLazy",
-    config = function()
-      require("goto-preview").setup({
-        default_mappings = true,
-        width = 120,
-        height = 80,
-      })
-    end,
-  },
-  { "RRethy/vim-illuminate", event = "VeryLazy" },
-  { "nvim-tree/nvim-web-devicons" },
-  {
     "NvChad/nvim-colorizer.lua",
     event = "VeryLazy",
     config = function()
       require("colorizer").setup({})
     end,
   },
-  { "sitiom/nvim-numbertoggle", event = "VeryLazy" },
+
   {
     "stevearc/oil.nvim",
     opts = {
@@ -223,20 +215,6 @@ return {
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },
 
-  -- text editing
-  {
-    "kevinhwang91/nvim-hlslens",
-    config = function()
-      require("hlslens").setup()
-    end,
-  },
-  {
-    "mcauley-penney/tidy.nvim",
-    opts = {
-      filetype_exclude = { "markdown", "diff" },
-    },
-  },
-  { "Bekaboo/deadcolumn.nvim" },
   {
     "numToStr/Comment.nvim",
     event = "VeryLazy",
@@ -266,11 +244,6 @@ return {
     end,
   },
 
-  { "tpope/vim-speeddating", event = "VeryLazy" },
-  { "tpope/vim-surround", event = "VeryLazy" },
-  { "tpope/vim-unimpaired", event = "VeryLazy" },
-
-  -- tmux
   {
     "alexghergh/nvim-tmux-navigation",
     event = "VeryLazy",
