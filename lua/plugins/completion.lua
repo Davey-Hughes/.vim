@@ -46,6 +46,7 @@ return {
           { name = "path", group_index = 0 },
           { name = "nvim_lsp", group_index = 1 },
           { name = "copilot", group_index = 1 },
+          { name = "supermaven", group_index = 1 },
         },
         formatting = {
           expandable_indicator = true,
@@ -54,7 +55,7 @@ return {
             mode = "symbol",
             maxwidth = 50,
             ellipsis_char = "...",
-            symbol_map = { Copilot = "" },
+            symbol_map = { Copilot = "", Supermaven = "" },
           }),
         },
         mapping = {
@@ -144,6 +145,7 @@ return {
 
   {
     "zbirenbaum/copilot.lua",
+    enabled = false,
     event = "VeryLazy",
     dependencies = {
       { "zbirenbaum/copilot-cmp", opts = {} },
@@ -152,5 +154,17 @@ return {
       suggestion = { enabled = true, auto_trigger = false },
       panel = { enabled = false },
     },
+  },
+
+  {
+    "supermaven-inc/supermaven-nvim",
+    config = function()
+      require("supermaven-nvim").setup({
+        ignore_filetypes = {},
+        log_level = "off",
+        disable_inline_completion = true,
+        disable_keymaps = true,
+      })
+    end,
   },
 }
