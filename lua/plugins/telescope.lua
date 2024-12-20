@@ -2,31 +2,28 @@ return {
   "nvim-telescope/telescope.nvim",
   event = "VeryLazy",
   dependencies = {
-    "nvim-lua/plenary.nvim",
     "BurntSushi/ripgrep",
-    "sharkdp/fd",
-    "nvim-treesitter/nvim-treesitter",
-    "nvim-tree/nvim-web-devicons",
-    "nvim-telescope/telescope-smart-history.nvim",
+    "kkharji/sqlite.lua",
+    "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-file-browser.nvim",
+    "nvim-telescope/telescope-live-grep-args.nvim",
+    "nvim-telescope/telescope-smart-history.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "nvim-treesitter/nvim-treesitter",
+    "rmagatti/auto-session",
+    "sharkdp/fd",
+    "viniarck/telescope-tmuxdir.nvim",
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
     },
-    "nvim-telescope/telescope-live-grep-args.nvim",
-    "kkharji/sqlite.lua",
     {
       "ThePrimeagen/harpoon",
       event = "VeryLazy",
       branch = "harpoon2",
     },
-    {
-      "viniarck/telescope-tmuxdir.nvim",
-    },
-    {
-      "rmagatti/auto-session",
-    },
   },
+
   config = function()
     local ts_select_dir_for_grep_args = function(prompt_bufnr)
       local action_state = require("telescope.actions.state")
@@ -79,10 +76,6 @@ return {
       pickers = {},
 
       extensions = {
-        -- persisted = {
-        --   layout_config = { width = 0.55, height = 0.55 },
-        -- },
-
         file_browser = {
           theme = "ivy",
           hijack_netrw = true,
@@ -136,7 +129,11 @@ return {
         :find()
     end
 
-    -- require("telescope").load_extension("persisted")
+    local function get_git_root()
+      local dot_git_path = vim.fn.finddir(".git", ".;")
+      return vim.fn.fnamemodify(dot_git_path, ":h")
+    end
+
     require("telescope").load_extension("smart_history")
     require("telescope").load_extension("fzf")
     require("telescope").load_extension("file_browser")
@@ -145,8 +142,12 @@ return {
 
     local builtin = require("telescope.builtin")
     vim.keymap.set("n", "<c-p>", builtin.git_files, { desc = "Git files" })
-    vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Find files" })
-    vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Live grep" })
+    vim.keymap.set("n", "<leader>ff", function()
+      builtin.find_files({ search_dirs = { get_git_root() } })
+    end, { desc = "Find Files" })
+    vim.keymap.set("n", "<leader>fg", function()
+      builtin.live_grep({ search_dirs = { get_git_root() } })
+    end, { desc = "Live grep" })
     vim.keymap.set("n", "<leader>fa", lga.live_grep_args, { desc = "Live grep args" })
     vim.keymap.set("n", "<leader>fo", builtin.oldfiles, { desc = "Old files" })
     vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Buffers" })
