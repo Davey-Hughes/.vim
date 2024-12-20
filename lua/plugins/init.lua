@@ -12,8 +12,14 @@ return {
   { "tpope/vim-abolish" },
   { "tpope/vim-sleuth" },
   { "tpope/vim-speeddating", event = "VeryLazy" },
-  { "tpope/vim-surround", event = "VeryLazy" },
   { "tpope/vim-unimpaired", event = "VeryLazy" },
+  {
+    "kylechui/nvim-surround",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({})
+    end,
+  },
 
   {
     "HakonHarnes/img-clip.nvim",
