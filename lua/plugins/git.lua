@@ -1,6 +1,6 @@
 return {
   -- { "rbong/vim-flog", event = "VeryLazy" },
-  -- { "tpope/vim-fugitive", event = "VeryLazy" },
+  { "tpope/vim-fugitive", event = "VeryLazy" },
   { "tpope/vim-rhubarb", event = "VeryLazy" },
 
   {
@@ -16,6 +16,7 @@ return {
 
   {
     "NeogitOrg/neogit",
+    event = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "sindrets/diffview.nvim",
