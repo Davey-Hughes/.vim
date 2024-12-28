@@ -13,7 +13,7 @@ return {
     require("obsidian").setup({
       dir = "~/obsidian/main",
       completion = {
-        nvim_cmp = true,
+        nvim_cmp = false,
         min_chars = 2,
         new_notes_location = "current_dir",
         prepend_note_id = true,

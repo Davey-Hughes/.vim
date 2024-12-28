@@ -7,7 +7,8 @@ return {
     { "neovim/nvim-lspconfig" },
     { "williamboman/mason.nvim" },
     { "williamboman/mason-lspconfig.nvim" },
-    { "hrsh7th/cmp-nvim-lsp" },
+    -- { "hrsh7th/cmp-nvim-lsp" },
+    { "saghen/blink.cmp" },
     { "mrcjkb/rustaceanvim", ft = "rust" },
     { "pest-parser/pest.vim", ft = "pest" },
     { "smjonas/inc-rename.nvim", opts = {} },
@@ -286,9 +287,10 @@ return {
       },
     })
 
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    capabilities.offsetEncoding = "utf-8"
+    -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    -- capabilities.offsetEncoding = "utf-8"
 
+    local capabilities = require("blink.cmp").get_lsp_capabilities()
     require("lspconfig").clangd.setup({
       on_attach = function(client, bufnr) end,
       capabilities = capabilities,
