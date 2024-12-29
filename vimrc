@@ -89,8 +89,6 @@ MapToggle <F3> list
 
 " Behavior-altering option toggles
 MapToggle <F11>  spell
-MapToggle <F12> paste
-set pastetoggle=<F12>
 
 """""""""""""""""""""""""""""""""""" undo """""""""""""""""""""""""""""""""""""
 
