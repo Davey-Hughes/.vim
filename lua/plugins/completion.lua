@@ -8,7 +8,6 @@ return {
       "onsails/lspkind.nvim",
       {
         "L3MON4D3/LuaSnip",
-        version = "v2.*",
         build = "make install_jsregexp",
       },
     },
@@ -145,7 +144,6 @@ return {
 
   {
     "zbirenbaum/copilot.lua",
-    enabled = false,
     event = "VeryLazy",
     dependencies = {
       { "zbirenbaum/copilot-cmp", opts = {} },
