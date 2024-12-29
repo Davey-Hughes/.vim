@@ -1,11 +1,43 @@
 return {
-  "VonHeikemen/lsp-zero.nvim",
-  branch = "v4.x",
+  "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
-    -- LSP Support
-    { "neovim/nvim-lspconfig" },
-    { "williamboman/mason.nvim" },
+    {
+      "williamboman/mason.nvim",
+      config = function()
+        require("mason").setup({})
+        require("mason-lspconfig").setup({
+          automatic_installation = {},
+          ensure_installed = {
+            "asm_lsp",
+            "bashls",
+            "biome",
+            "clangd",
+            "eslint",
+            "gopls",
+            "graphql",
+            "html",
+            "jqls",
+            "jsonls",
+            "lemminx",
+            "lua_ls",
+            "ltex",
+            "marksman",
+            "pest_ls",
+            "pyright",
+            "ruff",
+            "rust_analyzer",
+            "sqlls",
+            "taplo",
+            "vimls",
+            "yamlls",
+            "zls",
+          },
+
+          handlers = {},
+        })
+      end,
+    },
     { "williamboman/mason-lspconfig.nvim" },
     { "hrsh7th/cmp-nvim-lsp" },
     { "mrcjkb/rustaceanvim", ft = "rust" },
@@ -63,22 +95,6 @@ return {
   },
 
   config = function()
-    local lsp_zero = require("lsp-zero")
-
-    lsp_zero.extend_lspconfig({
-      suggest_lsp_servers = false,
-      sign_icons = {
-        error = "E",
-        warn = "W",
-        hint = "H",
-        info = "I",
-      },
-    })
-
-    local function on_list(options)
-      vim.api.nvim_command("Tabdrop")
-    end
-
     vim.opt.updatetime = 300
 
     -- show which LSP server triggered the message
@@ -124,87 +140,73 @@ return {
       desc = "Show diagnostic information when holding cursor if no other floating window",
     })
 
-    lsp_zero.on_attach(function(client, bufnr)
-      lsp_zero.default_keymaps({ buffer = bufnr })
+    local lspconfig_defaults = require("lspconfig").util.default_config
+    lspconfig_defaults.capabilities =
+      vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
-      vim.keymap.set("n", "gd", function()
-        vim.lsp.buf.definition({ reuse_win = true })
-      end, { buffer = bufnr, remap = false, desc = "Goto definition" })
+    vim.api.nvim_create_autocmd("LspAttach", {
+      desc = "LSP actions",
+      callback = function(event)
+        vim.keymap.set("n", "K", function()
+          vim.lsp.buf.hover()
+        end, { buffer = event.buf, remap = false, desc = "Hover" })
 
-      vim.keymap.set("n", "<leader>ws", function()
-        vim.lsp.buf.workspace_symbol()
-      end, { buffer = bufnr, remap = false, desc = "Workspace symbol" })
+        vim.keymap.set("n", "gd", function()
+          vim.lsp.buf.definition({ reuse_win = true })
+        end, { buffer = event.buf, remap = false, desc = "Goto definition" })
 
-      vim.keymap.set("n", "<leader>ca", function()
-        vim.lsp.buf.code_action()
-      end, { buffer = bufnr, remap = false, desc = "Code action" })
+        vim.keymap.set("n", "gi", function()
+          vim.lsp.buf.implementation()
+        end, { buffer = event.buf, remap = false, desc = "Goto implementation" })
 
-      vim.keymap.set("n", "<leader>rn", function()
-        return ":IncRename " .. vim.fn.expand("<cword>")
-      end, { buffer = bufnr, remap = false, expr = true, desc = "Increname" })
+        vim.keymap.set("n", "go", function()
+          vim.lsp.buf.type_definition()
+        end, { buffer = event.buf, remap = false, desc = "Goto type definition" })
 
-      vim.keymap.set("i", "<C-h>", function()
-        vim.lsp.buf.signature_help()
-      end, { buffer = bufnr, remap = false, desc = "Signature help" })
+        vim.keymap.set("n", "gD", function()
+          vim.lsp.buf.declaration()
+        end, { buffer = event.buf, remap = false, desc = "Goto declaration" })
 
-      vim.keymap.set("n", "<leader>cf", function()
-        vim.lsp.buf.format()
-      end, { buffer = bufnr, remap = false, desc = "Buffer format" })
+        vim.keymap.set("n", "<leader>ws", function()
+          vim.lsp.buf.workspace_symbol()
+        end, { buffer = event.buf, remap = false, desc = "Workspace symbol" })
 
-      vim.keymap.set("n", "<leader>lr", function()
-        vim.lsp.buf.references()
-      end, { buffer = bufnr, remap = false, desc = "Buffer format" })
+        vim.keymap.set("n", "<leader>ca", function()
+          vim.lsp.buf.code_action()
+        end, { buffer = event.buf, remap = false, desc = "Code action" })
 
-      if client.server_capabilities.codeLensProvider then
-        vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
-          group = "LSPConfig",
-          buffer = bufnr,
-          callback = vim.lsp.codelens.refresh,
-        })
+        vim.keymap.set("n", "<leader>rn", function()
+          return ":IncRename " .. vim.fn.expand("<cword>")
+        end, { buffer = event.buf, remap = false, expr = true, desc = "Increname" })
 
-        vim.api.nvim_create_autocmd("LspDetach", {
-          group = "LSPConfig",
-          buffer = bufnr,
-          callback = function(opt)
-            vim.lsp.codelens.clear(opt.data.client_id, opt.buf)
-          end,
-        })
-      end
-    end)
+        vim.keymap.set("i", "<C-h>", function()
+          vim.lsp.buf.signature_help()
+        end, { buffer = event.buf, remap = false, desc = "Signature help" })
 
-    lsp_zero.setup()
+        vim.keymap.set("n", "<leader>cf", function()
+          vim.lsp.buf.format()
+        end, { buffer = event.buf, remap = false, desc = "Buffer format" })
 
-    require("mason").setup({})
-    require("mason-lspconfig").setup({
-      ensure_installed = {
-        "asm_lsp",
-        "bashls",
-        "biome",
-        "clangd",
-        "eslint",
-        "gopls",
-        "graphql",
-        "html",
-        "jqls",
-        "jsonls",
-        "lemminx",
-        "lua_ls",
-        "ltex",
-        "marksman",
-        "pest_ls",
-        "pyright",
-        "ruff",
-        "rust_analyzer",
-        "sqlls",
-        "taplo",
-        "vimls",
-        "yamlls",
-        "zls",
-      },
+        vim.keymap.set("n", "<leader>lr", function()
+          vim.lsp.buf.references()
+        end, { buffer = event.buf, remap = false, desc = "Buffer format" })
 
-      handlers = {
-        rust_analyzer = lsp_zero.noop,
-      },
+        -- if client.server_capabilities.codeLensProvider then
+        --   vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
+        --     group = "LSPConfig",
+        --     buffer = event.buf,
+        --     callback = vim.lsp.codelens.refresh,
+        --   })
+        --
+        --   vim.api.nvim_create_autocmd("LspDetach", {
+        --     group = "LSPConfig",
+        --     buffer = event.buf,
+        --     callback = function(opt)
+        --       vim.lsp.codelens.clear(opt.data.client_id, opt.buf)
+        --     end,
+        --   })
+        -- end
+      end,
     })
 
     vim.cmd([[
