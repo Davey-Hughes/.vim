@@ -1,7 +1,7 @@
 return {
   { "Bekaboo/deadcolumn.nvim" },
   { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
-  { "RRethy/vim-illuminate", event = "VeryLazy" },
+  -- { "RRethy/vim-illuminate", event = "VeryLazy" },
   { "ipod825/vim-tabdrop", event = "VeryLazy" },
   { "kevinhwang91/nvim-hlslens", opts = {} },
   { "mcauley-penney/tidy.nvim", opts = { filetype_exclude = { "markdown", "diff" } } },
@@ -20,6 +20,10 @@ return {
       require("nvim-surround").setup({})
     end,
   },
+  {
+    "ZWindL/orphans.nvim",
+    opts = {},
+  },
 
   {
     "HakonHarnes/img-clip.nvim",
@@ -37,8 +41,8 @@ return {
 
       suppressed_dirs = { "~/", "~/projects", "~/Downloads", "/" },
 
-      auto_save_enabled = true,
-      auto_restore_enabled = true,
+      auto_save = true,
+      auto_restore = true,
 
       session_lens = {
         load_on_setup = true,
@@ -87,28 +91,6 @@ return {
       vim.keymap.set("n", "<leader>hp", function()
         harpoon:list():prev()
       end)
-    end,
-  },
-
-  {
-    "liuchengxu/vista.vim",
-    event = "VeryLazy",
-    config = function()
-      vim.g.vista_icon_indent = '["╰─▸ ", "├─▸ "]'
-      vim.g["vista#renderer#enable_icon"] = 1
-      vim.g.vista_stay_on_open = 0
-      vim.cmd([[
-        " close vista if the last buffer is closed
-        augroup vista
-            autocmd!
-            autocmd bufenter *
-                \ if winnr("$") == 1 && vista#sidebar#IsOpen() |
-                    \ execute "normal! :q!\<CR>" |
-                \ endif
-        augroup END
-
-        nnoremap <F10> :Vista!!<CR>
-      ]])
     end,
   },
 

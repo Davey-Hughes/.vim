@@ -36,6 +36,8 @@ return {
         sh = { "shfmt" },
         sql = { "sqlfluff" },
         tex = { "latexindent" },
+        typescript = { "prettierd" },
+        typescriptreact = { "prettierd" },
         toml = { "taplo" },
         uiua = { "uiua" },
         yaml = { "prettierd" },
