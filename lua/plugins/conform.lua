@@ -33,6 +33,7 @@ return {
         kotlin = { "ktlint" },
         latex = { "latexindent" },
         lua = { "stylua" },
+        scss = { "prettierd" },
         sh = { "shfmt" },
         sql = { "sqlfluff" },
         tex = { "latexindent" },

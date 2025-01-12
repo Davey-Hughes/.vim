@@ -144,6 +144,7 @@ return {
 
   {
     "zbirenbaum/copilot.lua",
+    enabled = false,
     event = "VeryLazy",
     dependencies = {
       { "zbirenbaum/copilot-cmp", opts = {} },
