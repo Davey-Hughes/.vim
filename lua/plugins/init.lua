@@ -273,6 +273,7 @@ return {
 
   {
     "Goose97/timber.nvim",
+    enabled = false,
     event = "VeryLazy",
     config = function()
       require("timber").setup({})

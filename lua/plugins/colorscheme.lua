@@ -34,7 +34,6 @@ return {
         on_colors = function(colors)
           local util = require("tokyonight.util")
           colors.hint = colors.fg_gutter
-          --   colors.diff = {
           colors.diff = {
             add = util.darken(colors.green2, 0.20),
             delete = util.darken(colors.red1, 0.30),
