@@ -24,7 +24,6 @@ return {
             "ltex",
             "marksman",
             "pest_ls",
-            "pyright",
             "ruff",
             "rust_analyzer",
             "sqlls",
@@ -235,7 +234,7 @@ return {
     require("lspconfig").kotlin_language_server.setup({})
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
-    require("lspconfig").pyright.setup({})
+    require("lspconfig").basedpyright.setup({})
 
     require("lspconfig").ruff.setup({
       on_attach = function(client, bufnr)
