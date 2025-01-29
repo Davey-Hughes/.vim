@@ -235,6 +235,7 @@ return {
     require("lspconfig").flow.setup({})
     require("lspconfig").solargraph.setup({})
     require("lspconfig").basedpyright.setup({})
+    require("lspconfig").fish_lsp.setup({})
 
     require("lspconfig").ruff.setup({
       on_attach = function(client, bufnr)
