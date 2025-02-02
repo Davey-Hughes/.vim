@@ -1,7 +1,7 @@
 return {
   "yetone/avante.nvim",
   event = "VeryLazy",
-  lazy = false,
+  lazy = true,
   version = "*",
   build = "make BUILD_FROM_SOURCE=true",
   dependencies = {
@@ -47,7 +47,9 @@ return {
         __inherited_from = "openai",
         api_key_name = "",
         endpoint = "http://127.0.0.1:11434/v1",
-        model = "deepseek-r1:32b",
+        model = "deepseek-r1:14b-8k",
+        temperature = 0,
+        max_tokens = 4096,
       },
     },
 
@@ -109,11 +111,11 @@ return {
       },
       edit = {
         border = "rounded",
-        start_insert = true, -- Start insert mode when opening the edit window
+        start_insert = false, -- Start insert mode when opening the edit window
       },
       ask = {
         floating = false, -- Open the 'AvanteAsk' prompt in a floating window
-        start_insert = true, -- Start insert mode when opening the ask window
+        start_insert = false, -- Start insert mode when opening the ask window
         border = "rounded",
         ---@type "ours" | "theirs"
         focus_on_apply = "ours", -- which diff to focus after applying
