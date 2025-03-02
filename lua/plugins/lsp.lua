@@ -91,6 +91,7 @@ return {
       ft = { "go", "gomod" },
       build = ':lua require("go.install").update_all_sync()',
     },
+    { "cordx56/rustowl" },
   },
 
   config = function()
@@ -139,7 +140,9 @@ return {
       desc = "Show diagnostic information when holding cursor if no other floating window",
     })
 
-    local lspconfig_defaults = require("lspconfig").util.default_config
+    local lspconfig = require("lspconfig")
+
+    local lspconfig_defaults = lspconfig.util.default_config
     lspconfig_defaults.capabilities =
       vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
@@ -231,25 +234,19 @@ return {
     end
 
     -- LSP specific setup
-    require("lspconfig").kotlin_language_server.setup({})
-    require("lspconfig").flow.setup({})
-    require("lspconfig").solargraph.setup({})
-    require("lspconfig").basedpyright.setup({})
-    require("lspconfig").fish_lsp.setup({})
+    lspconfig.kotlin_language_server.setup({})
+    lspconfig.flow.setup({})
+    lspconfig.solargraph.setup({})
+    lspconfig.basedpyright.setup({})
+    lspconfig.fish_lsp.setup({})
 
-    require("lspconfig").ruff.setup({
+    lspconfig.ruff.setup({
       on_attach = function(client, bufnr)
         enable_lsp_format(client, bufnr)
       end,
     })
 
-    require("lspconfig").biome.setup({
-      on_attach = function(client, bufnr)
-        enable_lsp_format(client, bufnr)
-      end,
-    })
-
-    require("lspconfig").ts_ls.setup({
+    lspconfig.ts_ls.setup({
       on_attach = function(client, bufnr) end,
       filetypes = {
         "javascript",
@@ -269,12 +266,27 @@ return {
       },
     })
 
-    require("lspconfig").ltex.setup({
+    lspconfig.eslint.setup({
+      on_attach = function(client, bufnr)
+        vim.api.nvim_create_autocmd("BufWritePre", {
+          buffer = bufnr,
+          command = "EslintFixAll",
+        })
+      end,
+    })
+
+    lspconfig.biome.setup({
+      on_attach = function(client, bufnr)
+        enable_lsp_format(client, bufnr)
+      end,
+    })
+
+    lspconfig.ltex.setup({
       enabled = false,
       filetypes = { "bib", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd" },
     })
 
-    require("lspconfig").lua_ls.setup({
+    lspconfig.lua_ls.setup({
       on_attach = function(client, bufnr) end,
       settings = {
         Lua = {
@@ -291,7 +303,7 @@ return {
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
     capabilities.offsetEncoding = "utf-8"
 
-    require("lspconfig").clangd.setup({
+    lspconfig.clangd.setup({
       on_attach = function(client, bufnr) end,
       capabilities = capabilities,
       settings = {
@@ -308,13 +320,6 @@ return {
       },
     })
 
-    require("lspconfig").eslint.setup({
-      enabled = false,
-      filetypes = {
-        "javascript",
-      },
-    })
-
     local cfg = require("go.lsp").config()
     if cfg then
       cfg.settings.gopls.hints = {
@@ -328,21 +333,23 @@ return {
       }
     end
 
-    require("lspconfig").gopls.setup(cfg)
+    lspconfig.gopls.setup(cfg)
 
-    require("lspconfig").uiua.setup({
+    lspconfig.uiua.setup({
       on_attach = function(client, bufnr)
         enable_lsp_format(client, bufnr)
       end,
     })
 
-    require("lspconfig").zls.setup({})
+    lspconfig.zls.setup({})
 
     require("pest-vim").setup({
       on_attach = function(client, bufnr)
         enable_lsp_format(client, bufnr)
       end,
     })
+
+    -- lspconfig.rustowlsp.setup({})
 
     vim.g.rustaceanvim = {
       tools = {},
@@ -366,6 +373,7 @@ return {
               extraArgs = {
                 "--",
                 "-W", "clippy::pedantic",
+                "--allow", "clippy::uninlined_format_args",
                 -- "-W", "clippy::nursery",
                 -- "-W", "clippy::unwrap_used",
                 -- "-W", "clippy::expect_used",

@@ -1,5 +1,4 @@
 return {
-  -- { "rbong/vim-flog", event = "VeryLazy" },
   { "tpope/vim-fugitive", event = "VeryLazy" },
   { "tpope/vim-rhubarb", event = "VeryLazy" },
 
@@ -22,7 +21,13 @@ return {
       "sindrets/diffview.nvim",
       "nvim-telescope/telescope.nvim",
     },
-    opts = { graph_style = "kitty" },
+    opts = {
+      graph_style = "kitty",
+      disable_hint = true,
+    },
+    keys = {
+      { "<leader>ng", "<cmd>Neogit<cr>", desc = "Open neogit" },
+    },
   },
 
   {
