@@ -1,7 +1,7 @@
 return {
   { "Bekaboo/deadcolumn.nvim" },
   { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
-  { "Davey-Hughes/vim-illuminate", event = "VeryLazy" },
+  { "RRethy/vim-illuminate", event = "VeryLazy" },
   { "ipod825/vim-tabdrop", event = "VeryLazy" },
   { "kevinhwang91/nvim-hlslens", opts = {} },
   { "mcauley-penney/tidy.nvim", opts = { filetype_exclude = { "markdown", "diff" } } },

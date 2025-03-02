@@ -54,3 +54,6 @@ vim.keymap.set("n", "<down>", "<nop>")
 vim.keymap.set("n", "<up>", "<nop>")
 vim.keymap.set("n", "<left>", "<nop>")
 vim.keymap.set("n", "<right>", "<nop>")
+
+vim.keymap.set({ "n", "v" }, "<leader>+", "<C-a>")
+vim.keymap.set({ "n", "v" }, "<leader>-", "<C-x>")
