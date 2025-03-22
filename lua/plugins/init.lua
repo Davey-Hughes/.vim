@@ -16,9 +16,7 @@ return {
   {
     "kylechui/nvim-surround",
     event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({})
-    end,
+    config = function() require("nvim-surround").setup({}) end,
   },
   {
     "ZWindL/orphans.nvim",
@@ -81,16 +79,10 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>hm", function()
-        harpoon:list():append()
-      end)
+      vim.keymap.set("n", "<leader>hm", function() harpoon:list():append() end)
 
-      vim.keymap.set("n", "<leader>hn", function()
-        harpoon:list():prev()
-      end)
-      vim.keymap.set("n", "<leader>hp", function()
-        harpoon:list():prev()
-      end)
+      vim.keymap.set("n", "<leader>hn", function() harpoon:list():prev() end)
+      vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end)
     end,
   },
 
@@ -163,30 +155,9 @@ return {
   },
 
   {
-    "Davey-Hughes/dashboard-nvim",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    opts = {
-      config = {
-        shortcut = {
-          { desc = "󰊳 LazyUpdate", group = "@property", action = "Lazy update", key = "u" },
-          { desc = "󰊳 TSUpdate", group = "@property", action = "TSUpdate", key = "t" },
-          { desc = "Close", group = "@property", action = "bdelete", key = "q", hide = true },
-        },
-        week_header = {
-          enable = true,
-        },
-      },
-    },
-  },
-
-  {
     "NvChad/nvim-colorizer.lua",
     event = "VeryLazy",
-    config = function()
-      require("colorizer").setup({})
-    end,
+    config = function() require("colorizer").setup({}) end,
   },
 
   {
@@ -254,29 +225,14 @@ return {
   },
 
   {
-    "LunarVim/bigfile.nvim",
-    opts = {
-      filesize = 2,
-      pattern = { "*" },
-      features = {
-        "indent_blankline",
-        "illuminate",
-        "lsp",
-        "treesitter",
-        "syntax",
-        "matchparen",
-        "vimopts",
-        "filetype",
-      },
-    },
-  },
-
-  {
     "Goose97/timber.nvim",
     enabled = false,
     event = "VeryLazy",
-    config = function()
-      require("timber").setup({})
-    end,
+    config = function() require("timber").setup({}) end,
+  },
+
+  {
+    "MagicDuck/grug-far.nvim",
+    opts = {},
   },
 }

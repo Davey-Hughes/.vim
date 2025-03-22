@@ -1,16 +1,11 @@
 return {
-  { "tpope/vim-fugitive", event = "VeryLazy" },
-  { "tpope/vim-rhubarb", event = "VeryLazy" },
-
   {
     "kdheepak/lazygit.nvim",
     event = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
-    config = function()
-      vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", nil)
-    end,
+    config = function() vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", nil) end,
   },
 
   {
@@ -33,8 +28,9 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     event = "VeryLazy",
-    config = function()
-      require("gitsigns").setup({})
-    end,
+    config = function() require("gitsigns").setup({}) end,
+    keys = {
+      { "<leader>gs", "<cmd>Gitsigns blame<cr>", desc = "Toggle git signs" },
+    },
   },
 }
