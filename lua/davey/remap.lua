@@ -56,4 +56,4 @@ vim.keymap.set("n", "<left>", "<nop>")
 vim.keymap.set("n", "<right>", "<nop>")
 
 vim.keymap.set({ "n", "v" }, "<leader>+", "<C-a>")
-vim.keymap.set({ "n", "v" }, "<leader>-", "<C-x>")
+vim.keymap.set({ "n", "v" }, "<leader>_", "<C-x>")

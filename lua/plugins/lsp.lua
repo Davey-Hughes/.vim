@@ -10,16 +10,13 @@ return {
           automatic_installation = {},
           ensure_installed = {
             "asm_lsp",
-            "bashls",
+            "basedpyright",
             "biome",
             "clangd",
-            "eslint",
             "gopls",
-            "graphql",
+            "harper-ls",
             "html",
             "jqls",
-            "jsonls",
-            "lemminx",
             "lua_ls",
             "ltex",
             "marksman",
@@ -58,7 +55,7 @@ return {
       ft = "lua",
       opts = {
         library = {
-          { path = "luvit-meta/library", words = { "vim%.uv" } },
+          { path = "uvit-meta/library", words = { "vim%.uv" } },
           { plugins = { "nvim-dap-ui" }, types = true },
         },
       },
@@ -80,9 +77,7 @@ return {
         local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
         vim.api.nvim_create_autocmd("BufWritePre", {
           pattern = "*.go",
-          callback = function()
-            require("go.format").goimport()
-          end,
+          callback = function() require("go.format").goimport() end,
           group = format_sync_grp,
         })
       end,
@@ -92,6 +87,8 @@ return {
       build = ':lua require("go.install").update_all_sync()',
     },
     { "cordx56/rustowl" },
+    { "artemave/workspace-diagnostics.nvim", opts = {} },
+    { "pmizio/typescript-tools.nvim", enabled = false, opts = {} },
   },
 
   config = function()
@@ -111,9 +108,7 @@ return {
     -- then check for diagnostics under the cursor
     function OpenDiagnosticIfNoFloat()
       for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-        if vim.api.nvim_win_get_config(winid).zindex then
-          return
-        end
+        if vim.api.nvim_win_get_config(winid).zindex then return end
       end
 
       -- THIS IS FOR BUILTIN LSP
@@ -149,49 +144,82 @@ return {
     vim.api.nvim_create_autocmd("LspAttach", {
       desc = "LSP actions",
       callback = function(event)
-        vim.keymap.set("n", "K", function()
-          vim.lsp.buf.hover()
-        end, { buffer = event.buf, remap = false, desc = "Hover" })
+        vim.keymap.set(
+          "n",
+          "K",
+          function() vim.lsp.buf.hover() end,
+          { buffer = event.buf, remap = false, desc = "Hover" }
+        )
 
-        vim.keymap.set("n", "gd", function()
-          vim.lsp.buf.definition({ reuse_win = true })
-        end, { buffer = event.buf, remap = false, desc = "Goto definition" })
+        vim.keymap.set(
+          "n",
+          "gd",
+          function() vim.lsp.buf.definition({ reuse_win = true }) end,
+          { buffer = event.buf, remap = false, desc = "Goto definition" }
+        )
 
-        vim.keymap.set("n", "gi", function()
-          vim.lsp.buf.implementation()
-        end, { buffer = event.buf, remap = false, desc = "Goto implementation" })
+        vim.keymap.set(
+          "n",
+          "gi",
+          function() vim.lsp.buf.implementation() end,
+          { buffer = event.buf, remap = false, desc = "Goto implementation" }
+        )
 
-        vim.keymap.set("n", "go", function()
-          vim.lsp.buf.type_definition()
-        end, { buffer = event.buf, remap = false, desc = "Goto type definition" })
+        vim.keymap.set(
+          "n",
+          "go",
+          function() vim.lsp.buf.type_definition() end,
+          { buffer = event.buf, remap = false, desc = "Goto type definition" }
+        )
 
-        vim.keymap.set("n", "gD", function()
-          vim.lsp.buf.declaration()
-        end, { buffer = event.buf, remap = false, desc = "Goto declaration" })
+        vim.keymap.set(
+          "n",
+          "gD",
+          function() vim.lsp.buf.declaration() end,
+          { buffer = event.buf, remap = false, desc = "Goto declaration" }
+        )
 
-        vim.keymap.set("n", "<leader>ws", function()
-          vim.lsp.buf.workspace_symbol()
-        end, { buffer = event.buf, remap = false, desc = "Workspace symbol" })
+        vim.keymap.set(
+          "n",
+          "<leader>ws",
+          function() vim.lsp.buf.workspace_symbol() end,
+          { buffer = event.buf, remap = false, desc = "Workspace symbol" }
+        )
 
-        vim.keymap.set("n", "<leader>ca", function()
-          vim.lsp.buf.code_action()
-        end, { buffer = event.buf, remap = false, desc = "Code action" })
+        vim.keymap.set(
+          "n",
+          "<leader>ca",
+          function() vim.lsp.buf.code_action() end,
+          { buffer = event.buf, remap = false, desc = "Code action" }
+        )
 
-        vim.keymap.set("n", "<leader>rn", function()
-          return ":IncRename " .. vim.fn.expand("<cword>")
-        end, { buffer = event.buf, remap = false, expr = true, desc = "Increname" })
+        vim.keymap.set(
+          "n",
+          "<leader>rn",
+          function() return ":IncRename " .. vim.fn.expand("<cword>") end,
+          { buffer = event.buf, remap = false, expr = true, desc = "Increname" }
+        )
 
-        vim.keymap.set("i", "<C-h>", function()
-          vim.lsp.buf.signature_help()
-        end, { buffer = event.buf, remap = false, desc = "Signature help" })
+        vim.keymap.set(
+          "i",
+          "<C-h>",
+          function() vim.lsp.buf.signature_help() end,
+          { buffer = event.buf, remap = false, desc = "Signature help" }
+        )
 
-        vim.keymap.set("n", "<leader>cf", function()
-          vim.lsp.buf.format()
-        end, { buffer = event.buf, remap = false, desc = "Buffer format" })
+        vim.keymap.set(
+          "n",
+          "<leader>cf",
+          function() vim.lsp.buf.format() end,
+          { buffer = event.buf, remap = false, desc = "Buffer format" }
+        )
 
-        vim.keymap.set("n", "<leader>lr", function()
-          vim.lsp.buf.references()
-        end, { buffer = event.buf, remap = false, desc = "Buffer format" })
+        vim.keymap.set(
+          "n",
+          "<leader>lr",
+          function() vim.lsp.buf.references() end,
+          { buffer = event.buf, remap = false, desc = "Buffer format" }
+        )
 
         -- if client.server_capabilities.codeLensProvider then
         --   vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
@@ -241,9 +269,7 @@ return {
     lspconfig.fish_lsp.setup({})
 
     lspconfig.ruff.setup({
-      on_attach = function(client, bufnr)
-        enable_lsp_format(client, bufnr)
-      end,
+      on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end,
     })
 
     lspconfig.ts_ls.setup({
@@ -251,6 +277,8 @@ return {
       filetypes = {
         "javascript",
         "typescript",
+        "javascriptreact",
+        "typescriptreact",
       },
       settings = {
         typescript = {
@@ -276,9 +304,7 @@ return {
     })
 
     lspconfig.biome.setup({
-      on_attach = function(client, bufnr)
-        enable_lsp_format(client, bufnr)
-      end,
+      on_attach = function(client, bufnr) end,
     })
 
     lspconfig.ltex.setup({
@@ -336,17 +362,15 @@ return {
     lspconfig.gopls.setup(cfg)
 
     lspconfig.uiua.setup({
-      on_attach = function(client, bufnr)
-        enable_lsp_format(client, bufnr)
-      end,
+      on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end,
     })
 
     lspconfig.zls.setup({})
 
+    lspconfig.harper_ls.setup({})
+
     require("pest-vim").setup({
-      on_attach = function(client, bufnr)
-        enable_lsp_format(client, bufnr)
-      end,
+      on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end,
     })
 
     -- lspconfig.rustowlsp.setup({})

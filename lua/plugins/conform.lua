@@ -29,8 +29,8 @@ return {
         fish = { "fish_indent" },
         graphql = { "prettierd" },
         html = { "prettierd" },
-        json = { "prettierd", "prettier", stop_after_first = true },
-        jsonc = { "prettierd", "prettier", stop_after_first = true },
+        json = { "biome", stop_after_first = true },
+        jsonc = { "biome", stop_after_first = true },
         kotlin = { "ktlint" },
         latex = { "latexindent" },
         lua = { "stylua" },
@@ -38,8 +38,8 @@ return {
         -- sh = { "shfmt" },
         sql = { "sqlfluff" },
         tex = { "latexindent" },
-        typescript = { "prettierd" },
-        typescriptreact = { "prettierd" },
+        typescript = { "biome" },
+        typescriptreact = { "biome" },
         toml = { "taplo" },
         uiua = { "uiua" },
         yaml = { "prettierd" },
@@ -78,6 +78,8 @@ return {
             "Spaces",
             "--indent-width",
             "2",
+            "--collapse-simple-statement",
+            "Always",
             "--",
             "-",
           },
@@ -93,12 +95,15 @@ return {
         },
       },
 
+      default_format_opts = {
+        timeout_ms = 500,
+        lsp_format = "fallback",
+      },
+
       format_on_save = function(bufnr)
         -- Disable with a global or buffer-local variable
-        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-          return
-        end
-        return { timeout_ms = 1000, lsp_format = "fallback" }
+        if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
+        return {}
       end,
     })
   end,

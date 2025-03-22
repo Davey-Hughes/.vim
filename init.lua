@@ -1,23 +1,7 @@
 ------------------------- Davey Hughes' NeoVim config -------------------------
 
 ---------------------------------- Lazy.nvim ----------------------------------
--- set mapleader to spacebar (needs to be done before Lazy.vim is bootstrapped)
-vim.g.mapleader = " "
-
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup("plugins")
+require("config.lazy")
 
 ------------------------------- System detection ------------------------------
 if vim.fn.has("mac") then
@@ -125,16 +109,12 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) <= vim.fn.line("$")
     local not_commit = vim.b[args.buf].filetype ~= "commit"
 
-    if valid_line and not_commit then
-      vim.cmd([[normal! g`"]])
-    end
+    if valid_line and not_commit then vim.cmd([[normal! g`"]]) end
   end,
 })
 
 vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = function()
-    vim.opt.hlsearch = false
-  end,
+  callback = function() vim.opt.hlsearch = false end,
 })
 
 require("davey.remap")

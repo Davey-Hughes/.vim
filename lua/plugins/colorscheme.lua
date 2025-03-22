@@ -6,9 +6,7 @@ return {
     cond = (vim.env.COLORSCHEME == "neosolarized"),
     config = function()
       vim.opt.background = "dark"
-      if vim.env.COLORSCHEME_VARIANT == "light" then
-        vim.opt.background = "dark"
-      end
+      if vim.env.COLORSCHEME_VARIANT == "light" then vim.opt.background = "dark" end
 
       vim.opt.termguicolors = true
       vim.g.neosolarized_patched = 1
@@ -28,7 +26,7 @@ return {
   {
     "folke/tokyonight.nvim",
     priority = 1000,
-    cond = (vim.env.COLORSCHEME == "tokyonight"),
+    cond = (vim.env.COLORSCHEME == nil or vim.env.COLORSCHEME == "tokyonight"),
     config = function()
       require("tokyonight").setup({
         on_colors = function(colors)
