@@ -14,7 +14,7 @@ return {
             "biome",
             "clangd",
             "gopls",
-            "harper-ls",
+            "harper_ls",
             "html",
             "jqls",
             "lua_ls",

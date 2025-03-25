@@ -1,5 +1,4 @@
 return {
-  -- colorscheme
   {
     "Davey-Hughes/NeoSolarized",
     priority = 1000,
