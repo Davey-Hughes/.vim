@@ -41,11 +41,6 @@ return {
     { "smjonas/inc-rename.nvim", opts = {} },
     { "Bilal2453/luvit-meta", lazy = true },
     {
-      "kosayoda/nvim-lightbulb",
-      cond = not vim.g.vscode,
-      opts = { autocmd = { enabled = true } },
-    },
-    {
       "chrisgrieser/nvim-lsp-endhints",
       event = "LspAttach",
       opts = {}, -- required, even if empty
@@ -367,7 +362,13 @@ return {
 
     lspconfig.zls.setup({})
 
-    lspconfig.harper_ls.setup({})
+    lspconfig.harper_ls.setup({
+      filetypes = {
+        "gitcommit",
+        "markdown",
+        "text",
+      },
+    })
 
     require("pest-vim").setup({
       on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end,
