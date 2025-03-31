@@ -2,7 +2,6 @@ return {
   { "Bekaboo/deadcolumn.nvim" },
   { "Eandrju/cellular-automaton.nvim", event = "VeryLazy" },
   { "RRethy/vim-illuminate", event = "VeryLazy" },
-  { "ipod825/vim-tabdrop", event = "VeryLazy" },
   { "kevinhwang91/nvim-hlslens", opts = {} },
   { "mcauley-penney/tidy.nvim", opts = { filetype_exclude = { "markdown", "diff" } } },
   { "michaelb/sniprun", event = "VeryLazy", build = "sh ./install.sh" },
@@ -18,10 +17,7 @@ return {
     event = "VeryLazy",
     config = function() require("nvim-surround").setup({}) end,
   },
-  {
-    "ZWindL/orphans.nvim",
-    opts = {},
-  },
+  { "ZWindL/orphans.nvim", opts = {} },
 
   {
     "HakonHarnes/img-clip.nvim",
@@ -59,30 +55,6 @@ return {
         width = 120,
         height = 80,
       })
-    end,
-  },
-
-  {
-    "ThePrimeagen/harpoon",
-    event = "VeryLazy",
-    branch = "harpoon2",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-    config = function()
-      local harpoon = require("harpoon")
-      ---@diagnostic disable-next-line: missing-fields
-      harpoon.setup({
-        menu = {
-          width = vim.api.nvim_win_get_width(0) - 4,
-        },
-      })
-
-      vim.keymap.set("n", "<leader>hm", function() harpoon:list():append() end)
-
-      vim.keymap.set("n", "<leader>hn", function() harpoon:list():prev() end)
-      vim.keymap.set("n", "<leader>hp", function() harpoon:list():prev() end)
     end,
   },
 
