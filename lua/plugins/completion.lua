@@ -29,6 +29,7 @@ return {
     dependencies = {
       { "rafamadriz/friendly-snippets" },
       { "Kaiser-Yang/blink-cmp-git", dependencies = { "nvim-lua/plenary.nvim" } },
+      { "moyiz/blink-emoji.nvim" },
       {
         "saghen/blink.compat",
         version = "*",
@@ -105,7 +106,7 @@ return {
       },
 
       sources = {
-        default = { "supermaven", "git", "lazydev", "lsp", "path", "snippets", "buffer" },
+        default = { "emoji", "supermaven", "git", "lazydev", "lsp", "path", "snippets", "buffer" },
         providers = {
           path = { score_offset = 100 },
           lsp = { score_offset = 90 },
@@ -117,7 +118,17 @@ return {
           git = {
             module = "blink-cmp-git",
             name = "Git",
-            opts = {},
+            opts = {
+              commit = {
+                triggers = { ";" },
+              },
+            },
+          },
+          emoji = {
+            module = "blink-emoji",
+            name = "Emoji",
+            score_offset = 100,
+            opts = { insert = true },
           },
           supermaven = {
             name = "supermaven",
