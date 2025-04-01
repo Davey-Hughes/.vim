@@ -35,7 +35,15 @@ return {
         lazy = true,
         opts = {},
       },
-      { "echasnovski/mini.icons", version = false },
+      {
+        "echasnovski/mini.icons",
+        version = false,
+        opts = {
+          lsp = {
+            supermaven = { glyph = "" },
+          },
+        },
+      },
     },
     build = "cargo build --release",
 
@@ -54,11 +62,20 @@ return {
         nerd_font_variant = "mono",
       },
 
+      cmdline = {
+        completion = {
+          menu = {
+            auto_show = false,
+          },
+        },
+      },
+
       completion = {
         documentation = { auto_show = true },
         accept = { auto_brackets = { enabled = true } },
         menu = {
           draw = {
+            columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
             components = {
               kind_icon = {
                 text = function(ctx)
@@ -103,7 +120,7 @@ return {
             transform_items = function(ctx, items)
               for _, item in ipairs(items) do
                 item.kind_icon = ""
-                item.kind_name = "Supermaven"
+                item.kind_name = "supermaven"
               end
               return items
             end,
