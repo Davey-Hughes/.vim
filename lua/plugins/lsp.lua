@@ -35,7 +35,6 @@ return {
       end,
     },
     { "williamboman/mason-lspconfig.nvim" },
-    { "hrsh7th/cmp-nvim-lsp" },
     { "mrcjkb/rustaceanvim", ft = "rust" },
     { "pest-parser/pest.vim", ft = "pest" },
     { "smjonas/inc-rename.nvim", opts = {} },
@@ -131,10 +130,6 @@ return {
     })
 
     local lspconfig = require("lspconfig")
-
-    local lspconfig_defaults = lspconfig.util.default_config
-    lspconfig_defaults.capabilities =
-      vim.tbl_deep_extend("force", lspconfig_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
     vim.api.nvim_create_autocmd("LspAttach", {
       desc = "LSP actions",
@@ -321,12 +316,8 @@ return {
       },
     })
 
-    local capabilities = require("cmp_nvim_lsp").default_capabilities()
-    capabilities.offsetEncoding = "utf-8"
-
     lspconfig.clangd.setup({
       on_attach = function(client, bufnr) end,
-      capabilities = capabilities,
       settings = {
         c = {
           hint = {
