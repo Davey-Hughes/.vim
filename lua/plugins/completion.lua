@@ -76,7 +76,7 @@ return {
       completion = {
         documentation = { auto_show = true },
         accept = { auto_brackets = { enabled = true } },
-        ghost_text = { enabled = true },
+        ghost_text = { enabled = false },
         menu = {
           draw = {
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
@@ -134,8 +134,8 @@ return {
           supermaven = {
             name = "supermaven",
             module = "blink.compat.source",
-            score_offset = 90,
-            async = true,
+            score_offset = 110,
+            async = false,
             transform_items = function(ctx, items)
               for _, item in ipairs(items) do
                 item.kind_icon = ""
@@ -146,8 +146,10 @@ return {
           },
         },
       },
+
       fuzzy = { implementation = "prefer_rust_with_warning" },
     },
+
     opts_extend = { "sources.default" },
   },
   {

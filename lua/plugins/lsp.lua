@@ -2,6 +2,7 @@ return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
   dependencies = {
+    { "saghen/blink.cmp" },
     {
       "williamboman/mason.nvim",
       config = function()
@@ -34,19 +35,18 @@ return {
         })
       end,
     },
+
     { "williamboman/mason-lspconfig.nvim" },
     { "mrcjkb/rustaceanvim", ft = "rust" },
     { "pest-parser/pest.vim", ft = "pest" },
     { "smjonas/inc-rename.nvim", opts = {} },
     { "Bilal2453/luvit-meta", lazy = true },
-    {
-      "chrisgrieser/nvim-lsp-endhints",
-      event = "LspAttach",
-      opts = {}, -- required, even if empty
-    },
+    { "artemave/workspace-diagnostics.nvim", opts = {} },
+    { "pmizio/typescript-tools.nvim", enabled = false, opts = {} },
+    { "chrisgrieser/nvim-lsp-endhints", event = "LspAttach", opts = {} },
+
     {
       "folke/lazydev.nvim",
-      ft = "lua",
       opts = {
         library = {
           { path = "uvit-meta/library", words = { "vim%.uv" } },
@@ -54,6 +54,7 @@ return {
         },
       },
     },
+
     {
       "ray-x/go.nvim",
       dependencies = {
@@ -80,12 +81,118 @@ return {
       ft = { "go", "gomod" },
       build = ':lua require("go.install").update_all_sync()',
     },
-    { "cordx56/rustowl" },
-    { "artemave/workspace-diagnostics.nvim", opts = {} },
-    { "pmizio/typescript-tools.nvim", enabled = false, opts = {} },
+
+    {
+      "cordx56/rustowl",
+      build = "cd rustowl && cargo install --path . --locked",
+      lazy = false, -- This plugin is already lazy
+      opts = {},
+    },
   },
 
-  config = function()
+  opts = {
+    servers = {
+      basedpyright = {},
+      biome = {},
+      fish_lsp = {},
+      flow = {},
+      kotlin_language_server = {},
+      pest_ls = {},
+      ruff = {},
+      solargraph = {},
+      uiua = {},
+      zls = {},
+
+      clangd = {
+        settings = {
+          c = {
+            hint = {
+              enable = true,
+            },
+          },
+          cpp = {
+            hint = {
+              enable = true,
+            },
+          },
+        },
+      },
+
+      eslint = {
+        on_attach = function(client, bufnr)
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            command = "EslintFixAll",
+          })
+        end,
+      },
+
+      gopls = {
+        settings = {
+          gopls = {
+            hints = {
+              assignVariableTypes = false,
+              compositeLiteralFields = false,
+              compositeLiteralTypes = false,
+              constantValues = false,
+              functionTypeParameters = false,
+              parameterNames = false,
+              rangeVariableTypes = false,
+            },
+          },
+        },
+      },
+
+      harper_ls = {
+        filetypes = {
+          "gitcommit",
+          "markdown",
+          "text",
+        },
+      },
+
+      ltex = {
+        enabled = false,
+        filetypes = { "bib", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd" },
+      },
+
+      lua_ls = {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+            hint = {
+              enable = true,
+            },
+          },
+        },
+      },
+
+      ts_ls = {
+        filetypes = {
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact",
+        },
+        settings = {
+          typescript = {
+            hint = {
+              enable = true,
+            },
+          },
+          javascript = {
+            hint = {
+              enable = true,
+            },
+          },
+        },
+      },
+    },
+  },
+
+  config = function(_, opts)
     vim.opt.updatetime = 300
 
     -- show which LSP server triggered the message
@@ -210,34 +317,16 @@ return {
           function() vim.lsp.buf.references() end,
           { buffer = event.buf, remap = false, desc = "Buffer format" }
         )
-
-        -- if client.server_capabilities.codeLensProvider then
-        --   vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
-        --     group = "LSPConfig",
-        --     buffer = event.buf,
-        --     callback = vim.lsp.codelens.refresh,
-        --   })
-        --
-        --   vim.api.nvim_create_autocmd("LspDetach", {
-        --     group = "LSPConfig",
-        --     buffer = event.buf,
-        --     callback = function(opt)
-        --       vim.lsp.codelens.clear(opt.data.client_id, opt.buf)
-        --     end,
-        --   })
-        -- end
       end,
     })
 
-    vim.cmd([[
-      highlight! link DiagnosticVirtualTextError DiagnosticError
-      highlight! link DiagnosticVirtualTextWarn DiagnosticWarn
-      highlight! link DiagnosticVirtualTextInfo DiagnosticInfo
-      highlight! link DiagnosticVirtualTextHint DiagnosticHint
-      highlight! link LspInlayHint DiagnosticHint
-    ]])
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextError", { link = "DiagnosticError" })
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextWarn", { link = "DiagnosticWarn" })
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { link = "DiagnosticInfo" })
+    vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { link = "DiagnosticHint" })
+    vim.api.nvim_set_hl(0, "LspInlayHint", { link = "DiagnosticHint" })
 
-    -- setup format for LSP servers
+    -- setup format for LSP servers that don't do it properly
     local enable_lsp_format = function(client, bufnr)
       local lsp_format = vim.api.nvim_create_augroup("LspFormat" .. client.name .. "," .. bufnr, {})
       vim.api.nvim_create_autocmd("BufWritePre", {
@@ -251,121 +340,14 @@ return {
       })
     end
 
-    -- LSP specific setup
-    lspconfig.kotlin_language_server.setup({})
-    lspconfig.flow.setup({})
-    lspconfig.solargraph.setup({})
-    lspconfig.basedpyright.setup({})
-    lspconfig.fish_lsp.setup({})
-
-    lspconfig.ruff.setup({
-      on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end,
-    })
-
-    lspconfig.ts_ls.setup({
-      on_attach = function(client, bufnr) end,
-      filetypes = {
-        "javascript",
-        "typescript",
-        "javascriptreact",
-        "typescriptreact",
-      },
-      settings = {
-        typescript = {
-          hint = {
-            enable = true,
-          },
-        },
-        javascript = {
-          hint = {
-            enable = true,
-          },
-        },
-      },
-    })
-
-    lspconfig.eslint.setup({
-      on_attach = function(client, bufnr)
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          buffer = bufnr,
-          command = "EslintFixAll",
-        })
-      end,
-    })
-
-    lspconfig.biome.setup({
-      on_attach = function(client, bufnr) end,
-    })
-
-    lspconfig.ltex.setup({
-      enabled = false,
-      filetypes = { "bib", "plaintex", "rst", "rnoweb", "tex", "pandoc", "quarto", "rmd" },
-    })
-
-    lspconfig.lua_ls.setup({
-      on_attach = function(client, bufnr) end,
-      settings = {
-        Lua = {
-          diagnostics = {
-            globals = { "vim" },
-          },
-          hint = {
-            enable = true,
-          },
-        },
-      },
-    })
-
-    lspconfig.clangd.setup({
-      on_attach = function(client, bufnr) end,
-      settings = {
-        c = {
-          hint = {
-            enable = true,
-          },
-        },
-        cpp = {
-          hint = {
-            enable = true,
-          },
-        },
-      },
-    })
-
-    local cfg = require("go.lsp").config()
-    if cfg then
-      cfg.settings.gopls.hints = {
-        assignVariableTypes = false,
-        compositeLiteralFields = false,
-        compositeLiteralTypes = false,
-        constantValues = false,
-        functionTypeParameters = false,
-        parameterNames = false,
-        rangeVariableTypes = false,
-      }
+    -- LSP setup
+    for server, config in pairs(opts.servers) do
+      config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+      if config.enable_lsp_format then
+        config.on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end
+      end
+      lspconfig[server].setup(config)
     end
-
-    lspconfig.gopls.setup(cfg)
-
-    lspconfig.uiua.setup({
-      on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end,
-    })
-
-    lspconfig.zls.setup({})
-
-    lspconfig.harper_ls.setup({
-      filetypes = {
-        "gitcommit",
-        "markdown",
-        "text",
-      },
-    })
-
-    require("pest-vim").setup({
-      on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end,
-    })
-
-    -- lspconfig.rustowlsp.setup({})
 
     vim.g.rustaceanvim = {
       tools = {},
@@ -378,6 +360,7 @@ return {
             end)
           end
         end,
+
         settings = {
           ["rust-analyzer"] = {
             cargo = {
