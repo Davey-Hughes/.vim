@@ -5,7 +5,7 @@
 return {
   "mikavilpas/yazi.nvim",
   event = "VeryLazy",
-  dependencies = { "folke/snacks.nvim", lazy = true },
+  dependencies = { "folke/snacks.nvim", lazy = false },
   keys = {
     {
       "<leader>-",

@@ -47,6 +47,7 @@ return {
       },
       { "xzbdmw/colorful-menu.nvim", opts = {} },
     },
+
     build = "cargo build --release",
 
     ---@module 'blink.cmp'
@@ -120,7 +121,7 @@ return {
             name = "Git",
             opts = {
               commit = {
-                triggers = { ";" },
+                triggers = { ":" },
               },
             },
           },
