@@ -42,6 +42,7 @@ return {
         opts = {
           lsp = {
             supermaven = { glyph = "" },
+            ollama = { glyph = "󰳆" },
           },
         },
       },
@@ -74,10 +75,11 @@ return {
       },
 
       completion = {
-        documentation = { auto_show = true },
+        documentation = { auto_show = true, window = { border = "rounded" } },
         accept = { auto_brackets = { enabled = true } },
         ghost_text = { enabled = false },
         menu = {
+          border = "rounded",
           draw = {
             columns = { { "label", "label_description", gap = 1 }, { "kind_icon", "kind", gap = 1 } },
             components = {
@@ -107,7 +109,7 @@ return {
       },
 
       sources = {
-        default = { "emoji", "supermaven", "git", "lazydev", "lsp", "path", "snippets", "buffer" },
+        default = { "lsp", "path", "snippets", "buffer", "supermaven", "minuet", "git", "lazydev", "emoji" },
         providers = {
           path = { score_offset = 100 },
           lsp = { score_offset = 90 },
@@ -135,14 +137,20 @@ return {
             name = "supermaven",
             module = "blink.compat.source",
             score_offset = 110,
-            async = false,
+            async = true,
             transform_items = function(ctx, items)
               for _, item in ipairs(items) do
-                item.kind_icon = ""
                 item.kind_name = "supermaven"
               end
               return items
             end,
+            override = {
+              get_trigger_characters = function(self)
+                local trigger_characters = self:get_trigger_characters()
+                vim.list_extend(trigger_characters, { "(", ")", '"', "'", "{", "}", "<", ">", "!", "?", ",", ".", "/" })
+                return trigger_characters
+              end,
+            },
           },
         },
       },
@@ -173,6 +181,33 @@ return {
         log_level = "off",
         disable_inline_completion = true,
         disable_keymaps = true,
+      })
+    end,
+  },
+
+  {
+    "milanglacier/minuet-ai.nvim",
+    enabled = false,
+    dependencies = {
+      { "nvim-lua/plenary.nvim" },
+    },
+    config = function()
+      require("minuet").setup({
+        provider = "openai_fim_compatible",
+        n_completions = 1,
+        context_window = 512,
+        provider_options = {
+          openai_fim_compatible = {
+            api_key = "TERM",
+            name = "Ollama",
+            end_point = "http://localhost:11434/v1/completions",
+            model = "qwen2.5-coder:7b",
+            optional = {
+              max_tokens = 56,
+              top_p = 0.9,
+            },
+          },
+        },
       })
     end,
   },

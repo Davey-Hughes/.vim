@@ -103,6 +103,8 @@ vim.opt.laststatus = 3
 -- search for existing tab when opening buffer
 vim.opt.switchbuf = "usetab"
 
+vim.o.winborder = "rounded"
+
 -- when editing a file, always jump to the last known cursor position.
 -- Don't do it when the position is invalid or when inside an event handler
 -- (happens when dropping a file on gvim).
