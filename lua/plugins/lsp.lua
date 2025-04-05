@@ -342,6 +342,7 @@ return {
 
     -- LSP setup
     for server, config in pairs(opts.servers) do
+      -- TODO: remove when this is merged https://cmp.saghen.dev/installation#lsp-capabilities
       config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
       if config.enable_lsp_format then
         config.on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end

@@ -14,13 +14,17 @@ return {
 
       local cond = require("nvim-autopairs.conds")
 
-      npairs.add_rule(rule("<", ">", {
-          "-html",
-          "-javascriptreact",
-          "-typescriptreact",
-        })
-        :with_pair(cond.before_regex("%a+:?:?$", 3))
-        :with_move(function(opts) return opts.char == ">" end))
+      npairs.add_rules({
+        rule("<", ">", {
+            "-html",
+            "-javascriptreact",
+            "-typescriptreact",
+          })
+          :with_pair(cond.before_regex("%a+:?:?<*", 20))
+          :with_move(function(opts) return opts.char == ">" end),
+
+        rule("|", "|", { "rust" }):with_move(cond.after_regex("|")),
+      })
     end,
   },
   {
@@ -55,11 +59,11 @@ return {
     ---@type blink.cmp.Config
     opts = {
       keymap = {
-        preset = "default",
+        preset = "enter",
 
         ["<Tab>"] = { "select_next", "fallback" },
         ["<S-Tab>"] = { "select_prev", "fallback" },
-        ["<CR>"] = { "select_and_accept", "fallback" },
+        ["<CR>"] = { "accept", "fallback" },
       },
 
       appearance = {
@@ -75,6 +79,7 @@ return {
       },
 
       completion = {
+        list = { selection = { preselect = false, auto_insert = false } },
         documentation = { auto_show = true, window = { border = "rounded" } },
         accept = { auto_brackets = { enabled = true } },
         ghost_text = { enabled = false },
@@ -109,7 +114,7 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "supermaven", "minuet", "git", "lazydev", "emoji" },
+        default = { "lsp", "path", "snippets", "buffer", "supermaven", "git", "lazydev", "emoji" },
         providers = {
           path = { score_offset = 100 },
           lsp = { score_offset = 90 },
