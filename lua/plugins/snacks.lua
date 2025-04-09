@@ -40,6 +40,25 @@ return {
               },
             },
           },
+
+          files = {
+            hidden = true,
+            ignored = true,
+          },
+
+          -- combination grep and files picker
+          combo = {
+            picker = "combo",
+            multi = { "grep", "files" },
+            regex = "true",
+            format = "file",
+            show_empty = true,
+            live = true,
+            supports_live = true,
+            hidden = true,
+            ignored = true,
+            follow = false,
+          },
         },
       },
       quickfile = { enabled = true },
@@ -61,6 +80,7 @@ return {
       { "<leader>fc", function() Snacks.picker.commands() end, desc = "Commands" },
       { "<leader>fl", function() Snacks.picker.lsp_workspace_symbols() end, desc = "LSP Workspace Symbols" },
       { "<leader>fn", function() Snacks.picker.noice() end, desc = "Noice History" },
+      { "<leader>f<space>", function() Snacks.picker.combo() end, desc = "Combination Picker" },
 
       { "<leader>.", function() Snacks.scratch() end, desc = "Toggle Scratch Buffer" },
       { "<leader>S", function() Snacks.scratch.select() end, desc = "Select Scratch Buffer" },

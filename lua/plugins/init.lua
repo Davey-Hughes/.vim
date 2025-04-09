@@ -30,10 +30,12 @@ return {
 
   {
     "rmagatti/auto-session",
+    event = "VimEnter",
     opts = {
       log_level = "error",
 
       suppressed_dirs = { "~/", "~/projects", "~/Downloads", "/" },
+      bypass_save_filetypes = { "snacks_dashboard" },
 
       auto_save = true,
       auto_restore = true,
