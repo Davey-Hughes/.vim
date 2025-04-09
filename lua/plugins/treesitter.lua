@@ -12,7 +12,6 @@ return {
           "go",
           "javascript",
           "json",
-          "latex",
           "lua",
           "python",
           "rust",

@@ -86,13 +86,13 @@ MapToggle <F11>  spell
 
 """""""""""""""""""""""""""""""""""" undo """""""""""""""""""""""""""""""""""""
 
-" set undo location to permanent directory in .vim folder
+" set undo location to directory in ~/.local/state/nvim
 " executes are necessary to expand variables like $VIMDIR
 
 " Save your backups to a less annoying place than the current directory.
 " If you have .vim-backup in the current directory, it'll use that.
 " Otherwise it saves it to ~/.vim/backup or . if all else fails.
-let $VIMLOCAL=$VIMDIR . '/local'
+let $VIMLOCAL=$HOME . '/.local/state/nvim'
 
 " viminfo stores the the state of your previous editing session
 execute 'set viminfofile=' . $VIMLOCAL . '/viminfo'
