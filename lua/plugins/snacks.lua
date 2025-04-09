@@ -43,7 +43,6 @@ return {
 
           files = {
             hidden = true,
-            ignored = true,
           },
 
           -- combination grep and files picker
@@ -56,7 +55,6 @@ return {
             live = true,
             supports_live = true,
             hidden = true,
-            ignored = true,
             follow = false,
           },
         },
