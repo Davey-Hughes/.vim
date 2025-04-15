@@ -5,7 +5,6 @@ return {
   { "kevinhwang91/nvim-hlslens", opts = {} },
   { "mcauley-penney/tidy.nvim", opts = { filetype_exclude = { "markdown", "diff" } } },
   { "michaelb/sniprun", event = "VeryLazy", build = "sh ./install.sh" },
-  { "nanotee/zoxide.vim", event = "VeryLazy" },
   { "nvim-tree/nvim-web-devicons" },
   { "sitiom/nvim-numbertoggle", event = "VeryLazy" },
   { "tpope/vim-abolish" },
@@ -69,14 +68,18 @@ return {
   },
 
   {
-    "crispgm/nvim-tabline",
-    dependencies = { "nvim-tree/nvim-web-devicons" }, -- optional
-    config = function()
-      require("tabline").setup({
-        show_icon = true,
-        brackets = { "", "" },
-      })
-    end,
+    "akinsho/bufferline.nvim",
+    dependencies = "nvim-tree/nvim-web-devicons",
+    opts = {
+      options = {
+        mode = "tabs",
+        show_buffer_close_icons = false,
+        numbers = "ordinal",
+        always_show_bufferline = false,
+        tab_size = 10,
+        modified_icon = "●",
+      },
+    },
   },
 
   {
