@@ -195,7 +195,47 @@ return {
   config = function(_, opts)
     vim.opt.updatetime = 300
 
-    -- show which LSP server triggered the message
+    -- LSP setup
+    for server, config in pairs(opts.servers) do
+      vim.lsp.config(server, config)
+      vim.lsp.enable(server)
+    end
+
+    vim.g.rustaceanvim = {
+      tools = {},
+      server = {
+        on_attach = function(client, bufnr)
+          if client.server_capabilities.inlayHintProvider then
+            vim.keymap.set("n", "<space>ih", function()
+              local current_setting = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
+              vim.lsp.inlay_hint.enable(not current_setting)
+            end)
+          end
+        end,
+
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+            },
+            checkOnSave = {
+              command = "clippy",
+              -- stylua: ignore
+              extraArgs = {
+                "--",
+                "-W", "clippy::pedantic",
+                "--allow", "clippy::uninlined_format_args",
+                -- "-W", "clippy::nursery",
+                -- "-W", "clippy::unwrap_used",
+                -- "-W", "clippy::expect_used",
+              },
+            },
+          },
+        },
+      },
+    }
+
+    -- default diagnostic config
     vim.diagnostic.config({
       virtual_text = {
         source = true,
@@ -205,8 +245,30 @@ return {
       },
     })
 
-    -- Function to check if a floating dialog exists and if not
-    -- then check for diagnostics under the cursor
+    -- toggle virtual lines
+    vim.keymap.set("n", "gK", function()
+      local new_virtual_lines = not vim.diagnostic.config().virtual_lines
+
+      ---@type boolean|table
+      local new_virtual_text = false
+      if not new_virtual_lines then new_virtual_text = {
+        source = true,
+      } end
+
+      vim.diagnostic.config({
+        virtual_lines = new_virtual_lines,
+        virtual_text = new_virtual_text,
+      })
+
+      -- close floating windows
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_config(win).relative == "win" then vim.api.nvim_win_close(win, false) end
+      end
+    end, { desc = "Toggle diagnostic virtual_lines" })
+
+    -- function to check if a floating dialog exists and if not
+    -- then check for diagnostics under the cursor.
+    -- disabled when virtual lines is enabled
     function OpenDiagnosticIfNoFloat()
       for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
         if vim.api.nvim_win_get_config(winid).zindex then return end
@@ -232,13 +294,14 @@ return {
     vim.api.nvim_create_autocmd({ "CursorHold" }, {
       group = "LSPConfig",
       pattern = "*",
-      callback = OpenDiagnosticIfNoFloat,
+      callback = function()
+        if not vim.diagnostic.config().virtual_lines then OpenDiagnosticIfNoFloat() end
+      end,
       desc = "Show diagnostic information when holding cursor if no other floating window",
     })
 
-    local lspconfig = require("lspconfig")
-
     vim.api.nvim_create_autocmd("LspAttach", {
+      group = "LSPConfig",
       desc = "LSP actions",
       callback = function(event)
         vim.keymap.set(
@@ -325,63 +388,5 @@ return {
     vim.api.nvim_set_hl(0, "DiagnosticVirtualTextInfo", { link = "DiagnosticInfo" })
     vim.api.nvim_set_hl(0, "DiagnosticVirtualTextHint", { link = "DiagnosticHint" })
     vim.api.nvim_set_hl(0, "LspInlayHint", { link = "DiagnosticHint" })
-
-    -- setup format for LSP servers that don't do it properly
-    local enable_lsp_format = function(client, bufnr)
-      local lsp_format = vim.api.nvim_create_augroup("LspFormat" .. client.name .. "," .. bufnr, {})
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = bufnr,
-        callback = function()
-          local v = vim.fn.winsaveview()
-          vim.lsp.buf.format()
-          vim.fn.winrestview(v)
-        end,
-        group = lsp_format,
-      })
-    end
-
-    -- LSP setup
-    for server, config in pairs(opts.servers) do
-      -- TODO: remove when this is merged https://cmp.saghen.dev/installation#lsp-capabilities
-      config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
-      if config.enable_lsp_format then
-        config.on_attach = function(client, bufnr) enable_lsp_format(client, bufnr) end
-      end
-      lspconfig[server].setup(config)
-    end
-
-    vim.g.rustaceanvim = {
-      tools = {},
-      server = {
-        on_attach = function(client, bufnr)
-          if client.server_capabilities.inlayHintProvider then
-            vim.keymap.set("n", "<space>ih", function()
-              local current_setting = vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr })
-              vim.lsp.inlay_hint.enable(not current_setting)
-            end)
-          end
-        end,
-
-        settings = {
-          ["rust-analyzer"] = {
-            cargo = {
-              allFeatures = true,
-            },
-            checkOnSave = {
-              command = "clippy",
-              -- stylua: ignore
-              extraArgs = {
-                "--",
-                "-W", "clippy::pedantic",
-                "--allow", "clippy::uninlined_format_args",
-                -- "-W", "clippy::nursery",
-                -- "-W", "clippy::unwrap_used",
-                -- "-W", "clippy::expect_used",
-              },
-            },
-          },
-        },
-      },
-    }
   end,
 }

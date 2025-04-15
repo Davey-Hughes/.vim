@@ -1,7 +1,6 @@
 return {
-  -- /Users/davey/.vscode/extensions/ms-vscode.cpptools-1.21.6-darwin-arm64/debugAdapters/bin
   {
-    -- enabled = false,
+    enabled = false,
     "mfussenegger/nvim-dap",
     event = "VeryLazy",
     dependencies = {
@@ -11,9 +10,7 @@ return {
       },
       {
         "rcarriga/nvim-dap-ui",
-        config = function()
-          require("dapui").setup()
-        end,
+        config = function() require("dapui").setup() end,
       },
       { "nvim-neotest/nvim-nio" },
       { "williamboman/mason.nvim" },
@@ -48,9 +45,7 @@ return {
           name = "launch file",
           type = "lldb",
           request = "launch",
-          program = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-          end,
+          program = function() return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file") end,
           cwd = "${workspaceFolder}",
           stopOnEntry = true,
         },
@@ -109,13 +104,9 @@ return {
         callback = dapui.close,
       })
 
-      vim.keymap.set("n", "<leader>db", function()
-        dap.toggle_breakpoint()
-      end)
+      vim.keymap.set("n", "<leader>db", function() dap.toggle_breakpoint() end)
 
-      if vim.bo.filetype ~= "rust" then
-        vim.keymap.set("n", "<leader>dr", "<cmd>DapNew<cr>")
-      end
+      if vim.bo.filetype ~= "rust" then vim.keymap.set("n", "<leader>dr", "<cmd>DapNew<cr>") end
 
       vim.keymap.set("n", "<leader>do", function()
         dapui.open()
