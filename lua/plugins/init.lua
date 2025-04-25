@@ -126,8 +126,8 @@ return {
     end,
 
     keys = {
-      { "<leader>gb", "<cmd>Godbolt!<cr>", { desc = "Godbolt" }, mode = "v" },
-      { "<leader>gc", "<cmd>GodboltCompiler! telescope", { desc = "Godbolt Compiler in Telescope" }, mode = "v" },
+      { "<leader>gB", "<cmd>Godbolt!<cr>", { desc = "Godbolt" }, mode = "v" },
+      { "<leader>gC", "<cmd>GodboltCompiler! telescope", { desc = "Godbolt Compiler in Telescope" }, mode = "v" },
     },
   },
 
