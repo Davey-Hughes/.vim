@@ -4,9 +4,7 @@ return {
     event = "VeryLazy",
     cond = not vim.g.vscode,
     dependencies = {
-      -- TODO: switch back when this is merged: https://github.com/folke/noice.nvim/issues/1082
-      -- { "MunifTanjim/nui.nvim"},
-      { "pynappo/nui.nvim", branch = "support-winborder" },
+      { "MunifTanjim/nui.nvim" },
       { "rcarriga/nvim-notify" },
     },
     config = function()
