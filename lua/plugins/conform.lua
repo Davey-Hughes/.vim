@@ -24,6 +24,7 @@ return {
 
     require("conform").setup({
       formatters_by_ft = {
+        bash = { lsp_format = "fallback" },
         c = { "clang-format" },
         cpp = { "clang-format" },
         fish = { "fish_indent" },
@@ -35,7 +36,7 @@ return {
         latex = { "latexindent" },
         lua = { "stylua" },
         scss = { "prettierd" },
-        -- sh = { "shfmt" },
+        sh = { "shfmt" },
         sql = { "sqlfluff" },
         tex = { "latexindent" },
         typescript = { "biome" },

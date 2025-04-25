@@ -27,6 +27,7 @@ return {
             "sqlls",
             "taplo",
             "vimls",
+            "vtsls",
             "yamlls",
             "zls",
           },
@@ -37,7 +38,7 @@ return {
     },
 
     { "williamboman/mason-lspconfig.nvim" },
-    { "mrcjkb/rustaceanvim", ft = "rust" },
+    { "mrcjkb/rustaceanvim" },
     { "pest-parser/pest.vim", ft = "pest" },
     { "smjonas/inc-rename.nvim", opts = {} },
     { "Bilal2453/luvit-meta", lazy = true },
@@ -93,6 +94,7 @@ return {
   opts = {
     servers = {
       basedpyright = {},
+      bashls = {},
       biome = {},
       fish_lsp = {},
       flow = {},
@@ -169,13 +171,7 @@ return {
         },
       },
 
-      ts_ls = {
-        filetypes = {
-          "javascript",
-          "typescript",
-          "javascriptreact",
-          "typescriptreact",
-        },
+      vtsls = {
         settings = {
           typescript = {
             hint = {
@@ -213,12 +209,11 @@ return {
           end
         end,
 
-        settings = {
+        default_settings = {
           ["rust-analyzer"] = {
-            cargo = {
-              allFeatures = true,
-            },
-            checkOnSave = {
+            cargo = { allFeatures = true },
+            checkOnSave = true,
+            check = {
               command = "clippy",
               -- stylua: ignore
               extraArgs = {
