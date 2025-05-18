@@ -85,7 +85,7 @@ return {
 
     {
       "cordx56/rustowl",
-      build = "cd rustowl && cargo install --path . --locked",
+      build = "cargo install --path . --locked",
       lazy = false, -- This plugin is already lazy
       opts = {},
     },
