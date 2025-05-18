@@ -34,6 +34,14 @@ return {
             },
             opts = { skip = true },
           },
+          {
+            filter = {
+              event = "msg_show",
+              kind = "echomsg",
+              find = "vim.deprecated",
+            },
+            opts = { skip = true },
+          },
         },
         lsp = {
           override = {
