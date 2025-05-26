@@ -23,14 +23,6 @@ return {
           },
         },
       },
-      {
-        -- Make sure to set this up properly if you have lazy=true
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          file_types = { "markdown", "Avante" },
-        },
-        ft = { "markdown", "Avante" },
-      },
     },
 
     opts = {
@@ -38,7 +30,7 @@ return {
 
       claude = {
         endpoint = "https://api.anthropic.com",
-        model = "claude-3-7-sonnet-latest",
+        model = "claude-sonnet-4-20250514",
         temperature = 0,
         max_tokens = 4096,
       },
@@ -144,5 +136,15 @@ return {
         throttle = 600,
       },
     },
+  },
+
+  {
+    -- Make sure to set this up properly if you have lazy=true
+    "MeanderingProgrammer/render-markdown.nvim",
+    enabled = false,
+    opts = {
+      file_types = { "markdown", "Avante" },
+    },
+    ft = { "markdown", "Avante" },
   },
 }
