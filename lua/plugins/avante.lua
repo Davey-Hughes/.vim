@@ -1,10 +1,11 @@
 return {
   {
     "yetone/avante.nvim",
+    enabled = false,
     event = "VeryLazy",
     lazy = true,
-    version = "*",
-    build = "make BUILD_FROM_SOURCE=true",
+    version = false,
+    build = "make BUILD_FROM_SOURCE=false",
     dependencies = {
       "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
@@ -28,21 +29,28 @@ return {
     opts = {
       provider = "claude",
 
-      claude = {
-        endpoint = "https://api.anthropic.com",
-        model = "claude-sonnet-4-20250514",
-        temperature = 0,
-        max_tokens = 4096,
-      },
+      providers = {
 
-      vendors = {
-        ollama = {
-          __inherited_from = "openai",
-          api_key_name = "",
-          endpoint = "http://127.0.0.1:11434/v1",
-          model = "deepseek-r1:14b-8k",
-          temperature = 0,
-          max_tokens = 4096,
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-sonnet-4-20250514",
+          extra_request_body = {
+            temperature = 0,
+            max_tokens = 4096,
+          },
+        },
+
+        vendors = {
+          ollama = {
+            __inherited_from = "openai",
+            api_key_name = "",
+            endpoint = "http://127.0.0.1:11434/v1",
+            model = "deepseek-r1:14b-8k",
+            extra_request_body = {
+              temperature = 0,
+              max_tokens = 4096,
+            },
+          },
         },
       },
 
