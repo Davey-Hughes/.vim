@@ -12,10 +12,8 @@ return {
           ensure_installed = {
             "asm_lsp",
             "basedpyright",
-            "biome",
             "clangd",
             "gopls",
-            "harper_ls",
             "html",
             "jqls",
             "lua_ls",
@@ -23,12 +21,10 @@ return {
             "marksman",
             "pest_ls",
             "ruff",
-            "rust_analyzer",
             "sqlls",
             "taplo",
             "vimls",
-            "vtsls",
-            "yamlls",
+            -- "yamlls",
             "zls",
           },
 
@@ -85,6 +81,7 @@ return {
 
     {
       "cordx56/rustowl",
+      enabled = false,
       build = "cargo install --path . --locked",
       lazy = false, -- This plugin is already lazy
       opts = {},
@@ -104,6 +101,21 @@ return {
       solargraph = {},
       uiua = {},
       zls = {},
+
+      azure_pipelines_ls = {
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://raw.githubusercontent.com/microsoft/azure-pipelines-vscode/master/service-schema.json"] = {
+                "/azure-pipeline*.y*l",
+                "/*.azure*",
+                "Azure-Pipelines/**/*.y*l",
+                "Pipelines/*.y*l",
+              },
+            },
+          },
+        },
+      },
 
       clangd = {
         settings = {
@@ -171,6 +183,19 @@ return {
         },
       },
 
+      -- tsgo = {
+      --   cmd = { "tsgo", "--lsp", "--stdio" },
+      --   filetypes = {
+      --     "javascript",
+      --     "javascriptreact",
+      --     "javascript.jsx",
+      --     "typescript",
+      --     "typescriptreact",
+      --     "typescript.tsx",
+      --   },
+      --   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git", "tsconfig.base.json" },
+      -- },
+
       vtsls = {
         settings = {
           typescript = {
@@ -181,6 +206,21 @@ return {
           javascript = {
             hint = {
               enable = true,
+            },
+          },
+        },
+      },
+
+      yamlls = {
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://json.schemastore.org/yamllint.json"] = {
+                "/azure-pipeline*.y*l",
+                "/*.azure*",
+                "Azure-Pipelines/**/*.y*l",
+                "Pipelines/*.y*l",
+              },
             },
           },
         },
@@ -315,6 +355,13 @@ return {
 
         vim.keymap.set(
           "n",
+          "gD",
+          "<cmd>tab split | lua vim.lsp.buf.definition()<CR>",
+          { buffer = event.buf, remap = false, desc = "Goto definition in new window" }
+        )
+
+        vim.keymap.set(
+          "n",
           "gi",
           function() vim.lsp.buf.implementation() end,
           { buffer = event.buf, remap = false, desc = "Goto implementation" }
@@ -325,13 +372,6 @@ return {
           "go",
           function() vim.lsp.buf.type_definition() end,
           { buffer = event.buf, remap = false, desc = "Goto type definition" }
-        )
-
-        vim.keymap.set(
-          "n",
-          "gD",
-          function() vim.lsp.buf.declaration() end,
-          { buffer = event.buf, remap = false, desc = "Goto declaration" }
         )
 
         vim.keymap.set(
