@@ -22,7 +22,7 @@ return {
       git = { enabled = true },
       gitbrowse = { enabled = true },
       lazygit = { enabled = false },
-      image = { enabled = true },
+      image = { enabled = false },
       indent = { enabled = true },
       input = { enabled = true },
       picker = {
@@ -61,6 +61,7 @@ return {
       },
       quickfile = { enabled = true },
       scope = { enabled = true },
+      terminal = { enabled = true },
       togggle = { enabled = true },
       words = { enabled = true },
     },
@@ -86,6 +87,7 @@ return {
       { "<leader>gb", function() Snacks.gitbrowse() end, desc = "Git Browse", mode = { "n", "v" } },
     },
   },
+
   {
     "ThePrimeagen/harpoon",
     event = "VeryLazy",
