@@ -90,11 +90,18 @@ return {
 
   opts = {
     servers = {
-      basedpyright = {},
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "standard",
+            },
+          },
+        },
+      },
       bashls = {},
       biome = {},
       fish_lsp = {},
-      flow = {},
       kotlin_language_server = {},
       pest_ls = {},
       ruff = {},
