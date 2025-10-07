@@ -41,6 +41,7 @@ return {
         tex = { "latexindent" },
         typescript = { "biome" },
         typescriptreact = { "biome" },
+        typst = { "typstyle" },
         toml = { "taplo" },
         uiua = { "uiua" },
         yaml = { "prettierd" },
@@ -83,6 +84,12 @@ return {
             "Always",
             "--",
             "-",
+          },
+        },
+
+        typstyle = {
+          args = {
+            "--wrap-text",
           },
         },
 
