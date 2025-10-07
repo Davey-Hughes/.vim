@@ -12,7 +12,10 @@ return {
           ensure_installed = {
             "asm_lsp",
             "basedpyright",
+            "bashls",
+            "biome",
             "clangd",
+            "fish_lsp",
             "gopls",
             "html",
             "jqls",
@@ -23,8 +26,9 @@ return {
             "ruff",
             "sqlls",
             "taplo",
+            "tinymist",
             "vimls",
-            -- "yamlls",
+            "yamlls",
             "zls",
           },
 
@@ -35,18 +39,18 @@ return {
 
     { "williamboman/mason-lspconfig.nvim" },
     { "mrcjkb/rustaceanvim" },
-    { "pest-parser/pest.vim", ft = "pest" },
-    { "smjonas/inc-rename.nvim", opts = {} },
-    { "Bilal2453/luvit-meta", lazy = true },
+    { "pest-parser/pest.vim",                ft = "pest" },
+    { "smjonas/inc-rename.nvim",             opts = {} },
+    { "Bilal2453/luvit-meta",                lazy = true },
     { "artemave/workspace-diagnostics.nvim", opts = {} },
-    { "pmizio/typescript-tools.nvim", enabled = false, opts = {} },
-    { "chrisgrieser/nvim-lsp-endhints", event = "LspAttach", opts = {} },
+    { "pmizio/typescript-tools.nvim",        enabled = false,     opts = {} },
+    { "chrisgrieser/nvim-lsp-endhints",      event = "LspAttach", opts = {} },
 
     {
       "folke/lazydev.nvim",
       opts = {
         library = {
-          { path = "uvit-meta/library", words = { "vim%.uv" } },
+          { path = "uvit-meta/library",  words = { "vim%.uv" } },
           { plugins = { "nvim-dap-ui" }, types = true },
         },
       },
@@ -90,15 +94,6 @@ return {
 
   opts = {
     servers = {
-      basedpyright = {
-        settings = {
-          basedpyright = {
-            analysis = {
-              typeCheckingMode = "standard",
-            },
-          },
-        },
-      },
       bashls = {},
       biome = {},
       fish_lsp = {},
@@ -119,6 +114,16 @@ return {
                 "Azure-Pipelines/**/*.y*l",
                 "Pipelines/*.y*l",
               },
+            },
+          },
+        },
+      },
+
+      basedpyright = {
+        settings = {
+          basedpyright = {
+            analysis = {
+              typeCheckingMode = "standard",
             },
           },
         },
@@ -202,6 +207,12 @@ return {
       --   },
       --   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git", "tsconfig.base.json" },
       -- },
+      --
+      tinymist = {
+        settings = {
+          exportPdf = "onType",
+        },
+      },
 
       vtsls = {
         settings = {
@@ -218,20 +229,23 @@ return {
         },
       },
 
-      yamlls = {
-        settings = {
-          yaml = {
-            schemas = {
-              ["https://json.schemastore.org/yamllint.json"] = {
-                "/azure-pipeline*.y*l",
-                "/*.azure*",
-                "Azure-Pipelines/**/*.y*l",
-                "Pipelines/*.y*l",
-              },
-            },
-          },
-        },
-      },
+      -- yamlls = {
+      --   settings = {
+      --     yaml = {
+      --       schemaStore = {
+      --         enable = true,
+      --       },
+      --       schemas = {
+      --         ["https://json.schemastore.org/yamllint.json"] = {
+      --           "/azure-pipeline*.y*l",
+      --           "/*.azure*",
+      --           "Azure-Pipelines/**/*.y*l",
+      --           "Pipelines/*.y*l",
+      --         },
+      --       },
+      --     },
+      --   },
+      -- },
     },
   },
 
@@ -293,9 +307,11 @@ return {
 
       ---@type boolean|table
       local new_virtual_text = false
-      if not new_virtual_lines then new_virtual_text = {
-        source = true,
-      } end
+      if not new_virtual_lines then
+        new_virtual_text = {
+          source = true,
+        }
+      end
 
       vim.diagnostic.config({
         virtual_lines = new_virtual_lines,
