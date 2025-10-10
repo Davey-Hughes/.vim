@@ -29,7 +29,7 @@ return {
 
   {
     "rmagatti/auto-session",
-    event = "VimEnter",
+    lazy = false,
     opts = {
       log_level = "error",
 
