@@ -115,8 +115,8 @@ return {
       },
 
       sources = {
-        default = { "lsp", "path", "snippets", "buffer", "minuet", "supermaven", "git", "lazydev", "emoji" },
-        completion = { trigger = { prefetch_on_insert = false } },
+        default = { "lazydev", "lsp", "path", "snippets", "buffer", "supermaven", "emoji" },
+        per_filetype = { codecompanion = { "codecompanion" } },
         providers = {
           path = { score_offset = 100 },
           lsp = { score_offset = 90 },
@@ -140,15 +140,15 @@ return {
             score_offset = 100,
             opts = { insert = true },
           },
-          minuet = {
-            name = "minuet",
-            module = "minuet.blink",
-            async = true,
-            -- Should match minuet.config.request_timeout * 1000,
-            -- since minuet.config.request_timeout is in seconds
-            timeout_ms = 3000,
-            score_offset = 110, -- Gives minuet higher priority among suggestions
-          },
+          -- minuet = {
+          --   name = "minuet",
+          --   module = "minuet.blink",
+          --   async = true,
+          --   -- Should match minuet.config.request_timeout * 1000,
+          --   -- since minuet.config.request_timeout is in seconds
+          --   timeout_ms = 3000,
+          --   score_offset = 110, -- Gives minuet higher priority among suggestions
+          -- },
           supermaven = {
             name = "supermaven",
             module = "blink.compat.source",
@@ -175,101 +175,5 @@ return {
     },
 
     opts_extend = { "sources.default" },
-  },
-
-  {
-    "zbirenbaum/copilot.lua",
-    enabled = false,
-    event = "VeryLazy",
-    dependencies = {
-      { "zbirenbaum/copilot-cmp", opts = {} },
-    },
-    opts = {
-      suggestion = { enabled = true, auto_trigger = false },
-      panel = { enabled = false },
-    },
-  },
-
-  {
-    "supermaven-inc/supermaven-nvim",
-    enabled = true,
-    config = function()
-      require("supermaven-nvim").setup({
-        ignore_filetypes = {},
-        log_level = "off",
-        disable_inline_completion = true,
-        disable_keymaps = true,
-      })
-    end,
-  },
-
-  {
-    "milanglacier/minuet-ai.nvim",
-    enabled = false,
-    dependencies = {
-      {
-        { "nvim-lua/plenary.nvim" },
-        { "Davidyz/VectorCode", version = "*", build = "uv tool upgrade vectorcode" },
-      },
-    },
-
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require("vectorcode").setup({
-        -- number of retrieved documents
-        n_query = 1,
-      })
-
-      local has_vc, vectorcode_config = pcall(require, "vectorcode.config")
-      local vectorcode_cacher = nil
-      if has_vc then vectorcode_cacher = vectorcode_config.get_cacher_backend() end
-
-      -- roughly equate to 2000 tokens for LLM
-      local RAG_Context_Window_Size = 8000
-
-      require("minuet").setup({
-        -- config = {
-        --   notify = debug,
-        -- },
-        provider = "openai_fim_compatible",
-        n_completions = 1,
-        context_window = 1024,
-        provider_options = {
-          openai_fim_compatible = {
-            api_key = "TERM",
-            name = "Ollama",
-            end_point = "http://localhost:11434/v1/completions",
-            model = "qwen2.5-coder:7b",
-            optional = {
-              max_tokens = 56,
-              top_p = 0.9,
-            },
-            template = {
-              prompt = function(pref, suff, _)
-                local prompt_message = ""
-                if has_vc and vectorcode_cacher then
-                  for _, file in ipairs(vectorcode_cacher.query_from_cache(0)) do
-                    prompt_message = prompt_message .. "<|file_sep|>" .. file.path .. "\n" .. file.document
-                  end
-                end
-
-                prompt_message = vim.fn.strcharpart(prompt_message, 0, RAG_Context_Window_Size)
-                print(prompt_message)
-
-                return prompt_message .. "<|fim_prefix|>" .. pref .. "<|fim_suffix|>" .. suff .. "<|fim_middle|>"
-              end,
-              suffix = false,
-            },
-          },
-        },
-
-        -- provider = "claude",
-        -- provider_options = {
-        --   claude = {
-        --     model = "claude-3-5-haiku-latest"
-        --   }
-        -- },
-      })
-    end,
   },
 }
