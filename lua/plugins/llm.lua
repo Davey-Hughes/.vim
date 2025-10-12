@@ -85,7 +85,7 @@ return {
       { "<leader>cm", ":CodeCompanionCmd ", mode = "n", desc = "Open CodeCompanion Cmd" },
     },
 
-    init = function() require("plugins.codecompanion.fidget-spinner"):init() end,
+    init = function() require("util.fidget-spinner"):init() end,
 
     opts = {
       display = {
