@@ -146,15 +146,20 @@ return {
             score_offset = 100,
             opts = { insert = true },
           },
-          -- minuet = {
-          --   name = "minuet",
-          --   module = "minuet.blink",
-          --   async = true,
-          --   -- Should match minuet.config.request_timeout * 1000,
-          --   -- since minuet.config.request_timeout is in seconds
-          --   timeout_ms = 3000,
-          --   score_offset = 110, -- Gives minuet higher priority among suggestions
-          -- },
+          codecompanion = {
+            module = "codecompanion.providers.completion.blink",
+            score_offset = 200,
+          },
+          minuet = {
+            name = "minuet",
+            enabled = false,
+            module = "minuet.blink",
+            async = true,
+            -- Should match minuet.config.request_timeout * 1000,
+            -- since minuet.config.request_timeout is in seconds
+            timeout_ms = 3000,
+            score_offset = 110, -- Gives minuet higher priority among suggestions
+          },
           supermaven = {
             name = "supermaven",
             module = "blink.compat.source",
@@ -174,7 +179,6 @@ return {
               end,
             },
           },
-
           copilot = {
             name = "copilot",
             module = "blink-copilot",
