@@ -106,6 +106,58 @@ return {
               },
             })
           end,
+
+          gemini_cli = function()
+            return require("codecompanion.adapters").extend("gemini_cli", {
+              commands = {
+                default = {
+                  "gemini",
+                  "--experimental-acp",
+                },
+              },
+              env = {
+                GEMINI_API_KEY = "GEMINI_API_KEY",
+              },
+            })
+          end,
+        },
+
+        http = {
+          anthropic = function()
+            return require("codecompanion.adapters").extend("anthropic", {
+              env = {
+                api_key = "CLAUDE_API_KEY",
+              },
+            })
+          end,
+
+          gemini = function()
+            return require("codecompanion.adapters").extend("gemini", {
+              env = {
+                api_key = "GEMINI_API_KEY",
+              },
+            })
+          end,
+
+          qwen2_5_coder = function()
+            return require("codecompanion.adapters").extend("ollama", {
+              name = "qwen2.5-coder",
+              schema = {
+                model = {
+                  default = "qwen2.5-coder:7b",
+                },
+                num_ctx = {
+                  default = 16384,
+                },
+                think = {
+                  default = false,
+                },
+                keep_alive = {
+                  default = "5m",
+                },
+              },
+            })
+          end,
         },
       },
 
