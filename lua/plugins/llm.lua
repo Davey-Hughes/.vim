@@ -188,7 +188,7 @@ return {
           adapter = "claude_code",
         },
         inline = {
-          adapter = "claude_code",
+          adapter = "gemini",
         },
         cmd = {
           adapter = "claude_code",
@@ -361,19 +361,6 @@ return {
         -- },
       })
     end,
-  },
-
-  {
-    "zbirenbaum/copilot.lua",
-    enabled = false,
-    event = "VeryLazy",
-    dependencies = {
-      { "zbirenbaum/copilot-cmp", opts = {} },
-    },
-    opts = {
-      suggestion = { enabled = true, auto_trigger = false },
-      panel = { enabled = false },
-    },
   },
 
   {

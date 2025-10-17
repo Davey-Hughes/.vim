@@ -15,6 +15,7 @@ return {
             "bashls",
             "biome",
             "clangd",
+            "copilot",
             "fish_lsp",
             "gopls",
             "html",

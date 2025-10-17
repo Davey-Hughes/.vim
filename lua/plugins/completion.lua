@@ -47,10 +47,16 @@ return {
           lsp = {
             supermaven = { glyph = "" },
             ollama = { glyph = "󰳆" },
+            copilot = { glyph = "" },
           },
         },
       },
       { "xzbdmw/colorful-menu.nvim", opts = {} },
+      "fang2hou/blink-copilot",
+      opts = {
+        max_completions = 1, -- Global default for max completions
+        max_attempts = 2, -- Global default for max attempts
+      },
     },
 
     build = "cargo build --release",
@@ -115,7 +121,7 @@ return {
       },
 
       sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer", "supermaven", "emoji" },
+        default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "supermaven", "emoji" },
         per_filetype = { codecompanion = { "codecompanion" } },
         providers = {
           path = { score_offset = 100 },
@@ -166,6 +172,16 @@ return {
                 vim.list_extend(trigger_characters, { "(", ")", '"', "'", "{", "}", "<", ">", "!", "?", ",", ".", "/" })
                 return trigger_characters
               end,
+            },
+          },
+
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 120,
+            async = true,
+            opts = {
+              max_completions = 3,
             },
           },
         },
