@@ -74,6 +74,14 @@ return {
         },
       },
       { "ravitemer/codecompanion-history.nvim" },
+      {
+        "Davey-Hughes/scrollEOF.nvim",
+        event = { "CursorMoved", "WinScrolled" },
+        opts = {
+          disabled_filetypes = { "codecompanion" },
+          enabled_filetypes = { "codecompanion" },
+        },
+      },
     },
 
     keys = {
