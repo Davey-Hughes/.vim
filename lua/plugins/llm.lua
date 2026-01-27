@@ -17,45 +17,6 @@ return {
       },
       { "j-hui/fidget.nvim" },
       {
-        "OXY2DEV/markview.nvim",
-        lazy = false,
-        opts = function()
-          local function conceal_tag(icon, hl_group)
-            return {
-              on_node = { hl_group = hl_group },
-              on_closing_tag = { conceal = "" },
-              on_opening_tag = {
-                conceal = "",
-                virt_text_pos = "inline",
-                virt_text = { { icon .. " ", hl_group } },
-              },
-            }
-          end
-
-          return {
-            html = {
-              container_elements = {
-                ["^buf$"] = conceal_tag("", "CodeCompanionChatVariable"),
-                ["^file$"] = conceal_tag("", "CodeCompanionChatVariable"),
-                ["^help$"] = conceal_tag("󰘥", "CodeCompanionChatVariable"),
-                ["^image$"] = conceal_tag("", "CodeCompanionChatVariable"),
-                ["^symbols$"] = conceal_tag("", "CodeCompanionChatVariable"),
-                ["^url$"] = conceal_tag("󰖟", "CodeCompanionChatVariable"),
-                ["^var$"] = conceal_tag("", "CodeCompanionChatVariable"),
-                ["^tool$"] = conceal_tag("", "CodeCompanionChatTool"),
-                ["^user_prompt$"] = conceal_tag("", "CodeCompanionChatTool"),
-                ["^group$"] = conceal_tag("", "CodeCompanionChatToolGroup"),
-              },
-            },
-
-            preview = {
-              filetypes = { "markdown", "typst", "html", "yaml", "latex", "codecompanion" },
-              ignore_buftypes = {},
-            },
-          }
-        end,
-      },
-      {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
         event = "VeryLazy",
@@ -65,6 +26,7 @@ return {
             prompt_for_file_name = false,
           },
         },
+        keys = { { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" } },
       },
       {
         "ravitemer/mcphub.nvim",
@@ -193,7 +155,7 @@ return {
         },
       },
 
-      strategies = {
+      interactions = {
         chat = {
           adapter = "claude_code",
         },
@@ -458,5 +420,45 @@ return {
         ft = { "NvimTree", "neo-tree" },
       },
     },
+  },
+
+  {
+    "OXY2DEV/markview.nvim",
+    lazy = false,
+    opts = function()
+      local function conceal_tag(icon, hl_group)
+        return {
+          on_node = { hl_group = hl_group },
+          on_closing_tag = { conceal = "" },
+          on_opening_tag = {
+            conceal = "",
+            virt_text_pos = "inline",
+            virt_text = { { icon .. " ", hl_group } },
+          },
+        }
+      end
+
+      return {
+        html = {
+          container_elements = {
+            ["^buf$"] = conceal_tag("", "CodeCompanionChatVariable"),
+            ["^file$"] = conceal_tag("", "CodeCompanionChatVariable"),
+            ["^help$"] = conceal_tag("󰘥", "CodeCompanionChatVariable"),
+            ["^image$"] = conceal_tag("", "CodeCompanionChatVariable"),
+            ["^symbols$"] = conceal_tag("", "CodeCompanionChatVariable"),
+            ["^url$"] = conceal_tag("󰖟", "CodeCompanionChatVariable"),
+            ["^var$"] = conceal_tag("", "CodeCompanionChatVariable"),
+            ["^tool$"] = conceal_tag("", "CodeCompanionChatTool"),
+            ["^user_prompt$"] = conceal_tag("", "CodeCompanionChatTool"),
+            ["^group$"] = conceal_tag("", "CodeCompanionChatToolGroup"),
+          },
+        },
+
+        preview = {
+          filetypes = { "markdown", "typst", "html", "latex", "codecompanion" },
+          -- ignore_buftypes = {},
+        },
+      }
+    end,
   },
 }
