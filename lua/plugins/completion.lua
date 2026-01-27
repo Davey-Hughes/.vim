@@ -16,12 +16,10 @@ return {
 
       npairs.add_rules({
         rule("<", ">", {
-            "-html",
-            "-javascriptreact",
-            "-typescriptreact",
-          })
-          :with_pair(cond.before_regex("%a+:?:?<*", 20))
-          :with_move(function(opts) return opts.char == ">" end),
+          "-html",
+          "-javascriptreact",
+          "-typescriptreact",
+        }):with_pair(cond.before_regex("%a+:?:?<*$", 10)),
 
         rule("|", "|", { "rust" }):with_move(cond.after_regex("|")),
       })
