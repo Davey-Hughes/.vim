@@ -1,25 +1,11 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    enable = true,
+    branch = "master",
     build = ":TSUpdate",
     config = function()
       ---@diagnostic disable-next-line: missing-fields
       require("nvim-treesitter.configs").setup({
-        ensure_installed = {
-          "bash",
-          "c",
-          "go",
-          "javascript",
-          "json",
-          "lua",
-          "python",
-          "rust",
-          "typescript",
-          "vim",
-        },
-
-        sync_install = false,
         auto_install = true,
         ignore_install = {},
 
@@ -56,6 +42,7 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     config = function()
       ---@diagnostic disable-next-line: missing-fields
