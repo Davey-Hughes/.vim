@@ -50,11 +50,6 @@ return {
         },
       },
       { "xzbdmw/colorful-menu.nvim", opts = {} },
-      "fang2hou/blink-copilot",
-      opts = {
-        max_completions = 1, -- Global default for max completions
-        max_attempts = 2, -- Global default for max attempts
-      },
     },
 
     build = "cargo build --release",
@@ -119,7 +114,7 @@ return {
       },
 
       sources = {
-        default = { "lazydev", "lsp", "path", "snippets", "buffer", "copilot", "supermaven", "emoji" },
+        default = { "lazydev", "lsp", "path", "snippets", "buffer", "supermaven", "emoji" },
         per_filetype = { codecompanion = { "codecompanion" } },
         providers = {
           path = { score_offset = 100 },
@@ -148,16 +143,16 @@ return {
             module = "codecompanion.providers.completion.blink",
             score_offset = 200,
           },
-          minuet = {
-            name = "minuet",
-            enabled = false,
-            module = "minuet.blink",
-            async = true,
-            -- Should match minuet.config.request_timeout * 1000,
-            -- since minuet.config.request_timeout is in seconds
-            timeout_ms = 3000,
-            score_offset = 110, -- Gives minuet higher priority among suggestions
-          },
+          -- minuet = {
+          --   name = "minuet",
+          --   enabled = false,
+          --   module = "minuet.blink",
+          --   async = true,
+          --   -- Should match minuet.config.request_timeout * 1000,
+          --   -- since minuet.config.request_timeout is in seconds
+          --   timeout_ms = 3000,
+          --   score_offset = 110, -- Gives minuet higher priority among suggestions
+          -- },
           supermaven = {
             name = "supermaven",
             module = "blink.compat.source",
@@ -177,15 +172,16 @@ return {
               end,
             },
           },
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 120,
-            async = true,
-            opts = {
-              max_completions = 3,
-            },
-          },
+          -- minuet = {
+          --   name = "minuet",
+          --   enabled = false,
+          --   module = "minuet.blink",
+          --   async = true,
+          --   -- Should match minuet.config.request_timeout * 1000,
+          --   -- since minuet.config.request_timeout is in seconds
+          --   timeout_ms = 3000,
+          --   score_offset = 110, -- Gives minuet higher priority among suggestions
+          -- },
         },
       },
 
