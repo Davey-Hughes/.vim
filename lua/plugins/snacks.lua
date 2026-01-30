@@ -21,7 +21,7 @@ return {
       debug = { enabled = true },
       git = { enabled = true },
       gitbrowse = { enabled = true },
-      lazygit = { enabled = false },
+      lazygit = { enabled = true },
       image = { enabled = false },
       indent = { enabled = true },
       input = { enabled = true },
