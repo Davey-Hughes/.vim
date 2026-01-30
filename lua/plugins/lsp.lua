@@ -15,7 +15,6 @@ return {
             "bashls",
             "biome",
             "clangd",
-            "copilot",
             "fish_lsp",
             "gopls",
             "html",
@@ -29,7 +28,7 @@ return {
             "taplo",
             "tinymist",
             "vimls",
-            "yamlls",
+            -- "yamlls",
             "zls",
           },
 
@@ -196,40 +195,38 @@ return {
         },
       },
 
-      -- tsgo = {
-      --   cmd = { "tsgo", "--lsp", "--stdio" },
-      --   filetypes = {
-      --     "javascript",
-      --     "javascriptreact",
-      --     "javascript.jsx",
-      --     "typescript",
-      --     "typescriptreact",
-      --     "typescript.tsx",
-      --   },
-      --   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git", "tsconfig.base.json" },
-      -- },
-      --
+      tsgo = {
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
+        },
+
+        root_marker = { "tsconfig.json", "jsconfig.json", "package.json", ".git", "tsconfig.base.json" },
+      },
+
       tinymist = {
         settings = {
           exportPdf = "onType",
         },
       },
 
-      vtsls = {
-        settings = {
-          typescript = {
-            hint = {
-              enable = true,
-            },
-          },
-          javascript = {
-            hint = {
-              enable = true,
-            },
-          },
-        },
-      },
-
+      -- vtsls = {
+      --   settings = {
+      --     typescript = {
+      --       hint = {
+      --         enable = true,
+      --       },
+      --     },
+      --     javascript = {
+      --       hint = {
+      --         enable = true,
+      --       },
+      --     },
+      --   },
+      -- },
+      --
       -- yamlls = {
       --   settings = {
       --     yaml = {
