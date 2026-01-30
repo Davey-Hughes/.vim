@@ -381,6 +381,20 @@ return {
 
         vim.keymap.set(
           "n",
+          "gs",
+          "<cmd>vsplit | lua vim.lsp.buf.definition()<CR>",
+          { buffer = event.buf, remap = false, desc = "Goto definition in split" }
+        )
+
+        vim.keymap.set(
+          "n",
+          "gS",
+          "<cmd>lefta vsplit | lua vim.lsp.buf.definition()<CR>",
+          { buffer = event.buf, remap = false, desc = "Goto definition in left split" }
+        )
+
+        vim.keymap.set(
+          "n",
           "gi",
           function() vim.lsp.buf.implementation() end,
           { buffer = event.buf, remap = false, desc = "Goto implementation" }
