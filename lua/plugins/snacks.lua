@@ -72,6 +72,7 @@ return {
 
       { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
       { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
+      { "<leader>fw", function() Snacks.picker.grep_word() end, desc = "Grep word" },
       { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
       { "<leader>ft", function() Snacks.picker.help() end, desc = "Help Pages" },
       { "<leader>fm", function() Snacks.picker.man() end, desc = "Man Pages" },
