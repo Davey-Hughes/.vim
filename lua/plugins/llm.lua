@@ -71,11 +71,8 @@ return {
         acp = {
           claude_code = function()
             return require("codecompanion.adapters").extend("claude_code", {
-
-              commands = {
-                default = {
-                  "claude-code-acp",
-                },
+              defaults = {
+                mcpServers = "inherit_from_config",
               },
             })
           end,
