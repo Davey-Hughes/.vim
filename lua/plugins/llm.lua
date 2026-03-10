@@ -70,11 +70,26 @@ return {
       adapters = {
         acp = {
           claude_code = function()
-            return require("codecompanion.adapters").extend("claude_code", {
-              defaults = {
-                mcpServers = "inherit_from_config",
-              },
-            })
+            return require("codecompanion.adapters").extend(
+              "claude_code",
+              (function()
+                local config = {
+                  defaults = {
+                    mcpServers = "inherit_from_config",
+                  },
+                }
+
+                if vim.uv.os_uname().sysname == "Linux" then
+                  config.commands = {
+                    default = {
+                      "claude-code-acp",
+                    },
+                  }
+                end
+
+                return config
+              end)()
+            )
           end,
 
           gemini_cli = function()
