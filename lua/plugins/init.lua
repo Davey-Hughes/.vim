@@ -206,4 +206,22 @@ return {
     "MagicDuck/grug-far.nvim",
     opts = {},
   },
+
+  {
+    "andythigpen/nvim-coverage",
+    version = "*",
+    opts = {
+      auto_reload = true,
+
+      lang = {
+        go = {
+          coverage_file = "coverage/coverage-nvim.out",
+        },
+
+        rust = {
+          coverage_file = "coverage/tests-nvim.lcov",
+        },
+      },
+    },
+  },
 }
