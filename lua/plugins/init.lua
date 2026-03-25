@@ -140,9 +140,7 @@ return {
     "numToStr/Comment.nvim",
     event = "VeryLazy",
     priority = -1000, -- ensure this loads last
-    dependencies = {
-      "JoosepAlviste/nvim-ts-context-commentstring",
-    },
+    dependencies = {},
 
     config = function()
       ---@diagnostic disable-next-line: missing-fields
@@ -160,7 +158,6 @@ return {
           below = "<leader>co",
           eol = "<leader>cA",
         },
-        pre_hook = require("ts_context_commentstring.integrations.comment_nvim").create_pre_hook(),
       })
 
       local ft = require("Comment.ft")
