@@ -11,7 +11,6 @@ return {
           automatic_installation = {},
           ensure_installed = {
             "asm_lsp",
-            "basedpyright",
             "bashls",
             "biome",
             "clangd",
@@ -101,10 +100,12 @@ return {
       pest_ls = {},
       ruff = {},
       solargraph = {},
+      ty = {},
       uiua = {},
       zls = {},
 
       azure_pipelines_ls = {
+        workspace_required = true,
         settings = {
           yaml = {
             schemas = {
@@ -119,15 +120,15 @@ return {
         },
       },
 
-      basedpyright = {
-        settings = {
-          basedpyright = {
-            analysis = {
-              typeCheckingMode = "standard",
-            },
-          },
-        },
-      },
+      -- basedpyright = {
+      --   settings = {
+      --     basedpyright = {
+      --       analysis = {
+      --         typeCheckingMode = "standard",
+      --       },
+      --     },
+      --   },
+      -- },
 
       clangd = {
         settings = {
