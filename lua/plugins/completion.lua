@@ -27,7 +27,7 @@ return {
   },
   {
     "saghen/blink.cmp",
-    enabled = true,
+    version = "1.*",
     dependencies = {
       { "rafamadriz/friendly-snippets" },
       { "Kaiser-Yang/blink-cmp-git", dependencies = { "nvim-lua/plenary.nvim" } },
