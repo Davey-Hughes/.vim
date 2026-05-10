@@ -1,15 +1,5 @@
 return {
   {
-    "kdheepak/lazygit.nvim",
-    enabled = false,
-    event = "VeryLazy",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    config = function() vim.keymap.set("n", "<leader>gg", ":LazyGit<CR>", nil) end,
-  },
-
-  {
     "swaits/lazyjj.nvim",
     dependencies = "nvim-lua/plenary.nvim",
     opts = {
