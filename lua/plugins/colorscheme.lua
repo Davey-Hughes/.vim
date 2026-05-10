@@ -5,7 +5,7 @@ return {
     cond = (vim.env.COLORSCHEME == "neosolarized"),
     config = function()
       vim.opt.background = "dark"
-      if vim.env.COLORSCHEME_VARIANT == "light" then vim.opt.background = "dark" end
+      if vim.env.COLORSCHEME_VARIANT == "light" then vim.opt.background = "light" end
 
       vim.opt.termguicolors = true
       vim.g.neosolarized_patched = 1
