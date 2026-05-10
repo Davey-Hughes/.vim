@@ -93,15 +93,22 @@ return {
 
   opts = {
     servers = {
+      asm_lsp = {},
       bashls = {},
       biome = {},
       fish_lsp = {},
+      html = {},
+      jqls = {},
       kotlin_language_server = {},
+      marksman = {},
       pest_ls = {},
       ruff = {},
       solargraph = {},
+      sqlls = {},
+      taplo = {},
       ty = {},
       uiua = {},
+      vimls = {},
       zls = {},
 
       azure_pipelines_ls = {
