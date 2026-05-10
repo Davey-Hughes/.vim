@@ -49,7 +49,7 @@ return {
       "folke/lazydev.nvim",
       opts = {
         library = {
-          { path = "uvit-meta/library", words = { "vim%.uv" } },
+          { path = "luvit-meta/library", words = { "vim%.uv" } },
           { plugins = { "nvim-dap-ui" }, types = true },
         },
       },

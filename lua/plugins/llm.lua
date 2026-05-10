@@ -44,7 +44,6 @@ return {
         event = { "CursorMoved", "WinScrolled" },
         opts = {
           disabled_filetypes = { "codecompanion" },
-          enabled_filetypes = { "codecompanion" },
         },
       },
     },
