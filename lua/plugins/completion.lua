@@ -30,7 +30,7 @@ return {
     version = "1.*",
     dependencies = {
       { "rafamadriz/friendly-snippets" },
-      { "Kaiser-Yang/blink-cmp-git", dependencies = { "nvim-lua/plenary.nvim" } },
+      { "Kaiser-Yang/blink-cmp-git",   dependencies = { "nvim-lua/plenary.nvim" } },
       { "moyiz/blink-emoji.nvim" },
       {
         "saghen/blink.compat",
