@@ -1,5 +1,3 @@
----@module "vectorcode"
-
 return {
   {
     "supermaven-inc/supermaven-nvim",
