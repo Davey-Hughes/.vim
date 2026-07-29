@@ -2,15 +2,17 @@
 # Follows the ws-sim / redextape setup: actions come from the code.forgejo.org mirror pinned by
 # SHA, and every tool is installed as a step (no fat preinstalled image).
 #
-# This repo has nothing to build and nothing to test — it is config that a human loads. So the
-# checks are the ones that can fail WITHOUT nvim running: does every Lua file parse, is it
-# formatted the way conform.nvim formats it on save, does luacheck find undeclared globals, is
-# the Vimscript clean. A "does the config actually boot" job was considered and rejected: 94
-# plugins, five of which build native code (cargo, TSUpdate, sniprun's install.sh), and
-# lazy-lock.json is gitignored so nothing is pinned — upstream breakage would turn this red on
-# unrelated commits.
+# This repo has nothing to build and no unit tests — it is config that a human loads. Four of the
+# five jobs are static checks that run WITHOUT nvim: does every Lua file parse, is it formatted the
+# way conform.nvim formats it on save, does luacheck find undeclared globals, is the Vimscript
+# clean. The fifth (`boot`) installs every plugin at its locked version and proves nvim actually
+# starts, which is the only check that exercises the config as a whole.
+#
+# `boot` is only viable because lazy-lock.json is tracked. While it was gitignored, every run
+# resolved whatever upstream happened to be publishing that day, so an unrelated plugin's bad
+# commit would have turned this red.
 
-name: lint
+name: ci
 
 on:
   push:
@@ -21,7 +23,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: lint-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -110,3 +112,40 @@ jobs:
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git ls-files '*.vim' | xargs vint
+
+  # The only job that runs the config rather than reading it: installs all 86 locked plugins into
+  # a scratch prefix and asserts nvim starts with empty stderr. Measured at 2m50s locally on a warm
+  # network; expect more on a cold runner.
+  #
+  # Pinned to the latest STABLE nvim, while the config is developed on 0.13.0-dev. That gap is the
+  # point — it catches a nightly-only API landing in the config before it reaches another machine.
+  # If you deliberately adopt a nightly feature, bump NVIM_VERSION (and its hash) or this goes red.
+  boot:
+    runs-on: docker
+    env:
+      # Neovim publishes no checksums alongside its release assets, so this hash was taken from the
+      # pinned artifact itself: it proves nothing has changed since, not that it was honest on pin
+      # day. Update BOTH values together when bumping.
+      NVIM_VERSION: 0.12.4
+      NVIM_SHA256: 012bf3fcac5ade43914df3f174668bf64d05e049a4f032a388c027b1ebd78628
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install Neovim
+        run: |
+          curl -fsSL -o /tmp/nvim.tar.gz \
+            "https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
+          echo "${NVIM_SHA256}  /tmp/nvim.tar.gz" | sha256sum -c - \
+            || { echo "neovim checksum mismatch — refusing to install" >&2; exit 1; }
+          tar xzf /tmp/nvim.tar.gz -C /opt
+          echo /opt/nvim-linux-x86_64/bin >> "$GITHUB_PATH"
+      # blink.cmp builds a native fuzzy matcher (`build = "cargo build --release"`), and sniprun's
+      # install.sh falls back to cargo when it has no prebuilt binary for the platform. Without a
+      # toolchain both fail their build task and boot-check.sh reports them.
+      - name: Install Rust (blink.cmp and sniprun build native code)
+        run: |
+          curl --proto '=https' --tlsv1.2 -fsSL https://sh.rustup.rs | sh -s -- -y --profile minimal
+          echo "$HOME/.cargo/bin" >> "$GITHUB_PATH"
+      - name: Install plugins at locked versions and boot
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          ./scripts/boot-check.sh
