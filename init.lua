@@ -16,8 +16,10 @@ else
   vim.g.Unix = 0
 end
 
--- vim folder location
-vim.cmd([[let $VIMDIR='~/.vim']])
+-- vim folder location. Derived from where this config actually is, not hardcoded to ~/.vim, so the
+-- tree works when checked out anywhere (CI clones it to a scratch dir). Resolves to ~/.config/nvim,
+-- which is the symlink to ~/.vim.
+vim.env.VIMDIR = vim.fn.stdpath("config")
 
 ------------------------------- General settings ------------------------------
 

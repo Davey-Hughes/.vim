@@ -56,7 +56,7 @@ return {
             "-assume-filename",
             "$FILENAME",
             "--style",
-            "file:" .. vim.env.HOME .. "/.vim/configs/.clang-format",
+            "file:" .. vim.fn.stdpath("config") .. "/configs/.clang-format",
           },
         },
 

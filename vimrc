@@ -9,7 +9,7 @@ augroup templates
 
     " c header files
     autocmd BufNewFile *.h
-        \ silent! 0r $HOME/.vim/templates/skeleton.h |
+        \ silent! 0r $VIMDIR/templates/skeleton.h |
         \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
 
     " cpp files
@@ -17,7 +17,7 @@ augroup templates
 
     " cpp header files
     autocmd BufNewFile *.hh
-        \ silent! 0r $HOME/.vim/templates/skeleton.hh |
+        \ silent! 0r $VIMDIR/templates/skeleton.hh |
         \ %substitute#\[:FILENAME:\]#\=toupper(expand('%:t:r'))
 
     " python files
