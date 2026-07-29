@@ -16,13 +16,3 @@ if filereadable(expand(expand('<amatch>:p:h').'/*makefile'))
 else
     call FromCSource()
 endif
-
-
-" ale c compile options
-let g:ale_c_cc_options='-std=c17 -Wall -Werror -Wpedantic'
-
-" linters for C
-let b:ale_linters={'c': ['ccls']}
-
-" disable coc for c files
-let b:coc_diagnostic_disable=1
