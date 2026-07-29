@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Pre-commit hook: run the static checks before a commit is recorded.
+#
+# Enable with:
+#   git config core.hooksPath scripts/hooks
+#
+# Checks run against the tracked WORKING TREE, not the staged index, so a commit
+# of a partially-staged file is validated against the file on disk. That can
+# reject a commit over unstaged edits — the tradeoff is deliberate, since the
+# alternative (materialising the index into a temp tree) is a lot of machinery
+# for a config repo where partial staging is rare.
+#
+# Bypass a single commit with `git commit --no-verify` when you need to.
+
+exec "$(git rev-parse --show-toplevel)/scripts/checks.sh"
