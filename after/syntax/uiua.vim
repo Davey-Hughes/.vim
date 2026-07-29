@@ -1,10 +1,12 @@
 " uiua 0.8.0
 
-if exists("b:current_syntax")
+scriptencoding utf-8
+
+if exists('b:current_syntax')
 	finish
 endif
 
-let b:current_syntax = "uiua"
+let b:current_syntax = 'uiua'
 syn iskeyword a-z
 
 syn keyword uiuaIdentifier e os Family Arch ExeExt DllExt Sep NumProcs MaxInt

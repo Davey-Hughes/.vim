@@ -16,24 +16,22 @@ return {
 
       npairs.add_rules({
         rule("<", ">", {
-          "rust",
-          "cpp",
-          "java",
-          "typescript",
-          "cs",
-          "kotlin",
-          "swift",
-          "scala",
-          "dart",
-        })
-        :with_pair(cond.before_regex("%a+:?:?<*$", -1))
-        :with_move(function(opts)
-          return opts.char == ">"
-        end),
+            "rust",
+            "cpp",
+            "java",
+            "typescript",
+            "cs",
+            "kotlin",
+            "swift",
+            "scala",
+            "dart",
+          })
+          :with_pair(cond.before_regex("%a+:?:?<*$", -1))
+          :with_move(function(opts) return opts.char == ">" end),
 
         rule("|", "|", { "rust" })
-        :with_pair(cond.not_before_regex([[[%w_%)%}%]'"%%|]%s*$]], -1))
-        :with_move(cond.after_regex("|")),
+          :with_pair(cond.not_before_regex([[[%w_%)%}%]'"%%|]%s*$]], -1))
+          :with_move(cond.after_regex("|")),
       })
     end,
   },
@@ -42,7 +40,7 @@ return {
     version = "1.*",
     dependencies = {
       { "rafamadriz/friendly-snippets" },
-      { "Kaiser-Yang/blink-cmp-git",   dependencies = { "nvim-lua/plenary.nvim" } },
+      { "Kaiser-Yang/blink-cmp-git", dependencies = { "nvim-lua/plenary.nvim" } },
       { "moyiz/blink-emoji.nvim" },
       {
         "saghen/blink.compat",
@@ -170,7 +168,7 @@ return {
             module = "blink.compat.source",
             score_offset = 110,
             async = true,
-            transform_items = function(ctx, items)
+            transform_items = function(_, items)
               for _, item in ipairs(items) do
                 item.kind_name = "supermaven"
               end

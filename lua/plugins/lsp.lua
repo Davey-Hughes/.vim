@@ -38,12 +38,12 @@ return {
 
     { "williamboman/mason-lspconfig.nvim" },
     { "mrcjkb/rustaceanvim" },
-    { "pest-parser/pest.vim",                ft = "pest" },
-    { "smjonas/inc-rename.nvim",             opts = {} },
-    { "Bilal2453/luvit-meta",                lazy = true },
+    { "pest-parser/pest.vim", ft = "pest" },
+    { "smjonas/inc-rename.nvim", opts = {} },
+    { "Bilal2453/luvit-meta", lazy = true },
     { "artemave/workspace-diagnostics.nvim", opts = {} },
-    { "pmizio/typescript-tools.nvim",        enabled = false,     opts = {} },
-    { "chrisgrieser/nvim-lsp-endhints",      event = "LspAttach", opts = {} },
+    { "pmizio/typescript-tools.nvim", enabled = false, opts = {} },
+    { "chrisgrieser/nvim-lsp-endhints", event = "LspAttach", opts = {} },
 
     {
       "folke/lazydev.nvim",
@@ -153,7 +153,7 @@ return {
       },
 
       eslint = {
-        on_attach = function(client, bufnr)
+        on_attach = function(_, bufnr)
           vim.api.nvim_create_autocmd("BufWritePre", {
             buffer = bufnr,
             command = "EslintFixAll",
@@ -313,11 +313,7 @@ return {
 
       ---@type boolean|table
       local new_virtual_text = false
-      if not new_virtual_lines then
-        new_virtual_text = {
-          source = true,
-        }
-      end
+      if not new_virtual_lines then new_virtual_text = { source = true } end
 
       vim.diagnostic.config({
         virtual_lines = new_virtual_lines,
@@ -333,7 +329,7 @@ return {
     -- function to check if a floating dialog exists and if not
     -- then check for diagnostics under the cursor.
     -- disabled when virtual lines is enabled
-    function OpenDiagnosticIfNoFloat()
+    local function OpenDiagnosticIfNoFloat()
       for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
         if vim.api.nvim_win_get_config(winid).zindex then return end
       end

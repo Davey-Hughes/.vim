@@ -1,0 +1,112 @@
+# Forgejo Actions lint for this Neovim config (self-hosted runner on git.daveynet.xyz).
+# Follows the ws-sim / redextape setup: actions come from the code.forgejo.org mirror pinned by
+# SHA, and every tool is installed as a step (no fat preinstalled image).
+#
+# This repo has nothing to build and nothing to test — it is config that a human loads. So the
+# checks are the ones that can fail WITHOUT nvim running: does every Lua file parse, is it
+# formatted the way conform.nvim formats it on save, does luacheck find undeclared globals, is
+# the Vimscript clean. A "does the config actually boot" job was considered and rejected: 94
+# plugins, five of which build native code (cargo, TSUpdate, sniprun's install.sh), and
+# lazy-lock.json is gitignored so nothing is pinned — upstream breakage would turn this red on
+# unrelated commits.
+
+name: lint
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["**/*.md", "LICENSE*"]
+  pull_request:
+    paths-ignore: ["**/*.md", "LICENSE*"]
+  workflow_dispatch:
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Parses every tracked Lua file without executing it. LuaJIT because that is the dialect nvim
+  # embeds — `lua5.4` would accept goto/integer-division syntax that the real config would reject.
+  lua-syntax:
+    runs-on: docker                    # -> catthehacker/ubuntu:act-latest (node+git+curl)
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install LuaJIT
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends luajit
+      - name: Parse every tracked Lua file
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          ./scripts/lua-syntax-check.sh
+
+  # Gates on the SAME formatting conform.nvim applies on save. stylua.toml lives at the repo root
+  # (not configs/) precisely so conform's `--search-parent-directories` finds it — a copy under
+  # configs/ is invisible to both conform and this job.
+  stylua:
+    runs-on: docker
+    env:
+      # Pinned to an exact version and asset, checksummed BEFORE it reaches PATH — same rule as the
+      # ws-sim nextest pin. Upstream ships no .sha256, so this hash was taken from the pinned
+      # artifact itself: it proves nothing has changed since, not that it was honest on pin day.
+      # Update BOTH values together when bumping.
+      STYLUA_VERSION: 2.5.2
+      STYLUA_SHA256: bcb0d855e91f102f28a370e850f8566b3b44b79e6274d806ea5246837c0fd5ab
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install stylua
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends unzip
+          curl -fsSL -o /tmp/stylua.zip \
+            "https://github.com/JohnnyMorganz/StyLua/releases/download/v${STYLUA_VERSION}/stylua-linux-x86_64.zip"
+          # Explicit failure rather than relying on the runner's shell being `bash -e`: a checksum
+          # check that cannot fail the step is not a checksum check.
+          echo "${STYLUA_SHA256}  /tmp/stylua.zip" | sha256sum -c - \
+            || { echo "stylua checksum mismatch — refusing to install" >&2; exit 1; }
+          unzip -q -o /tmp/stylua.zip -d /usr/local/bin
+          chmod +x /usr/local/bin/stylua
+      - name: Check formatting
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git ls-files '*.lua' | xargs stylua --check
+
+  # Catches undeclared globals and unused locals. Rules live in .luacheckrc — notably `vim` and
+  # `Snacks` are declared writable globals, without which this reports ~290 false positives.
+  luacheck:
+    runs-on: docker
+    env:
+      LUACHECK_VERSION: 1.2.0
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Install luacheck
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends luarocks
+          luarocks install luacheck "$LUACHECK_VERSION"
+      - name: Lint Lua
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git ls-files '*.lua' | xargs luacheck
+
+  # Covers the Vimscript under after/ and vimrc that the three Lua jobs never touch.
+  vint:
+    runs-on: docker
+    env:
+      VINT_VERSION: 0.3.21
+    steps:
+      - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      # Installed into a venv rather than `pip install --break-system-packages`: that flag is a
+      # pip 23+ option, so it hard-errors on an older image, while a venv works on every Ubuntu
+      # regardless of whether PEP 668 marks the system environment as externally managed.
+      - name: Install vint
+        run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends python3-venv
+          python3 -m venv /tmp/vint-venv
+          /tmp/vint-venv/bin/pip install --quiet "vim-vint==${VINT_VERSION}"
+          echo /tmp/vint-venv/bin >> "$GITHUB_PATH"
+      - name: Lint Vimscript
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git ls-files '*.vim' | xargs vint
