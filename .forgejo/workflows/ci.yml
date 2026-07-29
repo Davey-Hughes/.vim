@@ -117,27 +117,42 @@ jobs:
   # a scratch prefix and asserts nvim starts with empty stderr. Measured at 2m50s locally on a warm
   # network; expect more on a cold runner.
   #
-  # Pinned to the latest STABLE nvim, while the config is developed on 0.13.0-dev. That gap is the
-  # point — it catches a nightly-only API landing in the config before it reaches another machine.
-  # If you deliberately adopt a nightly feature, bump NVIM_VERSION (and its hash) or this goes red.
+  # Runs against nvim NIGHTLY, matching what this config is actually developed on. The cost is
+  # accepted deliberately: nightly is a moving target, so an upstream regression can turn this job
+  # red on a commit that changed nothing here. When that happens the version printed below is the
+  # first thing to check — it distinguishes "nvim broke" from "the config broke".
   boot:
     runs-on: docker
-    env:
-      # Neovim publishes no checksums alongside its release assets, so this hash was taken from the
-      # pinned artifact itself: it proves nothing has changed since, not that it was honest on pin
-      # day. Update BOTH values together when bumping.
-      NVIM_VERSION: 0.12.4
-      NVIM_SHA256: 012bf3fcac5ade43914df3f174668bf64d05e049a4f032a388c027b1ebd78628
     steps:
       - uses: https://code.forgejo.org/actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - name: Install Neovim
+      # Tracking nightly means the artifact changes daily, so there is no hash to pin in this file
+      # the way stylua is pinned above. Instead the expected digest is read from the release API and
+      # the download verified against it.
+      #
+      # Be clear about what that is worth: it catches a truncated or corrupted transfer, and it is
+      # NOT supply-chain protection, because the digest and the artifact come from the same origin —
+      # anything able to replace one can replace the other. It is strictly weaker than the pinned
+      # checksums elsewhere in this file. That is the price of tracking nightly.
+      - name: Install Neovim nightly
         run: |
+          apt-get update -qq
+          apt-get install -y --no-install-recommends jq
+          asset=nvim-linux-x86_64.tar.gz
+          expected=$(curl -fsSL https://api.github.com/repos/neovim/neovim/releases/tags/nightly \
+            | jq -r --arg a "$asset" '.assets[] | select(.name == $a) | .digest')
+          case "$expected" in
+            sha256:*) ;;
+            *) echo "could not read a sha256 digest for $asset from the release API" >&2; exit 1 ;;
+          esac
           curl -fsSL -o /tmp/nvim.tar.gz \
-            "https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
-          echo "${NVIM_SHA256}  /tmp/nvim.tar.gz" | sha256sum -c - \
-            || { echo "neovim checksum mismatch — refusing to install" >&2; exit 1; }
+            "https://github.com/neovim/neovim/releases/download/nightly/$asset"
+          echo "${expected#sha256:}  /tmp/nvim.tar.gz" | sha256sum -c - \
+            || { echo "neovim nightly digest mismatch — refusing to install" >&2; exit 1; }
           tar xzf /tmp/nvim.tar.gz -C /opt
           echo /opt/nvim-linux-x86_64/bin >> "$GITHUB_PATH"
+      # Recorded so a red run can be attributed to a specific nightly rather than guessed at.
+      - name: Report the nightly under test
+        run: nvim --version | head -2
       # blink.cmp builds a native fuzzy matcher (`build = "cargo build --release"`), and sniprun's
       # install.sh falls back to cargo when it has no prebuilt binary for the platform. Without a
       # toolchain both fail their build task and boot-check.sh reports them.
