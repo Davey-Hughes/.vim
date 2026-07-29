@@ -21,12 +21,21 @@ repo_root="$(git rev-parse --show-toplevel)"
 base="${BOOT_CHECK_DIR:-${TMPDIR:-/tmp}/nvim-boot-check}"
 
 rm -rf "${base:?}"
-mkdir -p "$base"/{config/nvim,data,state,cache}
+mkdir -p "$base"/{config/nvim,data,state,cache,home}
 
 # Tracked files as they exist in the WORKING TREE, not as of HEAD — so running
 # this locally tests the edits you are about to commit. In CI the two are
 # identical, since the checkout has no local modifications.
 (cd "$repo_root" && git ls-files -z | tar -cf - --null -T -) | tar -xf - -C "$base/config/nvim"
+
+# HOME is isolated too, and that matters more than it looks. An earlier version
+# overrode only the XDG dirs, so a dev box where ~/.vim happens to exist made a
+# config hardcoding "$HOME/.vim" pass here and fail in CI, where HOME is /root.
+# Cargo is pointed back at the real toolchain so blink.cmp still builds without
+# re-downloading the crate registry into a throwaway HOME.
+export CARGO_HOME="${CARGO_HOME:-$HOME/.cargo}"
+export RUSTUP_HOME="${RUSTUP_HOME:-$HOME/.rustup}"
+export HOME="$base/home"
 
 export XDG_CONFIG_HOME="$base/config"
 export XDG_DATA_HOME="$base/data"
